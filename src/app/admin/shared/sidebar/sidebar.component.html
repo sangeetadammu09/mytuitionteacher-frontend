@@ -1,0 +1,26 @@
+
+<div class="sidebar-wrapper" [ngClass]="{ 'app-side-open' : sidenavstatus }" >
+
+    <div class="text-center mt-3  justify-content-center ">
+        <img src="/assets/images/helpmetutors-new-logo-pp.png" height="auto" width="90%" class="imgr" />
+    </div>
+ 
+
+    <ul class="nav">
+ 
+        <li class="nav-item menu-li" *ngFor="let menuItem of menuItems" routerLinkActive="active-menu1" [routerLinkActiveOptions]="{exact: true}">
+            <a data-toggle="collapse" [attr.data-target]="'#' + menuItem.url"><i [ngClass]="'fa ' + menuItem.icon"></i> 
+                <span [ngClass]=" menuItem.submenuList.length > 0 ? 'dropdown-toggle menu-title' : 'menu-title'" 
+                >{{menuItem.parentMenu}}</span></a>
+            <div class="collapse" id="{{menuItem.url}}" aria-expanded="false"  *ngIf="menuItem.submenuList.length > 0">
+                <ul class="flex-column pl-2 nav" *ngFor="let submenuItem of menuItem.submenuList" routerLinkActive="active">
+                    <li class="nav-item sub-menu-li"><a class="nav-link py-0"  [routerLink]="[submenuItem.url]" routerLinkActive="active-menu" [routerLinkActiveOptions]="{exact: true}">
+                        <span  class="menu-title">{{submenuItem.menu}}</span></a></li>
+                </ul>
+            </div>
+        </li>
+     
+    </ul>
+
+    
+</div>

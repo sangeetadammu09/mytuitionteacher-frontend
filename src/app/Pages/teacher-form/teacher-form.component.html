@@ -1,0 +1,258 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card hmt-card">
+          <h1 class= "hmt-works">How it works!!<hr></h1>
+        <h5><b><i class="fas fa-lightbulb"></i>&nbsp;CREATE TUTOR PROFILE</b></h5>
+        <p>Create a tutor profile and find a suitable tuition job within minutes. Helpmetutors keep teacher's experience details and area of uniqueness at the top of the priority list.</p>
+       
+        <h5><b><i class="fas fa-search"></i>&nbsp; RESPOND TO YOUR SUITABLE REQUIREMENT</b></h5>
+        <p>Based on tutor's teaching details and level of experience. Helpmetutors suggest the best tuition to the teacher.</p>
+  
+     <h5><b><i class="fas fa-chalkboard-teacher"></i>&nbsp;GIVE A DEMO</b></h5>
+        <p>Helpmetutors fix demo class as per your convenience. If it didnt work out, you can opt always for another.</p>
+      
+        <h5><b><i class="fas fa-book-reader"></i>&nbsp; BEGIN EARNING </b></h5>
+        <p>Once the teacher is fixed. Tuition starts as per the scheduled time. Tutor try to help the student with his requirements. Teacher's hardwork will be appreciated </p>
+    
+
+      </div>
+
+    </div>
+    <div class="col-md-8">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+              <h1 class="hmt-parent">Are you looking for part time home/online teacher jobs? Register your tutoring details below FREELY to find suitable.!!</h1>
+          
+           <form class="row parentForm" [formGroup]="addTeacherForm" (ngSubmit)="submitTeacherForm()">
+              <div class="col-md-6">
+                  <label for="name">Full Name<span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid':
+                  (submitted && t['name'].errors) ||(t['name'].errors && t['name'].touched)}" />
+                  <div *ngIf="(submitted && t['name'].errors) ||(t['name'].errors && t['name'].touched)" class="invalid-feedback">
+                      <div *ngIf="t['name'].errors['required']">
+                          Name is required
+                      </div>
+                 </div>
+
+                </div>
+
+                <div class="col-md-6">
+                  <label for="email">Email Address<span style="color:red;">*</span></label>
+                    <input type="text" class="form-control" formControlName="email" [ngClass]="{'is-invalid':
+                  (submitted && t['email'].errors) ||(t['email'].errors && t['email'].touched)}" />
+                  <div *ngIf="(submitted && t['email'].errors) ||(t['email'].errors && t['email'].touched)" class="invalid-feedback">
+                      <div *ngIf="t['email'].errors['required']">Email is required</div>
+                      <div *ngIf="t['email'].errors['email']">Email is not valid</div>
+                 </div>
+                </div>
+              
+                 <div class="col-md-6">
+                  <label for="phone">Contact<span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" formControlName="contact" [ngClass]="{'is-invalid':
+                  (submitted && t['contact'].errors) ||(t['contact'].errors && t['contact'].touched)}" />
+                  <div *ngIf="(submitted && t['contact'].errors) ||(t['contact'].errors && t['contact'].touched)" class="invalid-feedback">
+                      <div *ngIf="t['contact'].errors['required']">Contact is required</div>
+                      <div *ngIf="t['contact'].errors['pattern']">Only Number are allowed</div>
+                      <div *ngIf="t['contact'].errors['maxlength']">Only 10 digits are allowed</div>
+                 </div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="location">State<span style="color:red;">*</span></label>
+                  <select class="form-control form-select" formControlName="state"
+                  [ngClass]="{'is-invalid':(submitted && t['state'].errors) ||(t['state'].errors && t['state'].touched)}">
+                      <option selected>Select</option>
+                      <option *ngFor="let item of statesList" [value]="item.name">{{item.name}}</option>
+                  </select>
+                  <div *ngIf="(submitted && t['state'].errors) ||(t['state'].errors && t['state'].touched)" class="invalid-feedback">
+                      <div *ngIf="t['state'].errors['required']">State is required</div>
+                 </div>
+                </div>
+
+
+                <div class="col-md-6">
+                  <label for="location">City<span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" formControlName="city"  [ngClass]="{'is-invalid':
+                  (submitted && t['city'].errors) ||(t['city'].errors && t['city'].touched)}" />
+                  <div *ngIf="(submitted && t['city'].errors) ||(t['city'].errors && t['city'].touched)" class="invalid-feedback">
+                      <div *ngIf="t['city'].errors['required']">City is required</div>
+                 </div>
+                </div>
+      
+                <div class="col-md-6">
+                  <label for="location">Location<span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" formControlName="location" [ngClass]="{'is-invalid':
+                  (submitted && t['location'].errors) ||(t['location'].errors && t['location'].touched)}" />
+                  <div *ngIf="(submitted && t['location'].errors) ||(t['location'].errors && t['location'].touched)" class="invalid-feedback">
+                      <div *ngIf="t['location'].errors['required']">Location is required</div>
+                     
+                 </div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="location">Qualification<span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" formControlName="qualification" [ngClass]="{'is-invalid':
+                  (submitted && t['qualification'].errors) ||(t['qualification'].errors && t['qualification'].touched)}" />
+                  <div *ngIf="(submitted && t['qualification'].errors) ||(t['qualification'].errors && t['qualification'].touched)" class="invalid-feedback">
+                      <div *ngIf="t['qualification'].errors['required']">Qualification is required</div>
+                     
+                 </div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="exampleInputEmail1">Teaching Experience<span style="color:red;">*</span></label>
+                  <select class="form-control form-select" id="exampleFormControlSelect1" formControlName="teaching"
+                  [ngClass]="{'is-invalid':(submitted && t['teaching'].errors) ||(t['teaching'].errors && t['teaching'].touched)}">
+                      <option disabled>Select</option>
+                      <option>0-2years</option>
+                      <option>2-4years</option>
+                      <option>4-6years</option>
+                      <option>6-8years</option>
+                      <option>8-10years</option>
+                      <option>10-15years</option>
+                      <option>more than 20years</option>
+                  </select>
+                  <div *ngIf="(submitted && t['teaching'].errors) ||(t['teaching'].errors && t['teaching'].touched)" class="invalid-feedback">
+                    <div *ngIf="t['teaching'].errors['required']">Teaching Experience is required</div>   
+                </div>  
+                </div>
+
+                <div class="col-md-6">
+                  <label for="location">Specialization<span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" formControlName="subjects" [ngClass]="{'is-invalid':
+                  (submitted && t['subjects'].errors) ||(t['subjects'].errors && t['subjects'].touched)}" />
+                  <div *ngIf="(submitted && t['subjects'].errors) ||(t['subjects'].errors && t['subjects'].touched)" class="invalid-feedback">
+                      <div *ngIf="t['subjects'].errors['required']">Specialization is required</div>
+                     
+                 </div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="exampleInputEmail1">Available Timings<span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" formControlName="timing" [ngClass]="{'is-invalid':
+                  (submitted && t['timing'].errors) ||(t['timing'].errors && t['timing'].touched)}" />
+                  <div *ngIf="(submitted && t['timing'].errors) ||(t['timing'].errors && t['timing'].touched)" class="invalid-feedback">
+                      <div *ngIf="t['timing'].errors['required']">Available Timings is required</div>
+                     
+                 </div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="exampleInputEmail1">Mode Of Teaching<span style="color:red;">*</span></label>
+                  <div class="form-group hmt-checkbox" 
+                  [ngClass]="{'is-invalid':(submitted && t['modeofteaching'].errors) ||(t['modeofteaching'].errors && t['modeofteaching'].touched)}">
+                      <div class="form-check form-check-inline" *ngFor="let item of modeofTeachingArr">
+                          <input class="form-check-input" id="modeofteaching" [value]="item.value"
+                           formControlName="modeofteaching" type="checkbox" (change)="onModeChange($event)">
+                          <label class="form-check-label" for="inlineCheckbox1">{{item.label}}</label>
+                      </div>
+                  </div>
+                  
+                    <div *ngIf="(submitted && t['modeofteaching'].errors) ||(t['modeofteaching'].errors && t['modeofteaching'].touched)" class="invalid-feedback">
+                      <div *ngIf="t['modeofteaching'].errors['required']">Mode Of Teaching is required</div>   
+                  </div>
+                  
+                </div>
+
+                <div class="col-md-6">
+                  <label for="exampleInputEmail1">Have Vehicle<span style="color:red;">*</span></label>
+                  <select class="form-control form-select" id="exampleFormControlSelect1" formControlName="vehicle"
+                  [ngClass]="{'is-invalid':(submitted && t['vehicle'].errors) ||(t['vehicle'].errors && t['vehicle'].touched)}">
+                      <option disabled>Select</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>  
+                  </select>
+                  <div *ngIf="(submitted && t['vehicle'].errors) ||(t['vehicle'].errors && t['vehicle'].touched)" class="invalid-feedback">
+                    <div *ngIf="t['vehicle'].errors['required']">Mode of Transport is required</div>   
+                </div>  
+                </div>
+
+                <div class="col-md-6">
+                  <label for="exampleInputEmail1">Mention five Preferred Locations<span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" formControlName="preferredlocation" [ngClass]="{'is-invalid':
+                  (submitted && t['preferredlocation'].errors) ||(t['preferredlocation'].errors && t['preferredlocation'].touched)}" />
+                  <div *ngIf="(submitted && t['preferredlocation'].errors) ||(t['preferredlocation'].errors && t['preferredlocation'].touched)" class="invalid-feedback">
+                      <div *ngIf="t['preferredlocation'].errors['required']">Preferred Location is required</div>
+                     
+                 </div>
+                </div>
+
+
+                <div class="col-md-6 d-flex">
+                  <div class="col-md-8">
+                      <label for="exampleInputEmail1">Charge<span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" formControlName="charge" [ngClass]="{'is-invalid':
+                  (submitted && t['charge'].errors) ||(t['charge'].errors && t['charge'].touched)}" />
+                  <div *ngIf="(submitted && t['charge'].errors) ||(t['charge'].errors && t['charge'].touched)" class="invalid-feedback">
+                      <div *ngIf="t['charge'].errors['required']">Charge is required</div> 
+                      <div *ngIf="t['charge'].errors['pattern']">Only Number are allowed</div>  
+                 </div>
+                 </div>
+                 <div class="ml-5 col-md-3">
+                  <label for="budget type">Type <span style="color:red;">*</span></label>
+                  <select class="form-control form-select" id="budgettype" formControlName="chargeType"
+                  [ngClass]="{'is-invalid':(submitted && t['chargeType'].errors) ||(t['chargeType'].errors && t['chargeType'].touched)}">
+                      <option disabled>Select</option>
+                      <option value="per hour">per hour</option>
+                      <option value="per month">per month</option>
+                      <option value="one time pay">one time pay</option>
+                  </select>
+                  <div *ngIf="(submitted && t['chargeType'].errors) ||(t['chargeType'].errors && t['chargeType'].touched)" class="invalid-feedback">
+                    <div *ngIf="t['chargeType'].errors['required']">Type is required</div>  
+               </div>
+                 </div>
+
+                </div>
+
+                <div class="col-md-6">
+                  <label for="exampleInputEmail1">About Me<span style="color:red;">*</span></label>
+                  <textarea type="text-area" class="form-control" rows="5" id="aboout" formControlName="about"
+                  placeholder="I am Rohit. My Qualification is BTech. I have 5 years of experience in teaching maths and science upto 10th Standard.">
+                  </textarea>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="formFile" class="form-label">Upload ID Proof</label>
+                    <input class="form-control" type="file" id="formFile" formControlName="document"  name="doument">
+                </div>  
+
+               <div class="modal-footer mb-3">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+               </div>
+
+            </form> 
+         
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="teacherModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Your details are saved successfully</p>
+       <p>We Will update you as soon as possible.</p>
+       <div class="modal-footer mb-3">
+        <button type="submit" class="btn btn-primary" (click)="closeTeacherConfimModal()">Okay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,178 @@
+.hmt-jumbo{
+    background-image: url("/assets/images/htm-aboutus1.png");
+    background-size: cover;  
+    background-repeat:   no-repeat;
+    background-position: center center;
+    height: 250px;
+}
+
+.section1, .section2{
+    margin-top: 60px;
+}
+
+.span1{
+    text-transform: uppercase; 
+    display: block;
+    color:  #9b111e ; 
+    font-weight: 500; 
+    margin-bottom: 10px;
+}
+
+.hmt-h2{
+     line-height: 1.3;
+     font-size: 32px; 
+     font-weight: 700;
+}
+
+.hmt-p1{
+    text-align:justify;
+}
+
+.hmt-h3{
+    padding-top:20px;
+    position: relative;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #28a7d8;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+.hmt-p2{
+    margin-bottom: 15px;
+    line-height: 1.7;
+    color: #727695;
+    font-family: var(--fontFamily2);
+    font-size: var(--fontSize);
+}
+
+
+.hmt-ul1{
+    padding-left: 0;
+    list-style-type: none;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+.hmt-li1{
+    position: relative;
+    margin-bottom: 12px;
+    color: black;
+    padding-top: 3px;
+    padding-left: 30px;
+}
+
+.hmt-h1{
+    max-width: 620px;
+    margin-bottom: 0;
+    font-size: 37px;
+    font-weight: 700;
+}
+
+.hmt-odometer{
+    color: white;
+     line-height: 0;
+     font-size: 50px;
+     margin-top: -7px;
+     margin-bottom: 10px;
+}
+
+.hmt-p3{
+    color: white;
+    line-height: normal;
+    font-family: var(--fontFamily1);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.hmt-about1{
+    color: white;
+     line-height: 0;
+     font-size: 50px;
+     margin-top: -7px;
+     margin-bottom: 10px;
+}
+
+.hmt-h31{
+    margin-bottom: 17px; color: white; font-size: 45px; font-weight: 600;
+}
+
+.hmt-p4{
+    color: white;line-height: normal;font-family: var(--fontFamily1);font-size: 16px;font-weight: 500;
+}
+
+.hmt-img1{
+    width:500px;
+    height:300px; margin-top: 10px;
+}
+
+.hmt-section4{
+margin-top: 50px;overflow: hidden; background-color: #dc3545;position: relative;z-index: 1;
+  padding-top: 70px;padding-bottom: 70px;
+}
+
+.hmt-row1{
+    display: flex;flex-wrap: wrap;  margin-right: -15px;  margin-left: -15px;
+}
+
+
+.hmt-about2{
+    color: white; line-height: 0;font-size: 50px;margin-top: -7px;margin-bottom: 10px;
+}
+
+.hmt-h31{
+    margin-bottom: 17px; color: white; font-size: 45px; font-weight: 600;
+}
+
+.hmt-p21{
+    color: white;line-height: normal;font-family: var(--fontFamily1);font-size: 16px;font-weight: 500;
+}
+
+
+
+.card1{
+    padding: 20px;
+}
+
+.hmt-angle:hover{
+   color:#9b111e ;
+}
+
+
+.counter
+{
+    background-color:whitesmoke ;
+    text-align: center;
+}
+.employees,.customer,.design,.order
+{
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+.counter-count
+{
+    font-size: 18px;
+    background-color: #9b111e ;
+    border-radius: 50%;
+    position: relative;
+    color: #ffffff;
+    text-align: center;
+    line-height: 92px;
+    width: 92px;
+    height: 92px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    display: inline-block;
+}
+
+.employee-p,.customer-p,.order-p,.design-p
+{
+    font-size: 24px;
+    color: #000000;
+    line-height: 34px;
+}
+
+

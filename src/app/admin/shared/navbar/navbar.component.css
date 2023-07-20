@@ -1,0 +1,61 @@
+.navbar-transparent{
+    background-color:  #9b111e !important;
+}
+
+.fa-bell:before{
+    color:black !important;
+}
+
+.ml-2{
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.fa-bars{
+    font-size: 22px;
+  }
+
+  .menu1{
+    margin-right: 10px;
+  }
+
+  .notification-menu{
+    margin: 15px 25px 15px 10px;
+  }
+
+  .fa-bell{
+    font-size: 22px;
+  }
+
+  .class1:hover{
+    background-color:#9b111e !important;
+  }
+
+  .notification {
+    /* background-color: #555; */
+    color: white;
+    text-decoration: none;
+    padding: 15px 26px;
+    position: relative;
+    display: inline-block;
+    border-radius: 2px;
+  }
+  
+  /* .notification:hover {
+    background: red;
+  } */
+  
+  .notification .badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+  }
+
+  .fa-lg{
+    font-size:2em !important;
+    color: white !important;
+  }

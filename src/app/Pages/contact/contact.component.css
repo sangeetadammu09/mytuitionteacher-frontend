@@ -1,0 +1,98 @@
+.container4{
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.hmt-contact{
+    padding: 2%;
+    z-index: 1;
+    border-radius: 0px;
+}
+.col-md-4{
+    background-image: url("/assets/images/hmt-contact4.png");
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+    padding: 2%;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+.col-md-8{
+    background: #fff;
+    padding: 3%;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.button{
+    text-align: center;
+    background-color: #9b111e;
+    font-size: 18px;
+    width: 40%;
+    border-radius: 5px;
+    color: white;
+}
+.contact-form button:focus{
+    box-shadow:none;
+}
+
+.contact-box{
+    font-size: 22px;
+    color: black;
+    margin-top: 20px;
+}
+
+#hmt-mail{
+    color:black;
+}
+
+#hmt-fb{
+    color:blue;
+}
+
+#hmt-insta{
+    color: orangered;
+}
+
+.contact1{
+    text-align: center;
+    font-style: italic;
+}
+
+
+.p-contact{
+    font-size: 16px;
+}
+
+
+.line{
+    text-align: center;
+}
+
+#hmt-pinterest{
+    color: darkred;
+}
+
+
+.form-control{
+    border-radius: 5px;
+    border:1px solid #999999;
+}
+
+.col-sm-2{
+    max-width: 20%;
+}
+
+/* Extra small devices (phones, 600px and down) */
+      @media only screen and (max-width: 600px) {
+
+        .col-md-4{
+            display: none;
+        }
+
+    }
+    

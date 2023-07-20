@@ -1,0 +1,48 @@
+
+<nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+  <div class="container-fluid">
+    <div class="navbar-wrapper">
+      <div class="navbar-toggle">
+        <button type="button" class="navbar-toggler" (click)="sidebarToggle()">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
+      </div>
+     <span class="menu1" (click)="sideNavToggle()"  *ngIf=" !tab ">
+      <i class="fa fa-chevron-circle-left fa-lg"></i>
+     </span>
+      <span><p class="text-black"></p></span>
+    </div>
+    <button class="navbar-toggler" type="button" (click)="collapse()"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="collapseExample" [ngbCollapse]="isCollapsed">
+      <ul class="navbar-nav">
+       
+        <li class="nav-item" *ngIf="userName">
+              <span class="d-md-block text-white mt-3"><p>Hello, {{userName}}</p>({{userRole}})</span>
+        </li>
+
+        <!-- <li class="nav-item">
+                     <a routerLink="notifications" class="notification">
+                      <span> <i class="fa fa-bell position-relative"> </i></span>
+                      <span class="badge"> {{countlist}} </span>
+                    </a>
+        </li> -->
+
+
+        <li class="nav-item">
+              <span class="d-md-block" (click)="logoutUser()">
+                <button class="btn btn-secondary"><i class="fa fa-sign-out"></i> Logout</button>
+              </span>
+        </li>
+
+        
+      </ul>
+    </div>
+  </div>
+</nav>

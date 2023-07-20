@@ -1,0 +1,50 @@
+
+
+.card0 {
+    box-shadow: 0px 4px 8px 0px #757575;
+    border-radius: 0px
+}
+
+
+
+
+.border-line {
+    border-right: 1px solid #EEEEEE
+}
+
+
+.px-3 {
+    padding-left: 3rem!important;
+    padding-right: 5px !important;
+}
+
+.mt-2, .mb-4{
+    font-size: 18px;
+}
+
+.hmt-already{
+    text-align: center;
+}
+
+
+.hmt-desc{
+    padding-left: 50px;
+}
+
+
+.mb-5, .my-5 {
+    margin-bottom: 0rem!important;
+}
+
+
+.hmt-take{
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+.registerBtn{
+    display: block;
+    margin: auto;
+}
+
+
