@@ -1,0 +1,19 @@
+<nav [ngClass]="{ sidebarPushRight: isActive, collapsed: collapsed }" class="sidebar bg-color">
+    <div class="list-group">
+        <a [routerLinkActive]="['router-link-active']" class="list-group-item" routerLink="/admin/dashboard">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;
+            <span>{{ 'Parking Management' | translate }}</span>
+        </a>
+       
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/admin/tables']" class="list-group-item">
+            <i class="fa fa-fw fa-table"></i>&nbsp;
+            <span>{{ 'Vehicle List' | translate }}</span>
+        </a>
+        
+        
+    </div>
+    <div (click)="toggleCollapsed()" [ngClass]="{ collapsed: collapsed }" class="toggle-button">
+        <i class="fa fa-fw fa-angle-double-{{ collapsed ? 'right' : 'left' }}"></i>&nbsp;
+        <span>{{ 'Collapse Sidebar' | translate }}</span>
+    </div>
+</nav>

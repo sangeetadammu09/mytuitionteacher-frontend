@@ -1,0 +1,27 @@
+<nav [ngClass]="{ sidebarPushRight: isActive, collapsed: collapsed }" class="sidebar bg-color">
+    <div class="list-group" *ngFor="let item of menuList">
+        <div class="nested-menu">
+          <a (click)="addExpandClass(item.id)" class="list-group-item" [attr.data-target]="'#menu' + item.url"
+            id="MdmSubMenuLink" aria-expanded="true" aria-controls="MdmSubMenu"
+            [routerLink]="item.subMenus.length == 0 ? item.url : undefined">
+            <i [ngClass]="'fa ' + item.icon"></i> 
+            <span class="pull-right"><i [ngClass]="item.subMenus.length > 0 ? 'fa fa-fw fa-angle-down' : null"></i></span>
+            <span>{{item.name}}</span>
+          </a>
+          <li [class.expand]="showMenu === item.id" class="nested">
+            <ul class="submenu">
+              <li *ngFor="let sub of item.subMenus">
+                <a routerLink="{{sub.url}}" routerLinkActive="active">
+                  <i [ngClass]="'fa ' + sub.icon"></i> &nbsp;
+                  <span>{{sub.name}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </div>
+      </div>
+    <div (click)="toggleCollapsed()" [ngClass]="{ collapsed: collapsed }" class="toggle-button">
+        <i class="fa fa-fw fa-angle-double-{{ collapsed ? 'right' : 'left' }}"></i>&nbsp;
+        <span>{{ 'Collapse Sidebar' | translate }}</span>
+    </div>
+</nav>

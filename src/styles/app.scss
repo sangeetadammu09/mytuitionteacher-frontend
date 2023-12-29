@@ -1,0 +1,221 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/scss/bootstrap';
+@import 'spinner';
+@import 'utils';
+@import 'rtl';
+@import 'responsive';
+
+@media print {
+    .breadcrumb {
+        display: none !important;
+    }
+}
+
+.color-success {
+    color: green;
+}
+
+.color-primary {
+    color: blue;
+}
+.color-secondary {
+    color: grey;
+}
+.color-warning {
+    color: yellow;
+}
+.color-danger {
+    color: red;
+}
+
+.custom-toolbar {
+    height: 50px;
+    background-color: #461364;
+    border-radius: 5px;
+    color: white;
+  
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+/* You can add global styles to this file, and also import other style files */
+/* *{
+    font-family: C, sans-serif;
+} */
+
+
+.ngx-pagination .current {
+    padding: 0.1875rem 0.625rem;
+    background: #9b111e !important;
+}
+
+.btn-primary {
+    background-color: #9b111e !important;
+    text-transform: capitalize !important;
+    font-size: 15px;
+}
+
+
+.nav-tabs>.nav-item>.nav-link {
+    color: #070707;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-size: 15px;
+    
+}
+
+.nav-tabs>.nav-item>.nav-link:hover {
+    background-color: transparent;
+}
+
+.nav-tabs>.nav-item>.nav-link.active {
+    background-color: #9b111e;
+    color: #FFFFFF;
+}
+
+.card {
+    border-radius: 12px;
+    box-shadow: 0 10px 10px 6px rgba(0, 0, 0, 0.15);
+}
+
+table tbody tr td {
+    width: 20%;
+    text-align: left!important;
+}
+
+.nav-tabs {
+    border: 0;
+}
+
+
+.btn-primary:hover,.btn-primary:active, .btn-primary:focus  {
+    background-color: #9b111e !important;
+}
+.btn-primary:focus, .btn-primary.active, .btn-primary:active:focus{
+    background-color: #9b111e !important;
+}
+
+
+.fa{
+    cursor: pointer;
+}
+
+    .label-red{
+       color:red;
+       font-size: 20px; 
+    }
+
+    .text-black{
+        text-transform: capitalize;
+        font-size: 18px!important;
+        font-weight: 500!important;
+        font-family: Montserrat,Helvetica Neue,Arial,sans-serif;
+    }
+
+    .p-dropdown{
+        width: 100%
+    }
+
+    .p-inputtext{
+        padding: 0.38rem 0.75rem !important;
+    }
+
+    .invalid-feedback {
+        font-size: 90% !important;
+    }
+
+    .document-body{
+        height:80vh;
+        overflow-y: scroll;
+      }
+
+      /* You can add global styles to this file, and also import other style files */
+.bg-light{
+    background: #9b111e !important;
+    color:#000;
+}
+
+.btn-primary{
+    background-color: #9b111e !important;
+    border-color:  #9b111e !important;
+}
+
+.thead-secondary{
+    background-color: #9b111e !important;
+}
+
+.prduct-table{
+    background-color:white
+}
+
+.table-card{
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    border-radius: 5px 5px;
+    background-color: white;
+}
+
+table tbody tr td{
+    width: 20%;
+    text-align: center;
+}
+
+table thead tr th{
+    width: 20%;
+    text-align: center;
+}
+
+.pagination-custom{
+    border-top: 1px solid rgb(219, 219, 219);
+}
+
+.dropdown-item:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #9b111e;
+}
+
+
+input[type=radio] {
+    margin-top: 10px !important;
+    width: 17px;
+    height: 17px;
+}
+
+.table-responsive{
+    overflow-y: hidden !important;
+    overflow-x: scroll !important;
+}
+
+/* media */
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+   
+ 
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) and (max-width: 767px) {
+   
+ 
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px)and (max-width: 991px) {
+    
+ 
+  
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+   
+ 
+} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+ @media only screen and (min-width: 1200px){  
+ }
+
+
