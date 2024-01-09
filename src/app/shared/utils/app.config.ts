@@ -22,6 +22,7 @@ export const APP_DI_CONFIG: any = {
       form : "parent/form",
       listofteachingjobsbypage : "parent/listofteachingjobsbypage",
       parentbyid : "parent/",
+      checkphoneemail : "parent/check/",
       parentupdate : "parent/update",
       parentdelete : "parent/delete"
     },
@@ -31,6 +32,7 @@ export const APP_DI_CONFIG: any = {
         form : "teacher/form",
         listofteachersbypage : "teacher/listofteachersbypage",
         teacherbyid : "teacher/",
+        checkphoneemail : "teacher/check/",
         teacherupdate : "teacher/update",
         teacherdelete : "teacher/delete",
         jobapply : "teacher/applyjob",

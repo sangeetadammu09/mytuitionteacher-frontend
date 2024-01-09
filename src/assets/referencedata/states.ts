@@ -1,0 +1,26 @@
+export const States = {
+statusCode: 200,
+data: [
+{code: "AP",name: "Andhra Pradesh"},
+{code: "AS",name: "Assam"},
+{code: "BR",name: "Bihar"},
+{code: "CG",name: "Chandigarh"},
+{code: "CH",name: "Chhattisgarh"},
+{code: "DL",name: "Delhi"},
+{code: "GJ",name: "Gujarat"},
+{code: "HR",name: "Haryana"},
+{code: "HP",name: "Himachal Pradesh"},
+{code: "JH",name: "Jharkhand"},
+{code: "KA",name: "Karnataka"},
+{code: "KL",name: "Kerala"},
+{code: "MP",name: "Madhya Pradesh"},
+{code: "MH",name: "Maharashtra"},
+{code: "OR",name: "Odisha"},
+{code: "PB",name: "Punjab"},
+{code: "RJ",name: "Rajasthan"},
+{code: "TN",name: "Tamil Nadu"},
+{code: "TS",name: "Telangana"},
+{code: "UK",name: "Uttarakhand"},
+{code: "UP",name: "Uttar Pradesh"},
+{code: "WB",name: "West Bengal"} ]
+}

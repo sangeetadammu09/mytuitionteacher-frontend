@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../../../shared/services/auth.service';
 import { TeacherService } from '../../../shared/services/teacher.service';
-import { States } from '../../../../assets/states';
+import { States } from '../../../../assets/referencedata/states';
+import { ModeofTeachingArr } from '../../../../assets/referencedata/modeofteaching';
+import { ErrorhandlerService } from '../../../shared/services/errorhandler.service';
+import { AuthService } from '../../../shared/services/auth.service';
 
 declare var $: any;
 
@@ -17,17 +19,22 @@ export class TeacherFormComponent implements OnInit {
 
   addTeacherForm!: FormGroup;
   submitted: boolean = false;
-  modeofTeachingArr: any =[];
+  modeofTeachingArr = ModeofTeachingArr.data;
   modeValueArr: any =[];
   public visible = false;
   statesList = States.data;
+  selectedFile:any;
+  selectedFileName:string = "";
+  modeOfTeachingArrayValue = [];
+
 
    // convenience getter for easy access to form fields
    get t() { return this.addTeacherForm.controls; };
 
 
   constructor(private fb : FormBuilder, private teacherService : TeacherService,  private router : Router,
-    private toastrService : ToastrService, private authService : AuthService){
+    private toastrService : ToastrService, private errHandler : ErrorhandlerService,
+    private authService : AuthService){
 
       this.addTeacherForm = this.fb.group({
         name : ['', Validators.required],
@@ -37,84 +44,135 @@ export class TeacherFormComponent implements OnInit {
         city : ['', Validators.required],
         location : ['', Validators.required],
         qualification : ['', Validators.required],
-        teaching : ['', Validators.required],
+        teachingexp : ['', Validators.required],
         about : [''],
-        modeofteaching : ['', Validators.required],
+        modeofteaching : [, Validators.required],
         subjects : ['', Validators.required],
         timing : ['', Validators.required],
         vehicle : ['', Validators.required],
         preferredlocation : ['', Validators.required],
         charge : ['', [Validators.required, Validators.pattern('^[0-9,]*$')]],
         chargeType : ['', Validators.required],
-        document: []
+        imageurl: [, Validators.required]
       
       })
   }
 
   ngOnInit(): void {
-    this.modeofTeachingArr = [
-      {
-        "id" : 1,
-        "label" : "Home",
-        "value" : "home"
-      },
-      {
-        "id" : 2,
-        "label" : "Online",
-        "value" : "online"
-      },
-      {
-        "id" : 3,
-        "label" : "Student's place",
-        "value" : "studentplace"
-      }
-    ]
+  
+    this.addTeacherForm.patchValue({
+      name : "Sangeeta",
+      email : "sangeeta@gmail.com",
+      contact : "8332895856",
+      state : "Andhra Pradesh",
+      city : "Vizag",
+      location : "Old Dairy Farm", 
+      qualification : "BTech",
+      teachingexp : "0-2 years",
+      about : "I am looking for home tuition jobs",
+      subjects : "maths,science",
+      details : 'looking for teacher',
+      modeofteaching : "home",
+      timing: "5pm",
+      gender : "female",
+      vehicle : "yes",
+      preferredlocation : "mvp colony",
+      charge : "5000",
+      chargeType : "per month",
+      imageurl: ""
+    
+    })
    
   }
 
+  checkPhoneEmail(event:any){
+     console.log(event.target.value);
+     let params= event.target.value;
+     this.teacherService.checkPhoneEmail(params).subscribe({next : (data:any)=>{
+         if(data.status == 409){
+           console.log(data.message) 
+         }
+     },error:((err:any) =>{
+        let error =  this.errHandler.handleError(err);
+        //console.log(error)
+        if(error.status == 401) {
+         this.toastrService.error('Token Expired');
+        }
+        if(error.status == 500){
+         this.toastrService.error('Server Error.Failed to add teacher');
+        }
+        
+     })})
+  }
+
+   removeDuplicates(array){
+    let output = []
+    for(let item of array){ 
+        if(!output.includes(item))
+          output.push(item)
+    }
+    console.log(output)
+    return output
+    }
 
   onModeChange(event:any){
-       var modeValue = event.target.value;
-       this.modeValueArr.push(modeValue);
+      //let temp = this.modeofTeachingArr.map((x:any)=>{ x.value == event.target.value ? x.checked = event.target.checked : x.checked });
+       this.modeofTeachingArr.forEach((x:any)=>{
+        if( x.value == event.target.value){
+          x.checked = event.target.checked
+        }
+      })
+      console.log(this.modeofTeachingArr)  
+  }
+
+
+  onFileSelect(event:any){
+    if (event.target.files && event.target.files[0]) {
+      let file = event.target.files[0];
+      this.selectedFile = file;
+      console.log(this.selectedFile)
+      this.selectedFileName = file.name.replace(/ /g,"_");
+      console.log(this.selectedFileName)
+      
+    }else{
+    }
+   
   }
 
   submitTeacherForm(){
     this.submitted = true;
+    console.log(this.addTeacherForm.value)
     if(this.addTeacherForm.valid){
-      var teacherObject:any = {};
-      teacherObject.tname = this.addTeacherForm.controls['name'].value;
-      teacherObject.temail = this.addTeacherForm.controls['email'].value;
-      teacherObject.contact = this.addTeacherForm.controls['contact'].value;
-      teacherObject.state = this.addTeacherForm.controls['state'].value;
-      teacherObject.city = this.addTeacherForm.controls['city'].value;
-      teacherObject.location = this.addTeacherForm.controls['location'].value;
-      teacherObject.qualification = this.addTeacherForm.controls['qualification'].value;
-      teacherObject.teachingexp = this.addTeacherForm.controls['teaching'].value;
-      teacherObject.timing = this.addTeacherForm.controls['timing'].value;
-      teacherObject.about = this.addTeacherForm.controls['about'].value;
-      teacherObject.modeofteaching = this.modeValueArr;
-      teacherObject.subjects = this.addTeacherForm.controls['subjects'].value;
-      teacherObject.timing = this.addTeacherForm.controls['timing'].value;
-      teacherObject.vehicle = this.addTeacherForm.controls['vehicle'].value;
-      teacherObject.preferredlocation = this.addTeacherForm.controls['preferredlocation'].value;
-      teacherObject.charge = this.addTeacherForm.controls['charge'].value;
-      teacherObject.chargeType = this.addTeacherForm.controls['chargeType'].value;
-      teacherObject.document = this.addTeacherForm.controls['document'].value;
-       console.log(teacherObject,'------------')
-       
-      this.teacherService.createteacher(teacherObject).subscribe((data:any) => {
-        if(data.status == 200){
-          $('#teacherModal').modal('show')
-          this.authService.teacherEmail(teacherObject).subscribe((data:any) => {
-           console.log(data, 'email')
-          });
-          //this.toastrService.success('Your details are saved successfully')
+      let payload = this.addTeacherForm.value;
+      let formData = new FormData();
+      Object.entries(payload).forEach(([key, value]) => {
+        if(key !== 'modeofteaching'){
+          formData.append(key, (value).toString());
         }
         
-      },(error:any) => {
-        console.log(error)
-        this.toastrService.error('Something went wrong')
-      })
+      });
+      formData.append('modeofteaching', JSON.stringify(this.modeofTeachingArr))
+      formData.append('image', this.selectedFile, this.selectedFileName);
+      this.teacherService.createteacher(formData).subscribe({next: (data:any)=>{
+        if(data.status == 200){
+          $('#teacherModal').modal('show')
+          this.authService.teacherEmail(payload).subscribe((data:any) => {
+           console.log(data, 'email')
+          });
+          this.toastrService.success('Your details are saved successfully')
+        }
+        
+      },error:((err:any) =>{
+        let error =  this.errHandler.handleError(err);
+        //console.log(error)
+        if(error.status == 401) {
+         this.toastrService.error('Token Expired');
+        }
+        if(error.status == 500){
+         this.toastrService.error('Server Error.Failed to add teacher');
+        }
+        
+     })})
 
     }else{
       return;

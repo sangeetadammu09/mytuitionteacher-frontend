@@ -19,7 +19,6 @@ export class ParentService {
     return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.login, parent)
   }
 
-
   createparent(parent: any){
     return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.form,parent)
   }
@@ -38,6 +37,10 @@ export class ParentService {
   
   deleteparent(_id:string){
     return this._http.delete<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.parentdelete+_id)
+  }
+
+  checkPhoneEmail(id:string){
+    return this._http.get<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.checkphoneemail+id)
   }
 
    //Helper Methods

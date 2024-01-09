@@ -117,24 +117,8 @@
                     <select class="form-control form-select" id="exampleFormControlSelect1" formControlName="grade"
                     [ngClass]="{'is-invalid':(submitted && p['grade'].errors) ||(p['grade'].errors && p['grade'].touched)}">
                         <option disabled>Select</option>
-                        <option value="nursery">Nursery, Kindergarten</option>
-                        <option value="class 1">class 1</option>
-                        <option value="class 2">class 2</option>
-                        <option value="class 3">class 3</option>
-                        <option value="class 4">class 4</option>
-                        <option value="class 5">class 5</option>
-                        <option value="class 6">class 6</option>
-                        <option value="class 7">class 7</option>
-                        <option value="class 8">class 8</option>
-                        <option value="class 9">class 9</option>
-                        <option value="class 10">class 10</option>
-                        <option value="class 11">class 11</option>
-                        <option value="class 12">class 12</option>
-                        <option value="nursery">Intermediate</option>
-                        <option value="diploma">Diploma</option>
-                        <option value="undergraduate">Undergraduate</option>
-                        <option value="postgraduate">Postgraduate</option>
-                        <option value="other">Other</option>
+                        <option *ngFor="let item of gradeList" [value]="item.name">{{item.name}}</option>
+                        
                        
                       </select>
                       <div *ngIf="(submitted && p['grade'].errors) ||(p['grade'].errors && p['grade'].touched)" class="invalid-feedback">
@@ -148,12 +132,7 @@
                     <select class="form-control form-select" id="exampleFormControlSelect1" formControlName="board"
                     [ngClass]="{'is-invalid':(submitted && p['board'].errors) ||(p['board'].errors && p['board'].touched)}">
                         <option disabled>Select</option>
-                        <option value="CBSE">CBSE</option>
-                        <option value="ICSE">ICSE</option>
-                        <option value="IGCSE">IGCSE</option>
-                        <option value="IB">IB</option>
-                        <option value="STATE">STATE</option>
-                        <option value="Other">Other</option>
+                        <option *ngFor="let item of boardList" [value]="item.name">{{item.name}}</option>
                        
                       </select>
                       <div *ngIf="(submitted && p['board'].errors) ||(p['board'].errors && p['board'].touched)" class="invalid-feedback">
@@ -276,7 +255,12 @@
 
                   <div class="col-md-6">
                     <label for="upload">Upload Document(if required)</label>
-                    <input class="form-control" type="file" id="formFile" formControlName="document"  name="doument">
+                    <input class="form-control" type="file" id="formFile" formControlName="imageurl" 
+                    (change)="onFileSelect($event)"  name="document"
+                    [ngClass]="{'is-invalid':(submitted && p['imageurl'].errors) ||(p['imageurl'].errors && p['imageurl'].touched)}">
+                    <div *ngIf="(submitted && p['imageurl'].errors) ||(p['imageurl'].errors && p['imageurl'].touched)" class="invalid-feedback">
+                      <div *ngIf="p['imageurl'].errors['required']">Document is required</div>
+                    </div>
                   </div>
 
                  <div class="modal-footer mb-3">

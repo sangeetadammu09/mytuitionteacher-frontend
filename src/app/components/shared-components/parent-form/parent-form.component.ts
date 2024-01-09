@@ -4,10 +4,12 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../shared/services/auth.service';
 import { ParentService } from '../../../shared/services/parent.service';
-import { States } from '../../../../assets/states';
+import { States } from '../../../../assets/referencedata/states';
+import { Board } from '../../../../assets/referencedata/board';
+import { Grade } from '../../../../assets/referencedata/grade';
+import { ErrorhandlerService } from '../../../shared/services/errorhandler.service';
 
 declare var $: any;
-
 @Component({
   selector: 'app-parent-form',
   templateUrl: './parent-form.component.html',
@@ -21,6 +23,10 @@ export class ParentFormComponent implements OnInit {
   formattedaddress:any;
   options:any;
   statesList = States.data;
+  boardList = Board.data;
+  gradeList = Grade.data;
+  selectedFile:any;
+  selectedFileName ="";
 
 
    // convenience getter for easy access to form fields
@@ -28,7 +34,7 @@ export class ParentFormComponent implements OnInit {
 
 
   constructor(private fb : FormBuilder, private parentService : ParentService,
-    private authService : AuthService, private router : Router,
+    private authService : AuthService, private router : Router, private errHandler : ErrorhandlerService,
      private toastrService : ToastrService){ 
       this.addParentForm = this.fb.group({
         name : ['', Validators.required],
@@ -49,52 +55,79 @@ export class ParentFormComponent implements OnInit {
         gender : ['', Validators.required],
         budget : ['', [Validators.required, Validators.pattern('^[0-9,]*$')]],
         budgettype : ['', Validators.required],
-        document: []
+        imageurl: [, Validators.required],
       
       })
   }
 
   ngOnInit(): void {
+    this.addParentForm.patchValue({
+      name : "Sangeeta",
+      email : "sangeeta@gmail.com",
+      contact : "8332895856",
+      state : "Andhra Pradesh",
+      city : "Vizag",
+      location : "Old Dairy Farm", 
+      lookingfor : "tutor",
+      grade : "Class 4",
+      board : "CBSE",
+      subjects : "maths,science",
+      details : 'looking for teacher',
+      modeofteaching : "home",
+      days: "5",
+      hours: "1.5hours",
+      time: "5pm",
+      gender : "female",
+      budget : "5000",
+      budgettype : "per month",
+      imageurl: ""
+    
+    })
       
+  }
+
+  onFileSelect(event:any){
+    if (event.target.files && event.target.files[0]) {
+      let file = event.target.files[0];
+      this.selectedFile = file;
+      this.selectedFileName = file.name.replace(/ /g,"_");
+      // this.fileUploadError = '';
+    }
+   
   }
 
   submitParentForm(){
     this.submitted = true;
-    console.log(this.addParentForm.value)
+    console.log(this.addParentForm.value)  
     if(this.addParentForm.valid){
-      var parentObject:any = {};
-      parentObject.pname = this.addParentForm.controls['name'].value;
-      parentObject.pemail = this.addParentForm.controls['email'].value;
-      parentObject.contact = this.addParentForm.controls['contact'].value;
-      parentObject.state = this.addParentForm.controls['state'].value;
-      parentObject.city = this.addParentForm.controls['city'].value;
-      parentObject.location = this.addParentForm.controls['location'].value;
-      parentObject.lookingfor = this.addParentForm.controls['lookingfor'].value;
-      parentObject.grade = this.addParentForm.controls['grade'].value;
-      parentObject.board = this.addParentForm.controls['board'].value;
-      parentObject.subjects = this.addParentForm.controls['subjects'].value;
-      parentObject.details = this.addParentForm.controls['details'].value;
-      parentObject.modeofteaching = this.addParentForm.controls['modeofteaching'].value;
-      parentObject.gender = this.addParentForm.controls['gender'].value;
-      parentObject.days = this.addParentForm.controls['days'].value;
-      parentObject.hours = this.addParentForm.controls['hours'].value;
-      parentObject.time = this.addParentForm.controls['time'].value;
-      parentObject.budget = this.addParentForm.controls['budget'].value;
-      parentObject.budgettype = this.addParentForm.controls['budgettype'].value;
-      parentObject.document = this.addParentForm.controls['document'].value;
-      console.log(parentObject,'------------')
-      this.parentService.createparent(parentObject).subscribe((data:any) => {
-        console.log(data)
+      let payload = this.addParentForm.value;
+      let formData = new FormData();
+      Object.entries(payload).forEach(([key, value]) => {
+        formData.append(key, (value).toString());
+      });
+      formData.append('image', this.selectedFile, this.selectedFileName);
+      this.parentService.createparent(formData).subscribe({next: (data:any)=>{
         if(data.status == 200){
           $('#parentModal').modal('show')
-          this.authService.parentEmail(parentObject).subscribe((data:any) => {
-          //  console.log(data, 'email')    
+          this.authService.parentEmail(payload).subscribe((data:any) => {
+           console.log(data, 'email')
           });
-        } 
-      },(error:any) => {
-        console.log(error)
-        this.toastrService.error('Something went wrong')
-      })
+          this.toastrService.success('Your details are saved successfully')
+        }
+        
+      },error:((err:any) =>{
+        let error =  this.errHandler.handleError(err);
+        //console.log(error)
+        if(error.status == 401) {
+         this.toastrService.error('Token Expired');
+        }
+        if(error.status == 500){
+         this.toastrService.error('Server Error.Failed to add parent');
+        }
+        
+     })})
+     
+      
 
     }else{
       return;
@@ -103,7 +136,6 @@ export class ParentFormComponent implements OnInit {
   }
 
 
- 
   closeParentConfimModal(){
     $('#parentModal').modal('hide')
     this.router.navigate(['/'])

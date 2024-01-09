@@ -40,7 +40,7 @@
 
                 <div class="col-md-6">
                   <label for="email">Email Address<span style="color:red;">*</span></label>
-                    <input type="text" class="form-control" formControlName="email" [ngClass]="{'is-invalid':
+                    <input type="text" class="form-control" formControlName="email" (change)="checkPhoneEmail($event)" [ngClass]="{'is-invalid':
                   (submitted && t['email'].errors) ||(t['email'].errors && t['email'].touched)}" />
                   <div *ngIf="(submitted && t['email'].errors) ||(t['email'].errors && t['email'].touched)" class="invalid-feedback">
                       <div *ngIf="t['email'].errors['required']">Email is required</div>
@@ -50,7 +50,7 @@
               
                  <div class="col-md-6">
                   <label for="phone">Contact<span style="color:red;">*</span></label>
-                  <input type="text" class="form-control" formControlName="contact" [ngClass]="{'is-invalid':
+                  <input type="text" class="form-control" formControlName="contact" (change)="checkPhoneEmail($event)" [ngClass]="{'is-invalid':
                   (submitted && t['contact'].errors) ||(t['contact'].errors && t['contact'].touched)}" />
                   <div *ngIf="(submitted && t['contact'].errors) ||(t['contact'].errors && t['contact'].touched)" class="invalid-feedback">
                       <div *ngIf="t['contact'].errors['required']">Contact is required</div>
@@ -103,19 +103,19 @@
 
                 <div class="col-md-6">
                   <label for="exampleInputEmail1">Teaching Experience<span style="color:red;">*</span></label>
-                  <select class="form-control form-select" id="exampleFormControlSelect1" formControlName="teaching"
-                  [ngClass]="{'is-invalid':(submitted && t['teaching'].errors) ||(t['teaching'].errors && t['teaching'].touched)}">
+                  <select class="form-control form-select" id="exampleFormControlSelect1" formControlName="teachingexp"
+                  [ngClass]="{'is-invalid':(submitted && t['teachingexp'].errors) ||(t['teachingexp'].errors && t['teachingexp'].touched)}">
                       <option disabled>Select</option>
-                      <option>0-2years</option>
-                      <option>2-4years</option>
-                      <option>4-6years</option>
-                      <option>6-8years</option>
-                      <option>8-10years</option>
-                      <option>10-15years</option>
-                      <option>more than 20years</option>
+                      <option value="0-2 years">0-2 years</option>
+                      <option value="2-4 years">2-4 years</option>
+                      <option value="4-6 years">4-6 years</option>
+                      <option value="6-8 years">6-8 years</option>
+                      <option value="8-10 years">8-10 years</option>
+                      <option value="10-15 years">10-15 years</option>
+                      <option value="more than 20years">more than 20 years</option>
                   </select>
-                  <div *ngIf="(submitted && t['teaching'].errors) ||(t['teaching'].errors && t['teaching'].touched)" class="invalid-feedback">
-                    <div *ngIf="t['teaching'].errors['required']">Teaching Experience is required</div>   
+                  <div *ngIf="(submitted && t['teachingexp'].errors) ||(t['teachingexp'].errors && t['teachingexp'].touched)" class="invalid-feedback">
+                    <div *ngIf="t['teachingexp'].errors['required']">Teaching Experience is required</div>   
                 </div>  
                 </div>
 
@@ -140,14 +140,14 @@
                 </div>
 
                 <div class="col-md-6">
-                  <label for="exampleInputEmail1">Mode Of Teaching<span style="color:red;">*</span></label>
-                  <div class="form-group hmt-checkbox" 
-                  [ngClass]="{'is-invalid':(submitted && t['modeofteaching'].errors) ||(t['modeofteaching'].errors && t['modeofteaching'].touched)}">
-                      <div class="form-check form-check-inline" *ngFor="let item of modeofTeachingArr">
-                          <input class="form-check-input" id="modeofteaching" [value]="item.value"
-                           formControlName="modeofteaching" type="checkbox" (change)="onModeChange($event)">
+                  <label for="exampleInputEmail1">Mode Of Teaching<span style="color:red;">*</span></label>   
+                  <div class="form-group hmt-checkbox">
+                     <div class="form-check form-check-inline" *ngFor="let item of modeofTeachingArr">
+                          <input class="form-check-input" [value]="item.value" [checked]="item.checked"
+                          [ngClass]="{'is-invalid':(submitted && t['modeofteaching'].errors) ||(t['modeofteaching'].errors && t['modeofteaching'].touched)}"
+                            type="checkbox" (change)="onModeChange($event)" formArrayName="modeofteaching">
                           <label class="form-check-label" for="inlineCheckbox1">{{item.label}}</label>
-                      </div>
+                      </div>                     
                   </div>
                   
                     <div *ngIf="(submitted && t['modeofteaching'].errors) ||(t['modeofteaching'].errors && t['modeofteaching'].touched)" class="invalid-feedback">
@@ -201,7 +201,7 @@
                   </select>
                   <div *ngIf="(submitted && t['chargeType'].errors) ||(t['chargeType'].errors && t['chargeType'].touched)" class="invalid-feedback">
                     <div *ngIf="t['chargeType'].errors['required']">Type is required</div>  
-               </div>
+                  </div>
                  </div>
 
                 </div>
@@ -215,7 +215,12 @@
 
                 <div class="col-md-6">
                     <label for="formFile" class="form-label">Upload ID Proof</label>
-                    <input class="form-control" type="file" id="formFile" formControlName="document"  name="doument">
+                    <input class="form-control" type="file" id="formFile" (change)="onFileSelect($event)" 
+                    formControlName="imageurl"  name="doument"
+                    [ngClass]="{'is-invalid':(submitted && t['imageurl'].errors) ||(t['imageurl'].errors && t['imageurl'].touched)}">
+                    <div *ngIf="(submitted && t['imageurl'].errors) ||(t['imageurl'].errors && t['imageurl'].touched)" class="invalid-feedback">
+                      <div *ngIf="t['imageurl'].errors['required']">ID proof is required</div>
+                    </div>
                 </div>  
 
                <div class="modal-footer mb-3">

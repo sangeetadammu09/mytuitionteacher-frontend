@@ -39,6 +39,10 @@ export class TeacherService {
   deleteteacher(id:string){
     return this._http.delete<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Teacher.teacherdelete+`/${id}`)
   }
+  
+  checkPhoneEmail(val:string){
+    return this._http.get<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Teacher.checkphoneemail+val)
+  }
 
 
   jobApplied(job:any){
