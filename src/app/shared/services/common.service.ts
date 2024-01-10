@@ -10,8 +10,12 @@ export class CommonService {
   constructor(private http: HttpClient){ }
 
   login(data:any){
-   return this.http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.SuperAdmin.login,data)
+   return this.http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Common.login,data)
   }
+
+  register(data:any){
+    return this.http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Common.register,data)
+   }
 
 
 }

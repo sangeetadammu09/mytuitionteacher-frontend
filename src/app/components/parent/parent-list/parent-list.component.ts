@@ -7,12 +7,11 @@ import { ParentService } from '../../../shared/services/parent.service';
 import { TeacherService } from '../../../shared/services/teacher.service';
 
 @Component({
-  selector: 'app-teacher-jobs',
-  templateUrl: './teacher-jobs.component.html',
-  styleUrls: ['./teacher-jobs.component.css']
+  selector: 'app-parent-list',
+  templateUrl: './parent-list.component.html',
+  styleUrls: ['./parent-list.component.scss']
 })
-export class TeacherJobsComponent implements OnInit {
-
+export class ParentListComponent {
   listofTeachingJobs: any =[];
   applyJobForm!: FormGroup;
   submitted: boolean = false;
@@ -117,3 +116,4 @@ export class TeacherJobsComponent implements OnInit {
  
 
 }
+

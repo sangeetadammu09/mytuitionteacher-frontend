@@ -2,16 +2,13 @@
 .card0 {
     box-shadow: 0px 4px 6px 0px #757575;
     margin: auto;
-    width: 50%;
+    width: 40%;
 }
 
 .loginbtn{
     margin :auto;
     display: block;
 }
-
-
-
 
 @media screen and (max-width: 991px) {
     .logo {

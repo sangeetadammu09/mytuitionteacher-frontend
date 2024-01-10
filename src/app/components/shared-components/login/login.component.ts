@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -7,6 +7,7 @@ import { MasterService } from '../../../../app/shared/services/master.service';
 import { CommonService } from '../../../../app/shared/services/common.service';
 import { decodeToken } from '../../../../app/shared/utils/token';
 import { AdminMenuList } from '../../../../assets/menus/menu';
+import { ErrorhandlerService } from '../../../../app/shared/services/errorhandler.service';
 
 
 @Component({
@@ -21,9 +22,13 @@ export class LoginComponent implements OnInit {
    decodedToken!:any;
    loginText = "Login";
    menuList = AdminMenuList;
+   togglePasswordIcon: boolean = false;
+   @ViewChild('inputpassword') inputpassword!:ElementRef;
 
-  constructor( private _router: Router, private _fb: FormBuilder,private _toastrService: ToastrService, 
-    private _commonService: CommonService, private masterService: MasterService) { 
+  constructor( private _router: Router, private _fb: FormBuilder, 
+    private _commonService: CommonService, private masterService: MasterService,
+    private errHandler : ErrorhandlerService,
+    private _toastrService : ToastrService) { 
      this.loginForm = this._fb.group({
         email : ['', Validators.required],
         password : ['', Validators.required]
@@ -31,9 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   get f() {return this.loginForm.controls;}
 
@@ -41,36 +44,50 @@ export class LoginComponent implements OnInit {
     this._router.navigate(['/register'])
   }
 
+  togglePassword(){
+    this.togglePasswordIcon = !this.togglePasswordIcon;
+    if(this.togglePasswordIcon){ 
+      this.inputpassword.nativeElement.setAttribute("type", 'text');
+    }else{
+      this.inputpassword.nativeElement.setAttribute("type", 'password');
+    }
+  
+  }
+
   login(){
     this.submitted = true;
-    this._router.navigate(['/dashboard/parent-details']);
-    this.masterService.sendMenu(this.menuList);
-   
-    // if(this.loginForm.valid){
-    //   localStorage.clear();
-    //   let loginFormData :any ={};
-    //   loginFormData.email=  this.loginForm.controls['email'].value;
-    //   loginFormData.password = this.loginForm.controls['password'].value;
-
-    //   this._commonService.login(loginFormData).subscribe((data:any) => {
-    //     console.log(data)
-    //     if(data.status == 200){
-    //       this.decodedToken = decodeToken(data.token);
-    //       localStorage.setItem('userToken',data.token);
-    //       var loggedUserDetails = this.decodedToken.admin
-    //       this._toastrService.success('Logged in successfully!');
-    //       this.masterService.sendUserDetails(loggedUserDetails)
-    //       this._router.navigate(['/admin/listofteachers'])
-    //     }else{
-    //       this._toastrService.info('Logging in. Please hold on!');
-    //     }
-    //   }, (error:HttpErrorResponse)=>{
-    //     this._toastrService.error(error.error.message)
-    //   })
+    this.masterService.sendMenu(this.menuList); 
+    if(this.loginForm.valid){
+      localStorage.clear();
+      this._commonService.login(this.loginForm.value).subscribe({next: (data:any)=>{
+        if(data.status == 200){
+        //  this.decodedToken = decodeToken(data.token);
+          console.log(this.decodedToken,'token')
+          localStorage.setItem('userToken',data.token);
+          let loggedUserDetails = data.loggedcommon;
+          this._toastrService.success('Logged in successfully!');
+          this.masterService.sendUserDetails(loggedUserDetails)
+          // navigation to specific users
+          loggedUserDetails.role == 'parent' ? this._router.navigate(['/dashboard/parent/my-profile']):
+          loggedUserDetails.role == 'teacher' ? this._router.navigate(['/dashboard/teacher/my-profile']):
+          loggedUserDetails.role == 'superadmin' ? this._router.navigate(['/dashboard/superadmin/my-profile']):
+          loggedUserDetails.role == 'subadmin' ? this._router.navigate(['/dashboard/subadmin/my-profile']): undefined;
+        }  
+      },error:((err:any) =>{
+        let error =  this.errHandler.handleError(err);
+        //console.log(error)
+        if(error.status == 401) {
+         this._toastrService.error('Token Expired');
+        }
+        if(error.status == 500){
+         this._toastrService.error('Server Error.Failed to login');
+        }
+        
+     })})
        
-    // }else{
-    //   console.log('invalid login')
-    // }
+    }else{
+      console.log('invalid login')
+    }
   }
 
 }
