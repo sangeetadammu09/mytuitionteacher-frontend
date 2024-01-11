@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from '../../../../app/shared/services/common.service';
 import { ErrorhandlerService } from '../../../../app/shared/services/errorhandler.service';
-import { MasterService } from '../../../../app/shared/services/master.service';
 
 @Component({
   selector: 'app-register',
@@ -24,16 +23,19 @@ export class RegisterComponent implements OnInit {
   @ViewChild('inputpassword') inputpassword!:ElementRef;
 
   constructor( private _router: Router, private _fb: FormBuilder, private _commonService: CommonService, 
-               private masterService: MasterService,private errHandler : ErrorhandlerService,private _toastrService : ToastrService) { 
+               private errHandler : ErrorhandlerService,private _toastrService : ToastrService) { 
      this.registerForm = this._fb.group({
         firstname : ['', Validators.required],
         lastname : ['', Validators.required],
         email : ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
         mobile : ['', [Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
         role : ['', Validators.required],
+        location: ['empty', Validators.required],
+        sociallinks:  ['empty', Validators.required],
         password : ['', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
         cpass : ['', Validators.required],    
-        isActive : [true]
+        isActive : [true],
+        //imageurl: [],
      })
 
   }
@@ -58,7 +60,13 @@ export class RegisterComponent implements OnInit {
   register(){
     this.submitted = true;
       if(this.registerForm.valid){
-        this._commonService.register(this.registerForm.value).subscribe({next: (data:any)=>{
+        let payload = this.registerForm.value;
+        let formData = new FormData();
+        Object.entries(payload).forEach(([key, value]) => {
+          formData.append(key, (value).toString());
+        });
+    //  formData.append('image', this.selectedFile, this.selectedFileName);
+        this._commonService.register(formData).subscribe({next: (data:any)=>{
           if(data.status == 200){
             this._toastrService.success('Registered successfully!');
             this._router.navigate(['/login'])

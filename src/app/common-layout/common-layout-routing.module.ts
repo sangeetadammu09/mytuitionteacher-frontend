@@ -22,8 +22,7 @@ const routes: Routes = [
             { path: 'teaching-jobs', component : ParentListComponent},
             { path: 'login', component: LoginComponent},
             { path: 'register', component: RegisterComponent},
-            { path: 'teacher-form', component: TeacherFormComponent},
-            { path: 'parent-form', component: ParentFormComponent}
+           
             
         ]
     }

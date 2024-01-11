@@ -1,0 +1,14 @@
+<div class="row custom-toolbar mt-3 mb-3">
+    <div class="col-12">
+        <h5>{{pagetitle}}</h5>
+    </div>
+    <div class="col-12">
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb" >
+              <li class="breadcrumb-item" *ngFor="let item of breadcrumbLabel"><a href="javascript:void(0)">{{item}}</a></li>
+              <!-- <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
+              <li class="breadcrumb-item active" aria-current="page">User Profile</li> -->
+            </ol>
+          </nav>
+    </div>
+</div>

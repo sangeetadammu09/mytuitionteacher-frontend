@@ -27,8 +27,10 @@ $topnav-background-color: #9b111e;
             background: $topnav-background-color;
             border: 0;
             border-radius: 0;
-            color: #999;
+            color: white;
             text-decoration: none;
+            padding: 10px;
+            margin-top: 10px;
 
             .fa {
                 margin-right: 10px;
@@ -37,7 +39,7 @@ $topnav-background-color: #9b111e;
 
         a:hover {
             background: darken($topnav-background-color, 5%);
-            color: #fff;
+            color: black;
         }
 
         a.router-link-active {

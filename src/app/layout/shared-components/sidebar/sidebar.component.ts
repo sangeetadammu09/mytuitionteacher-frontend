@@ -13,7 +13,7 @@ export class SidebarComponent implements OnInit {
     collapsed: boolean;
     showMenu: string;
     pushRightClass: string;
-    menuList = JSON.parse(localStorage.getItem("menus"));
+    menuList = JSON.parse(localStorage.getItem("menu"));
     staticMenuList = [];
     adminMenuList: any[] = [];
 
@@ -33,24 +33,24 @@ export class SidebarComponent implements OnInit {
         this.collapsed = false;
         this.showMenu = '';
         this.pushRightClass = 'push-right';
-        this.getMenusAfterLogin();
+       // this.getMenusAfterLogin();
     }
 
     getMenusAfterLogin() {
         let temp = this.masterService.getMenu();
         this.menuList = temp.data;
         console.log(this.menuList)
-        //     if (this.menuList.length > 0) {
-        //         this.menuList.forEach((e: any) => {
-        //             this.staticMenuList.forEach((f: any) => {
-        //                 if (e.id == f.id) {
-        //                     this.adminMenuList.push(f)
-        //                 }
-        //             })
-        //         });
-        //     } else {
-        //         this.toastrService.error("No menus Found")
-        //     }
+            if (this.menuList.length > 0) {
+                this.menuList.forEach((e: any) => {
+                    this.staticMenuList.forEach((f: any) => {
+                        if (e.id == f.id) {
+                            this.adminMenuList.push(f)
+                        }
+                    })
+                });
+            } else {
+                this.toastrService.error("No menus Found")
+            }
     }
 
     eventCalled() {

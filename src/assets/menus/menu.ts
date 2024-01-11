@@ -3,14 +3,22 @@ export const ParentMenuList = {
     data: [
         {
             id: 0,
-            name: 'My Details',
+            name: 'My Profile',
             icon : 'fa-user',
             isActive: true,
-            url: 'mydetails',
+            url: 'my-profile',
             subMenus: []
         },
         {
             id: 1,
+            name: 'Tution Form',
+            icon : 'fa-pencil',
+            isActive: true,
+            url: 'parent-form',
+            subMenus: []
+        },
+        {
+            id: 2,
             name: 'Teachers List',
             icon : 'fa-chalkboard',
             isActive: true,
@@ -18,19 +26,19 @@ export const ParentMenuList = {
             subMenus: []
         },
         {
-            id: 2,
+            id: 3,
             name: 'My Post History',
             icon : 'fa-user',
             isActive: true,
-            url: 'myhistory',
+            url: 'parent-history',
             subMenus: []
         },
         {
-            id: 3,
+            id: 4,
             name: 'Feedback Form',
             icon : 'fa-user',
             isActive: true,
-            url: 'feedback-form',
+            url: 'parent-feedback',
             subMenus: []
         },
           
@@ -44,40 +52,48 @@ export const TeacherMenuList = {
     data: [
         {
             id: 0,
-            name: 'My Details',
+            name: 'My Profile',
             icon : 'fa-user',
             isActive: true,
-            url: 'mydetails',
+            url: 'my-profile',
             subMenus: []
         },
         {
-            id: 0,
+            id: 1,
+            name: 'Teacher Form',
+            icon : 'fa-user',
+            isActive: true,
+            url: 'teacher-form',
+            subMenus: []
+        },
+        {
+            id: 2,
             name: 'Tuitions List',
             icon : 'fa-chalkboard',
             isActive: true,
-            url: 'teachers-list',
+            url: 'tuitions-list',
             subMenus: []
         },
         {
-            id: 0,
+            id: 3,
             name: 'My Job History',
             icon : 'fa-user',
             isActive: true,
-            url: 'myhistory',
+            url: 'teacher-history',
             subMenus: []
         },
         {
-            id: 0,
+            id: 4,
             name: 'Feedback Form',
             icon : 'fa-user',
             isActive: true,
-            url: 'feedback-form',
+            url: 'teacher-feedback',
             subMenus: []
         },
           
 
     ],
-    message: "Parent Menu fetched successfully",
+    message: "Teacher Menu fetched successfully",
 };
 
 export const AdminMenuList = {
@@ -85,46 +101,87 @@ export const AdminMenuList = {
     data: [
         {
             id: 0,
-            name: 'My Details',
+            name: 'My Profile',
             icon : 'fa-user',
             isActive: true,
-            url: 'mydetails',
+            url: 'my-profile',
             subMenus: []
         },
         {
-            id: 0,
+            id: 1,
             name: 'Parent List',
+            icon : 'fa-chalkboard',
+            isActive: true,
+            url: 'tuitions-list',
+            subMenus: []
+        },
+        {
+            id: 2,
+            name: 'Teacher List',
+            icon : 'fa-user',
+            isActive: true,
+            url: 'teachers-list',
+            subMenus: []
+        },
+        {
+            id: 3,
+            name: 'Admins List',
+            icon : 'fa-user',
+            isActive: true,
+            url: 'admins-list',
+            subMenus: []
+        },
+        {
+            id: 4,
+            name: 'List of Payments',
+            icon : 'fa-money',
+            isActive: true,
+            url: 'payment-list',
+            subMenus: []
+        },       
+
+    ],
+    message: "Admin Menu fetched successfully",
+};
+
+export const SubAdminMenuList = {
+    status: 200,
+    data: [
+        {
+            id: 0,
+            name: 'My Profile',
+            icon : 'fa-user',
+            isActive: true,
+            url: 'my-profile',
+            subMenus: []
+        },
+        {
+            id: 1,
+            name: 'Teachers List',
             icon : 'fa-chalkboard',
             isActive: true,
             url: 'teachers-list',
             subMenus: []
         },
         {
-            id: 0,
-            name: 'Teacher List',
+            id: 2,
+            name: 'Tuitions List',
             icon : 'fa-user',
             isActive: true,
-            url: 'myhistory',
+            url: 'tuitions-list',
             subMenus: []
         },
         {
-            id: 0,
-            name: 'List of Successful Tuitions',
+            id: 3,
+            name: 'Payment List',
             icon : 'fa-user',
             isActive: true,
-            url: 'feedback-form',
+            url: 'sub-payment-list',
             subMenus: []
         },
-        {
-            id: 0,
-            name: 'Feedback Form',
-            icon : 'fa-user',
-            isActive: true,
-            url: 'feedback-form',
-            subMenus: []
-        },
+       
           
 
     ],
-    message: "Parent Menu fetched successfully",
+    message: "Sub Admin Menu fetched successfully",
 };

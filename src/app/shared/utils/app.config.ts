@@ -8,6 +8,8 @@ export const APP_DI_CONFIG: any = {
     Common:{
       login : "login",
       register : "register", 
+      userbyid : "user/",
+      update : "user/update/",
     },
     SubAdmin:{
       login : "subadmin/login",
@@ -20,7 +22,7 @@ export const APP_DI_CONFIG: any = {
       login : "parent/login",
       register : "parent/register",
       form : "parent/form",
-      listofteachingjobsbypage : "parent/listofteachingjobsbypage",
+      listofteachingjobs : "parent/listofteachingjobsbypage",
       parentbyid : "parent/",
       checkphoneemail : "parent/check/",
       parentupdate : "parent/update",

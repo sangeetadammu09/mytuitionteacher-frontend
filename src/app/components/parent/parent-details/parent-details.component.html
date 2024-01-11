@@ -1,1 +1,225 @@
-<p>parent-details works!</p>
+<div class="container">
+    <div class="row">
+        <app-page-title [pagetitle]="title" [breadcrumbLabel]="breadcrumb"></app-page-title>
+    </div>
+    <div class="row gutters-sm">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center">
+                        <img [src]="parentData ? parentData.imageurl : '../../../../assets/images/noimageavailable.png'" 
+                          alt="Parent Image" class="rounded-circle"
+                            width="150" />
+                        <div class="mt-3" *ngIf="parentData">
+                            <h4>{{parentData.firstname}} {{parentData.lastname}}</h4>
+                            <h5 class="text-secondary  mb-1">{{parentData.role | titlecase}}</h5>
+                            <p class="text-muted font-size-sm">{{parentData.location == "empty" ? "" : parentData.location}}</p>
+                        </div>
+                        <div class="mt-3">
+                            <div class="col-12">
+                                <svg xmlns="http://www.w3.org/2000/svg>" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info">
+                                    <path
+                                        d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                    </path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg>" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="feather feather-instagram mr-2 icon-inline text-danger">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg>" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="feather feather-facebook mr-2 icon-inline text-primary">
+                                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-8">
+            <div class="card mb-3" *ngIf="parentData">
+                <div class="card-body" *ngIf="!isEdited">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Name</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">{{parentData.firstname}} {{parentData.lastname}}</div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Email</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">{{parentData.email}}</div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Phone</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">+91-{{parentData.mobile}}</div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Address</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">{{parentData.location == "empty" ? "" : parentData.location}}</div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a class="btn btn-primary me-3" (click)="isEdited = true">Edit</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" *ngIf="isEdited">
+                    <form class="form-inline" [formGroup]="parentForm" (ngSubmit)="updateDetails()">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">First Name<span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" formControlName="firstname" name="firstname"
+                                    [ngClass]="{'is-invalid':(submitted && f['firstname'].errors) ||(f['firstname'].errors && f['firstname'].touched) }">
+                                    <div *ngIf="(submitted && f['firstname'].errors) ||(f['firstname'].errors && f['firstname'].touched)"
+                                    class="invalid-feedback">
+                                     <div *ngIf="f['firstname'].errors['required']">First Name is required
+                                     </div>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Last Name<span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" formControlName="lastname" name="lastname"
+                                    [ngClass]="{'is-invalid':(submitted && f['firstname'].errors) ||(f['firstname'].errors && f['firstname'].touched) }">
+                                    <div *ngIf="(submitted && f['firstname'].errors) ||(f['firstname'].errors && f['firstname'].touched)"
+                                    class="invalid-feedback">
+                                     <div *ngIf="f['firstname'].errors['required']">First Name is required
+                                     </div>
+                                  </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Email<span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" formControlName="email" name="email"
+                                    [ngClass]="{'is-invalid':(submitted && f['lastname'].errors) ||(f['lastname'].errors && f['lastname'].touched) }">
+                                    <div *ngIf="(submitted && f['lastname'].errors) ||(f['lastname'].errors && f['lastname'].touched)"
+                                    class="invalid-feedback">
+                                     <div *ngIf="f['lastname'].errors['required']">Last Name is required
+                                     </div>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Mobile<span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" formControlName="mobile" name="mobile"
+                                    [ngClass]="{'is-invalid':(submitted && f['mobile'].errors) ||(f['mobile'].errors && f['mobile'].touched) }">
+                                    <div *ngIf="(submitted && f['mobile'].errors) ||(f['mobile'].errors && f['mobile'].touched)"
+                                    class="invalid-feedback">
+                                     <div *ngIf="f['mobile'].errors['required']">Mobile is required
+                                     </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Role<span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control field-disabled" formControlName="role" name="role" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Location<span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" formControlName="location" name="location"
+                                    [ngClass]="{'is-invalid':(submitted && f['location'].errors) ||(f['location'].errors && f['location'].touched) }">
+                                    <div *ngIf="(submitted && f['location'].errors) ||(f['location'].errors && f['location'].touched)"
+                                    class="invalid-feedback">
+                                     <div *ngIf="f['location'].errors['required']">Location is required
+                                     </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group mb-3" *ngIf="!parentData.imageurl">
+                                    <label class="form-label">Upload Picture</label>
+                                    <input type="file" class="form-control" formControlName="imageurl"
+                                     name="imageurl" (change)="onFileSelect($event)"
+                                     [ngClass]="{'is-invalid':(submitted && f['imageurl'].errors) ||(f['imageurl'].errors && f['imageurl'].touched) }">
+                                    <div *ngIf="(submitted && f['imageurl'].errors) ||(f['imageurl'].errors && f['imageurl'].touched)"
+                                    class="invalid-feedback">  
+                                     <div *ngIf="f['imageurl'].errors['required']">Picture is required
+                                     </div>
+                                  </div>
+                                </div>
+                                <!-- <div class="mb-3" *ngIf="parentData.imageurl">                                   
+                                        <a class="custom-hyperlink" (click)="addNewSocialGroup()">Reupload Picture</a>
+                                </div> -->
+                               
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 mb-3">
+                                <a class="custom-hyperlink" (click)="addNewSocialGroup()">Add SocialLinks</a>
+                            </div>
+                            <ng-container *ngFor="let item of parentForm.get('socialLinks').controls;let i = index"
+                                [formGroup]="item">
+                                <div class="col-lg-9 col-sm-9">
+                                    <div class="form-group mb-3">
+                                        <label for="exampleInputName2">Name<span style="color:red;">*</span></label>
+                                        <!-- <input type="text" class="form-control" formControlName="name" name="name"> -->
+                                        <select class="form-select" name="socialMedia" id="socialMedia" formControlName="name">
+                                            <option value="" disabled>Select</option>
+                                            <option *ngFor="let item of socialMediaList" [value]="item.name">{{item.label}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="exampleInputName2">Url<span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" formControlName="url" name="url">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-3">
+                                    <a class="btn btn-primary mt-remove" (click)="deleteSocialGroup(i)"><i
+                                            class="fa fa-trash"></i></a>
+                                </div>
+                                <hr/>
+                            </ng-container>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button  type="submit" class="btn btn-primary me-3">Update</button>
+                                <a class="btn btn-primary" (click)="isEdited = false">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

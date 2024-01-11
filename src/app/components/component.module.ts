@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../shared/utils/shared.module';
 import { AboutComponent } from './shared-components/about/about.component';
@@ -23,6 +22,8 @@ import { AdminDetailsComponent } from './superadmin/admin-details/admin-details.
 import { PaymentDetailsComponent } from './superadmin/payment-details/payment-details.component';
 import { SubadminDetailsComponent } from './subadmin/subadmin-details/subadmin-details.component';
 import { SubadminPaymentComponent } from './subadmin/subadmin-payment/subadmin-payment.component';
+import { AdminListComponent } from './superadmin/admin-list/admin-list.component';
+import { PageTitleComponent } from './shared-components/page-title/page-title.component';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { SubadminPaymentComponent } from './subadmin/subadmin-payment/subadmin-p
     HomeComponent,ContactComponent,AboutComponent,LoginComponent,RegisterComponent,
     RegisteredTutorsComponent,TeacherFormComponent,ParentFormComponent,ParentDetailsComponent, TeacherListComponent, 
     ParentHistoryComponent, ParentFeedbackComponent, TeacherdetailsComponent, 
-    TeacherfeedbackComponent, TeacherhistoryComponent, ParentListComponent, AdminDetailsComponent, PaymentDetailsComponent, SubadminDetailsComponent, SubadminPaymentComponent
+    TeacherfeedbackComponent, TeacherhistoryComponent, ParentListComponent, AdminDetailsComponent, PaymentDetailsComponent, SubadminDetailsComponent, SubadminPaymentComponent, AdminListComponent, PageTitleComponent
   ]
 })
 

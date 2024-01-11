@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,6 +9,7 @@ import { AuthGuard } from './shared';
 import { LanguageTranslationModule } from './shared/modules/language-translation/language-translation.module';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthInterceptor } from './shared/utils/auth.interceptor';
 //import { CarouselModule } from 'ngx-owl-carousel-o';
 
 
@@ -28,7 +29,11 @@ import { ToastrModule } from 'ngx-toastr';
        
     ],
     declarations: [AppComponent],
-    providers: [AuthGuard],
+    providers: [{
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true
+   }],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

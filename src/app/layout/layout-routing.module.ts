@@ -11,6 +11,9 @@ import { ParentListComponent } from '../components/parent/parent-list/parent-lis
 import { TeacherdetailsComponent } from '../components/teacher/teacherdetails/teacherdetails.component';
 import { AdminDetailsComponent } from '../components/superadmin/admin-details/admin-details.component';
 import { PaymentDetailsComponent } from '../components/superadmin/payment-details/payment-details.component';
+import { AdminListComponent } from '../components/superadmin/admin-list/admin-list.component';
+import { ParentFormComponent } from '../components/parent/parent-form/parent-form.component';
+import { TeacherFormComponent } from '../components/teacher/teacher-form/teacher-form.component';
 
 const routes: Routes = [
     {
@@ -19,9 +22,10 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'my-profile', pathMatch: 'prefix' },
             { path : 'my-profile', component: ParentDetailsComponent},
-            { path : 'teacher-list', component: TeacherListComponent}, // list of teachers available
+            { path : 'teachers-list', component: TeacherListComponent}, // list of teachers available
             { path : 'parent-history', component: ParentHistoryComponent},
             { path : 'parent-feedback', component: ParentFeedbackComponent},
+            { path: 'parent-form', component: ParentFormComponent}
 
         ]
     },
@@ -31,9 +35,10 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'my-profile', pathMatch: 'prefix' },
             { path : 'my-profile', component: TeacherdetailsComponent},
-            { path : 'tuition-list', component: ParentListComponent}, // list of tuitions jobs available
+            { path : 'tuitions-list', component: ParentListComponent}, // list of tuitions jobs available
             { path : 'teacher-history', component: TeacherhistoryComponent},
             { path : 'teacher-feedback', component: TeacherfeedbackComponent},
+            { path: 'teacher-form', component: TeacherFormComponent}
 
         ]
     },
@@ -45,7 +50,7 @@ const routes: Routes = [
             { path : 'my-profile', component: AdminDetailsComponent},
             { path : 'tuition-list', component: ParentListComponent}, // list of tuitions jobs available
             { path : 'teacher-list', component: TeacherhistoryComponent},
-           // { path : 'subadmin-list', component: S},
+            { path : 'admins-list', component: AdminListComponent},
             { path : 'payment-list', component: PaymentDetailsComponent},
 
         ]
