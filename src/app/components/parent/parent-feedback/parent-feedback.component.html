@@ -1,1 +1,145 @@
-<p>parent-feedback works!</p>
+<div class="container-fluid">
+    <div class="row">
+      <app-page-title [pagetitle]="title" [breadcrumbLabel]="breadcrumb"></app-page-title>
+    </div>
+      <div class="row">
+        <div class="col-md-9">
+          <h1 class="hmt-parent">List of Feedbacks</h1>  
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary justify-content-end" data-bs-toggle="modal" data-bs-target="#feedbackModal" >Add Feedback</button> 
+        </div>
+      </div>
+      <div class="row">
+        <div class="table-responsive  py-3" *ngIf="feedbackList.length > 0">
+          <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col" *ngFor="let item of tableColumns">{{item}}</th>            
+              </tr>
+            </thead>
+            <tbody *ngFor="let item of feedbackList| paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems } ; let i = index">
+              <tr>
+                <td  scope="col">{{itemsPerPage*(currentPage-1)+i+1}}</td>
+                <td  scope="col">{{item.createdAt | date:'dd/MM/yyyy'}}</td>
+                <td>{{item.firstname}}</td>
+                <td>{{item.teacher}} {{item.state}}</td>
+                <td>{{item.tuition}}</td>                
+                <td>{{item.rating}}</td>  
+                <td>{{item.comment}}</td> 
+                <td rowspan="3">
+                  <span data-bs-toggle="modal" data-bs-target="#shortlistTeacherModal" (click)="openShortListTeacherModal(item)"  >
+                    <img src="../../../../assets/images/icons/user_checked_icon.png" alt="ShortList Teacher">
+                  </span>  
+                </td> 
+                       
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row w-100 p-2"  *ngIf="feedbackList.length > 0">
+          <div class="col-6">
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <label class="control-label" for="noOfRows">No. of Entries</label>
+              </div>
+              <div class="col-auto">
+                <select name="noOfRows" (change)="onTableSizeChange($event)" class="form-select form-select-sm">
+                  <option *ngFor="let size of tableSize" [ngValue]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 d-flex justify-content-end">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" [responsive]="true"
+              (pageChange)="handlePageChange($event)"></pagination-controls>
+          </div>
+        </div>
+        <div class="col-12 mb-3" *ngIf="feedbackList.length == 0">
+          <p class="text-center">No Feedback Found</p>
+        </div>
+      </div>
+   </div>
+  
+   <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Feedback</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="row parentForm" [formGroup]="addFeedbackForm" (ngSubmit)="submitFeedback()">
+            <div class="col-md-6">
+                <label for="name">First Name<span style="color:red;">*</span></label>
+                <input type="text" class="form-control field-disabled" formControlName="firstname" readonly />
+              </div>
+            <div class="col-md-6">
+                <label for="name">Last Name<span style="color:red;">*</span></label>
+                <input type="text" class="form-control field-disabled" formControlName="lastname" readonly />
+            </div>
+            <div class="col-md-6">
+                <label for="email">Email<span style="color:red;">*</span></label>
+                  <input type="text" class="form-control field-disabled" formControlName="email" readonly/>           
+              </div>
+         
+              <div class="col-md-6">
+                <label for="phone">Contact<span style="color:red;">*</span></label>
+                <input type="text" class="form-control field-disabled" formControlName="contact" readonly/>
+                
+              </div>
+  
+              <div class="col-md-6">
+                <label for="location">Tuitions<span style="color:red;">*</span></label>
+                <select class="form-control form-select" formControlName="tuition"
+                [ngClass]="{'is-invalid':(submitted && p['tuition'].errors) ||(p['tuition'].errors && p['tuition'].touched)}">
+                    <option selected>Select</option>
+                    <option *ngFor="let item of tuitionList" [value]="item.name">{{item.name}}</option>
+                </select>
+                <div *ngIf="(submitted && p['tuition'].errors) ||(p['tuition'].errors && p['tuition'].touched)" class="invalid-feedback">
+                    <div *ngIf="p['tuition'].errors['required']">Tuition is required</div>
+               </div>
+              </div>
+  
+  
+              <div class="col-md-6">
+                <label for="location">Teacher<span style="color:red;">*</span></label>
+                <input type="text" class="form-control" formControlName="teacher"  [ngClass]="{'is-invalid':
+                (submitted && p['teacher'].errors) ||(p['teacher'].errors && p['teacher'].touched)}" />
+                <div *ngIf="(submitted && p['teacher'].errors) ||(p['teacher'].errors && p['teacher'].touched)" class="invalid-feedback">
+                    <div *ngIf="p['teacher'].errors['required']">Teacher is required</div>
+               </div>
+              </div>
+    
+              <div class="col-md-6">
+                <label for="location">Rating<span style="color:red;">*</span></label>
+                <input type="text" class="form-control" formControlName="rating"  [ngClass]="{'is-invalid':
+                (submitted && p['rating'].errors) ||(p['rating'].errors && p['rating'].touched)}" />
+                <div *ngIf="(submitted && p['rating'].errors) ||(p['rating'].errors && p['rating'].touched)" class="invalid-feedback">
+                    <div *ngIf="p['rating'].errors['required']">Rating is required</div>                  
+               </div>
+              </div>
+            
+              <div class="col-md-6">
+                <label for="location">Comment</label>
+                <textarea type="text-area" class="form-control" rows="5" id="comment" formControlName="comment"
+                [ngClass]="{'is-invalid': (submitted && p['comment'].errors) ||(p['comment'].errors && p['comment'].touched)}">
+                <div *ngIf="(submitted && p['comment'].errors) ||(p['comment'].errors && p['comment'].touched)" class="invalid-feedback">
+                    <div *ngIf="p['comment'].errors['required']">Comment is required</div>                  
+               </div>
+                </textarea>
+              </div>         
+  
+             <div class="modal-footer mb-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+             </div>
+  
+           </form>
+        </div>
+      </div>
+    </div>
+  </div>

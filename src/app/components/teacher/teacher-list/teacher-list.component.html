@@ -1,1 +1,109 @@
-<p>teacher-list works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <app-page-title [pagetitle]="title" [breadcrumbLabel]="breadcrumb"></app-page-title>
+    </div>
+    <div class="row pt-3">
+        <div class="col-lg-8">
+          <h4>List of Registered Teachers</h4>
+        </div>
+        <div class="col-lg-4">
+          <div class="input-group">
+            <input  class="form-control border-secondary border-right-0 rounded-0" type="search" [(ngModel)]="filterText"
+            placeholder="Search By Teacher Name" (change)="searchTeacher(filterText)">
+          </div>
+        </div>
+        
+      </div>
+      <div class="table-responsive  py-3" *ngIf="teacherList.length > 0">
+        <table class="table table-bordered table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">S No.</th>
+              <th scope="col">Reg. Date</th>
+              <th scope="col">Name</th>
+              <th scope="col">Location</th>
+              <th scope="col">Qualification</th>
+              <th scope="col">Mode</th>
+              <th scope="col">Exp.</th>
+              <th scope="col">Subjects</th>    
+              <th scope="col">Charge</th>
+              <th scope="col">Vehicle</th>
+              <th scope="col">Action</th>
+              
+            </tr>
+          </thead>
+          <tbody *ngFor="let item of teacherList| paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems } ; let i = index">
+            <tr>
+              <td  scope="col">{{itemsPerPage*(currentPage-1)+i+1}}</td>
+              <td  scope="col">{{item.createdAt | date:'dd/MM/yyyy'}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.city}} {{item.state}}</td>
+              <td>{{item.qualification}}</td> 
+              <td>
+                <ng-container *ngFor="let x of item.modeofteaching">
+                    <span>{{x.label}}, </span> 
+                  </ng-container>
+              </td>                
+              <td>{{item.teachingexp}}</td>  
+              <td>{{item.subjects}}</td>
+              <td>{{item.charge}} {{item.chargeType}}</td>
+              <td *ngIf="item.vehicle == 'yes'">
+                <i class="fa fa-circle status-true"></i>
+              </td>
+              <td *ngIf="item.vehicle == 'no'">
+                <i class="fa fa-circle status-false"></i>
+              </td>
+  
+              <td data-bs-toggle="modal" data-bs-target="#shortlistTeacherModal" (click)="openShortListTeacherModal(item)"  >
+                <img src="../../../../assets/images/icons/user_checked_icon.png" alt="ShortList Teacher">
+              </td>          
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row w-100 p-2"  *ngIf="teacherList.length > 0">
+        <div class="col-6">
+          <div class="row align-items-center">
+            <div class="col-auto">
+              <label class="control-label" for="noOfRows">No. of Entries</label>
+            </div>
+            <div class="col-auto">
+              <select name="noOfRows" (change)="onTableSizeChange($event)" class="form-select form-select-sm">
+                <option *ngFor="let size of tableSize" [ngValue]="size">
+                  {{ size }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+          <pagination-controls previousLabel="Prev" nextLabel="Next" [responsive]="true"
+            (pageChange)="handlePageChange($event)"></pagination-controls>
+        </div>
+      </div>
+      <div class="col-12 mb-3" *ngIf="teacherList.length == 0">
+        <p class="text-center">No Teacher Found</p>
+      </div> 
+</div>
+
+
+<div class="modal fade" id="shortlistTeacherModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Teacher has been shortlisted.</p>
+          <p>We Will update you as soon as possible.</p>
+         <div class="modal-footer mb-3">
+          <button type="submit" class="btn btn-primary">Okay</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+

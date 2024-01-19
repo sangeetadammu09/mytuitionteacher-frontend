@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from '../../../../app/shared/services/common.service';
 import { ErrorhandlerService } from '../../../../app/shared/services/errorhandler.service';

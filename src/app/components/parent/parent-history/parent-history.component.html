@@ -1,1 +1,98 @@
-<p>parent-history works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <app-page-title [pagetitle]="title" [breadcrumbLabel]="breadcrumb"></app-page-title>
+    </div>
+    <div class="row pt-3">
+        <div class="col-lg-8">
+          <h4>List of Posted Tuitions</h4>
+        </div>
+        <div class="col-lg-4">
+          <div class="input-group">
+            <input  class="form-control border-secondary border-right-0 rounded-0" type="search" [(ngModel)]="filterText"
+            placeholder="Search By Tuition Name" (change)="searchTuition(filterText)">
+          </div>
+        </div>
+        
+      </div>
+
+        <div class="table-responsive py-3" *ngIf="tuitionList.length > 0"> 
+          <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col" [ngClass]="item == 'Looking for' ? 'col-lg-3': null" *ngFor="let item of tableColumns">{{item}}</th>            
+              </tr>
+            </thead>
+            <tbody *ngFor="let item of tuitionList| paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems } ; let i = index">
+              <tr>
+                <td>{{itemsPerPage*(currentPage-1)+i+1}} </td>
+                <td>{{item.createdAt | date:'dd/MM/yyyy'}}</td>
+                <td>{{item.status}}</td>
+                <td>{{item.city}} {{item.state}}</td>
+                <td>{{item.lookingfor}}</td> 
+                <!-- <td>
+                  <ng-container *ngFor="let x of item.modeofteaching">
+                      <span>{{x.label}}, </span> 
+                    </ng-container>
+                </td>-->
+                <td>{{item.modeofteaching}}</td>
+                <td class="custom-ellipsis js-btn-tooltip" data-toggle="tooltip" data-custom-class="tooltip-secondary" data-placement="top" 
+                [title]="item.details">{{item.details}}</td>  
+                <td>{{item.grade}}</td>
+                <td>{{item.board}}</td>
+                <td>{{item.subjects}}</td>
+                <td>{{item.days}}days/weekly {{item.hours}}/daily at {{item.time}}</td>
+                <td>{{item.budget}} {{item.budgettype}}</td>
+                <td>{{item.gender}}</td>
+                <td data-bs-toggle="modal" data-bs-target="#shortlistTeacherModal" (click)="openShortListTeacherModal(item)"  >
+                  <img src="../../../../assets/images/icons/edit_icon.png" alt="Post Status">
+                </td>          
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row w-100 p-2"  *ngIf="tuitionList.length > 0">
+          <div class="col-6">
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <label class="control-label" for="noOfRows">No. of Entries</label>
+              </div>
+              <div class="col-auto">
+                <select name="noOfRows" (change)="onTableSizeChange($event)" class="form-select form-select-sm">
+                  <option *ngFor="let size of tableSize" [ngValue]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 d-flex justify-content-end">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" [responsive]="true"
+              (pageChange)="handlePageChange($event)"></pagination-controls>
+          </div>
+        </div>
+      <div class="col-12 mb-3" *ngIf="tuitionList.length == 0">
+        <p class="text-center">No Tuition Found</p>
+      </div> 
+</div>
+
+
+<div class="modal fade" id="shortlistTeacherModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Post has been closed.</p>
+         <div class="modal-footer mb-3">
+          <button type="submit" class="btn btn-primary">Okay</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

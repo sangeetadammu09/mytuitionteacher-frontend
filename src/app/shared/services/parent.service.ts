@@ -11,20 +11,16 @@ export class ParentService {
 
   constructor(private _http: HttpClient) { }
 
-  parentregister(parent: any){
-   return  this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.register, parent)
-  }
-
-  parentlogin(parent: any){
-    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.login, parent)
-  }
-
   createparent(parent: any){
     return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.form,parent)
   }
 
   listofteachingjobs(pagination: any){
     return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.listofteachingjobsbypage,pagination)
+  }
+
+  listoftuitionsByParentId(id:any,pagination: any){
+    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.listoftuitionsByParentId+id,pagination)
   }
 
   singleparent(_id:string){

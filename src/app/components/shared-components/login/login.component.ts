@@ -92,6 +92,9 @@ export class LoginComponent implements OnInit {
         if(error.status == 500){
          this._toastrService.error('Server Error.Failed to login');
         }
+        if(error.status == 400){
+          this._toastrService.error('Invalid details. Please try again');
+         }
         
      })})
        

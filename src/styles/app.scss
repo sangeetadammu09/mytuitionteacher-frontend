@@ -18,12 +18,15 @@
 .color-primary {
     color: blue;
 }
+
 .color-secondary {
     color: grey;
 }
+
 .color-warning {
     color: yellow;
 }
+
 .color-danger {
     color: red;
 }
@@ -33,11 +36,11 @@
     background-color: #461364;
     border-radius: 5px;
     color: white;
-  
+
     display: flex;
     align-items: center;
     padding: 0 10px;
-  }
+}
 
 /* You can add global styles to this file, and also import other style files */
 /* *{
@@ -63,7 +66,7 @@
     border: 1px solid transparent;
     border-radius: 3px;
     font-size: 15px;
-    
+
 }
 
 .nav-tabs>.nav-item>.nav-link:hover {
@@ -82,7 +85,7 @@
 
 table tbody tr td {
     width: 20%;
-    text-align: left!important;
+    text-align: left !important;
 }
 
 .nav-tabs {
@@ -90,83 +93,88 @@ table tbody tr td {
 }
 
 
-.btn-primary:hover,.btn-primary:active, .btn-primary:focus  {
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
     background-color: #9b111e !important;
 }
-.btn-primary:focus, .btn-primary.active, .btn-primary:active:focus{
+
+.btn-primary:focus,
+.btn-primary.active,
+.btn-primary:active:focus {
     background-color: #9b111e !important;
 }
 
 
-.fa{
+.fa {
     cursor: pointer;
 }
 
-    .label-red{
-       color:red;
-       font-size: 20px; 
-    }
+.label-red {
+    color: red;
+    font-size: 20px;
+}
 
-    .text-black{
-        text-transform: capitalize;
-        font-size: 18px!important;
-        font-weight: 500!important;
-        font-family: Montserrat,Helvetica Neue,Arial,sans-serif;
-    }
+.text-black {
+    text-transform: capitalize;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    font-family: Montserrat, Helvetica Neue, Arial, sans-serif;
+}
 
-    .p-dropdown{
-        width: 100%
-    }
+.p-dropdown {
+    width: 100%
+}
 
-    .p-inputtext{
-        padding: 0.38rem 0.75rem !important;
-    }
+.p-inputtext {
+    padding: 0.38rem 0.75rem !important;
+}
 
-    .invalid-feedback {
-        font-size: 90% !important;
-    }
+.invalid-feedback {
+    font-size: 90% !important;
+}
 
-    .document-body{
-        height:80vh;
-        overflow-y: scroll;
-      }
+.document-body {
+    height: 80vh;
+    overflow-y: scroll;
+}
 
-      /* You can add global styles to this file, and also import other style files */
-.bg-light{
+/* You can add global styles to this file, and also import other style files */
+.bg-light {
     background: #9b111e !important;
-    color:#000;
+    color: #000;
 }
 
-.btn-primary{
+.btn-primary {
     background-color: #9b111e !important;
-    border-color:  #9b111e !important;
+    border-color: #9b111e !important;
 }
 
-.thead-secondary{
+.thead-secondary {
     background-color: #9b111e !important;
 }
 
-.prduct-table{
-    background-color:white
+.prduct-table {
+    background-color: white
 }
 
-.table-card{
+.table-card {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     border-radius: 5px 5px;
     background-color: white;
 }
 
-table tbody tr td{
+table tbody tr td {
     width: 20%;
     text-align: center;
 }
 
-table thead tr th{
+table thead tr th {
     width: 20%;
     text-align: center;
 }
 
-.pagination-custom{
+.pagination-custom {
     border-top: 1px solid rgb(219, 219, 219);
 }
 
@@ -176,7 +184,7 @@ table thead tr th{
     background-color: #9b111e;
 }
 
-.custom-hyperlink{
+.custom-hyperlink {
     text-decoration: none;
     color: #000000;
     font-weight: 600;
@@ -186,7 +194,7 @@ table thead tr th{
     border-radius: 5px;
 }
 
-.field-disabled{
+.field-disabled {
     background-color: #ced4da;
 }
 
@@ -197,66 +205,153 @@ input[type=radio] {
     height: 17px;
 }
 
-.table-responsive{
-    overflow-y: hidden !important;
-    overflow-x: scroll !important;
+
+.table-responsive::-webkit-scrollbar
+{
+	background-color: #F5F5F5;
 }
+
+.table-responsive::-webkit-scrollbar-thumb
+{
+	background-color: #eee8e8;
+	border: none;
+}
+
+table.autowidth td{
+    white-space:nowrap;
+}
+
+
+.custom-ellipsis{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  
+}
+
 
 .gutters-sm {
     margin-right: -8px;
     margin-left: -8px;
 }
 
-.gutters-sm>.col, .gutters-sm>[class*=col-] {
+.gutters-sm>.col,
+.gutters-sm>[class*=col-] {
     padding-right: 8px;
     padding-left: 8px;
 }
-.mb-3, .my-3 {
-    margin-bottom: 1rem!important;
+
+.mb-3,
+.my-3 {
+    margin-bottom: 1rem !important;
 }
 
 .bg-gray-300 {
     background-color: #e2e8f0;
 }
+
 .h-100 {
-    height: 100%!important;
+    height: 100% !important;
 }
+
 .shadow-none {
-    box-shadow: none!important;
+    box-shadow: none !important;
+}
+
+.hmt-card {
+    padding: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.form-control {
+    border-radius: 3px;
+    border: 1px solid #999999;
+}
+
+
+.hmt-works {
+    text-align: center;
+    color: #9b111e;
+}
+
+.hmt-parent {
+    font-size: 18px;
+    font-weight: 500;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: black;
+    margin-top: 10px;
+}
+
+.hmt-upload {
+    box-shadow: 0;
+    border: 0px none #ffffff;
+    ;
+}
+
+.hmt-notes {
+    height: 150px;
+}
+
+.parentForm .col-md-6 {
+    margin-bottom: 15px;
+}
+
+.form-control.is-invalid {
+    border: 1px solid #9b111e
+}
+
+.ml-5 {
+    margin-left: 37px;
+}
+
+.status-true,
+.status-completed {
+    color: green;
+    font-size: 15px;
+}
+
+.status-false,
+.status-hold {
+    color: red;
+    font-size: 15px;
+}
+
+.table .thead-dark tr th,
+.table tbody tr td {
+    text-align: center !important;
+}
+
+.thead-dark {
+   background-color: #9585876e;
+}
+
+.table .thead-dark tr th{
+    padding: 10px;
+}
+
+table th {
+    width: auto !important;
 }
 
 /* media */
 /* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-   
- 
-}
+@media only screen and (max-width: 600px) {}
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) and (max-width: 767px) {
-   
- 
-}
+@media only screen and (min-width: 600px) and (max-width: 767px) {}
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px)and (max-width: 991px) {
-    
- 
-  
-} 
+@media only screen and (min-width: 768px)and (max-width: 991px) {}
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-   
- 
-} 
+@media only screen and (min-width: 992px) and (max-width: 1199px) {}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
- @media only screen and (min-width: 1200px){  
- }
+@media only screen and (min-width: 1200px) {}
 
- .no-box-shadow{
-    box-shadow:  none;
- }
-
-
+.no-box-shadow {
+    box-shadow: none;
+}

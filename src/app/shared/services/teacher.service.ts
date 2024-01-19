@@ -25,7 +25,7 @@ export class TeacherService {
 
 
   listofteachers(pagination: any){
-    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Teacher.listofteachersbypage,pagination)
+    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Teacher.listofteachers,pagination)
   }
 
   singleteacher(id:string){
