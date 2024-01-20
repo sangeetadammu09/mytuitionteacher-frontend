@@ -8,7 +8,6 @@ import { APP_DI_CONFIG } from '../utils/app.config';
 })
 export class ParentService {
 
-
   constructor(private _http: HttpClient) { }
 
   createparent(parent: any){
@@ -38,6 +37,29 @@ export class ParentService {
   checkPhoneEmail(id:string){
     return this._http.get<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.checkphoneemail+id)
   }
+
+  // feedback
+  createfeedback(data: any){
+    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Feedback.create,data)
+  }
+
+  listoffeedbacks(pagination: any){
+    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Feedback.listoffeedbacks,pagination)
+  }
+
+  listoffeedbackbyparentid(id:any,pagination: any){
+    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Feedback.listbyparentid+id,pagination)
+  }
+
+  updatefeedback(data: any){
+    return this._http.put<any>(APP_DI_CONFIG.dataDomain+APP_DI_CONFIG.endPoints.Feedback.update,data)
+  }
+  
+  deletefeedback(_id:string){
+    return this._http.delete<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Feedback.delete+_id)
+  }
+
+
 
    //Helper Methods
 

@@ -35,7 +35,6 @@ export class AuthService {
      return this.http.post(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Mail.teacher, body);
   }
 
-
   interestedteacherEmail(body:any) {
     return this.http.post(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Mail.appliedteacher, body);
  }

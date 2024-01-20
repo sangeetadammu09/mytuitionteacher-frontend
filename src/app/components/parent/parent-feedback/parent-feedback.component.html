@@ -3,11 +3,11 @@
       <app-page-title [pagetitle]="title" [breadcrumbLabel]="breadcrumb"></app-page-title>
     </div>
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-lg-10">
           <h1 class="hmt-parent">List of Feedbacks</h1>  
         </div>
-        <div class="col-md-2">
-          <button class="btn btn-primary justify-content-end" data-bs-toggle="modal" data-bs-target="#feedbackModal" >Add Feedback</button> 
+        <div class="col-lg-2">
+          <button class="btn btn-primary justify-content-end" data-bs-toggle="modal" data-bs-target="#feedbackModal">Add Feedback</button> 
         </div>
       </div>
       <div class="row">
@@ -22,14 +22,14 @@
               <tr>
                 <td  scope="col">{{itemsPerPage*(currentPage-1)+i+1}}</td>
                 <td  scope="col">{{item.createdAt | date:'dd/MM/yyyy'}}</td>
-                <td>{{item.firstname}}</td>
-                <td>{{item.teacher}} {{item.state}}</td>
+                <td>{{item.firstname}} {{item.lastname}}</td>
+                <td>{{item.teacher?.name}}</td>
                 <td>{{item.tuition}}</td>                
                 <td>{{item.rating}}</td>  
                 <td>{{item.comment}}</td> 
                 <td rowspan="3">
-                  <span data-bs-toggle="modal" data-bs-target="#shortlistTeacherModal" (click)="openShortListTeacherModal(item)"  >
-                    <img src="../../../../assets/images/icons/user_checked_icon.png" alt="ShortList Teacher">
+                  <span data-bs-toggle="modal" data-bs-target="#feedbackModal" (click)="openModal(item)"  >
+                    <img src="../../../../assets/images/icons/edit_icon.png" alt="Update Feedback">
                   </span>  
                 </td> 
                        
@@ -64,7 +64,7 @@
    </div>
   
    <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog md-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Add Feedback</h5>
@@ -73,7 +73,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form class="row parentForm" [formGroup]="addFeedbackForm" (ngSubmit)="submitFeedback()">
+          <form class="row parentForm" [formGroup]="feedbackForm" (ngSubmit)="submitFeedback()">
             <div class="col-md-6">
                 <label for="name">First Name<span style="color:red;">*</span></label>
                 <input type="text" class="form-control field-disabled" formControlName="firstname" readonly />
@@ -94,8 +94,8 @@
               </div>
   
               <div class="col-md-6">
-                <label for="location">Tuitions<span style="color:red;">*</span></label>
-                <select class="form-control form-select" formControlName="tuition"
+                <label for="location">Tuitions{{p['id'].value}}<span style="color:red;">*</span></label>
+                <select class="form-select" formControlName="tuition" 
                 [ngClass]="{'is-invalid':(submitted && p['tuition'].errors) ||(p['tuition'].errors && p['tuition'].touched)}">
                     <option selected>Select</option>
                     <option *ngFor="let item of tuitionList" [value]="item.name">{{item.name}}</option>
