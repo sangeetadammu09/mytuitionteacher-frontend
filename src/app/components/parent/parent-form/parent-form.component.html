@@ -174,20 +174,22 @@
                  
              </div>
             </div>
-
+       
             <div class="col-md-4 mb-3">
-              <label for="modeofteaching">Mode Of Teaching<span style="color:red;">*</span></label>
-              <select  class="form-control form-select" id="modeofteaching" formControlName="modeofteaching"
-              [ngClass]="{'is-invalid':(submitted && p['modeofteaching'].errors) ||(p['modeofteaching'].errors && p['modeofteaching'].touched)}">
-                <option disabled>Select</option>
-                <option value="home">Home</option>
-                <option value="online">Online</option>
-                <option value="tutor place">Tutor's place</option>
-              
-              </select>
-              <div *ngIf="(submitted && p['modeofteaching'].errors) ||(p['modeofteaching'].errors && p['modeofteaching'].touched)" class="invalid-feedback">
-                <div *ngIf="p['modeofteaching'].errors['required']">Mode of teaching is required</div> 
+              <label for="exampleInputEmail1">Mode Of Teaching<span style="color:red;">*</span></label>   
+              <div class="form-group hmt-checkbox">
+                 <div class="form-check form-check-inline" *ngFor="let item of modeofTeachingArr">
+                      <input class="form-check-input" [value]="item.value" [checked]="item.checked"
+                      [ngClass]="{'is-invalid':(submitted && p['modeofteaching'].errors) ||(p['modeofteaching'].errors && p['modeofteaching'].touched)}"
+                        type="checkbox" (change)="onModeChange($event)" formArrayName="modeofteaching">
+                      <label class="form-check-label" for="inlineCheckbox1">{{item.label}}</label>
+                  </div>                     
               </div>
+              
+                <div *ngIf="(submitted && p['modeofteaching'].errors) ||(p['modeofteaching'].errors && p['modeofteaching'].touched)" class="invalid-feedback">
+                  <div *ngIf="p['modeofteaching'].errors['required']">Mode Of Teaching is required</div>   
+              </div>
+              
             </div>
 
             <div class="col-md-4 mb-3">

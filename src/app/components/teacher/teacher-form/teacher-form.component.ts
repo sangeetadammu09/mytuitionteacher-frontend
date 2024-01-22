@@ -25,8 +25,6 @@ export class TeacherFormComponent implements OnInit {
   statesList = States.data;
   selectedFile:any;
   selectedFileName:string = "";
-  modeOfTeachingArrayValue = [];
-
 
    // convenience getter for easy access to form fields
    get t() { return this.addTeacherForm.controls; };
@@ -53,7 +51,8 @@ export class TeacherFormComponent implements OnInit {
         preferredlocation : ['', Validators.required],
         charge : ['', [Validators.required, Validators.pattern('^[0-9,]*$')]],
         chargeType : ['', Validators.required],
-        imageurl: [, Validators.required]
+        imageurl: [, Validators.required],
+        isActive : [true]
       
       })
   }

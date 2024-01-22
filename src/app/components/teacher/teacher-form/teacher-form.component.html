@@ -1,32 +1,13 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-4">
-      <div class="card hmt-card">
-          <h1 class= "hmt-works">How it works!!<hr></h1>
-        <h5><b><i class="fas fa-lightbulb"></i>&nbsp;CREATE TUTOR PROFILE</b></h5>
-        <p>Create a tutor profile and find a suitable tuition job within minutes. Helpmetutors keep teacher's experience details and area of uniqueness at the top of the priority list.</p>
-       
-        <h5><b><i class="fas fa-search"></i>&nbsp; RESPOND TO YOUR SUITABLE REQUIREMENT</b></h5>
-        <p>Based on tutor's teaching details and level of experience. Helpmetutors suggest the best tuition to the teacher.</p>
-  
-     <h5><b><i class="fas fa-chalkboard-teacher"></i>&nbsp;GIVE A DEMO</b></h5>
-        <p>Helpmetutors fix demo class as per your convenience. If it didnt work out, you can opt always for another.</p>
-      
-        <h5><b><i class="fas fa-book-reader"></i>&nbsp; BEGIN EARNING </b></h5>
-        <p>Once the teacher is fixed. Tuition starts as per the scheduled time. Tutor try to help the student with his requirements. Teacher's hardwork will be appreciated </p>
-    
-
-      </div>
-
-    </div>
-    <div class="col-md-8">
+    <div class="col-md-12">
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
               <h1 class="hmt-parent">Are you looking for part time home/online teacher jobs? Register your tutoring details below FREELY to find suitable.!!</h1>
           
            <form class="row parentForm" [formGroup]="addTeacherForm" (ngSubmit)="submitTeacherForm()">
-              <div class="col-md-6">
+              <div class="col-lg-4 mb-3">
                   <label for="name">Full Name<span style="color:red;">*</span></label>
                   <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid':
                   (submitted && t['name'].errors) ||(t['name'].errors && t['name'].touched)}" />
@@ -38,8 +19,8 @@
 
                 </div>
 
-                <div class="col-md-6">
-                  <label for="email">Email Address<span style="color:red;">*</span></label>
+                <div class="col-lg-4 mb-3">
+                  <label for="email">Email<span style="color:red;">*</span></label>
                     <input type="text" class="form-control" formControlName="email" (change)="checkPhoneEmail($event)" [ngClass]="{'is-invalid':
                   (submitted && t['email'].errors) ||(t['email'].errors && t['email'].touched)}" />
                   <div *ngIf="(submitted && t['email'].errors) ||(t['email'].errors && t['email'].touched)" class="invalid-feedback">
@@ -48,7 +29,7 @@
                  </div>
                 </div>
               
-                 <div class="col-md-6">
+                 <div class="col-lg-4 mb-3">
                   <label for="phone">Contact<span style="color:red;">*</span></label>
                   <input type="text" class="form-control" formControlName="contact" (change)="checkPhoneEmail($event)" [ngClass]="{'is-invalid':
                   (submitted && t['contact'].errors) ||(t['contact'].errors && t['contact'].touched)}" />
@@ -59,7 +40,7 @@
                  </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-lg-4 mb-3">
                   <label for="location">State<span style="color:red;">*</span></label>
                   <select class="form-control form-select" formControlName="state"
                   [ngClass]="{'is-invalid':(submitted && t['state'].errors) ||(t['state'].errors && t['state'].touched)}">
@@ -72,7 +53,7 @@
                 </div>
 
 
-                <div class="col-md-6">
+                <div class="col-lg-4 mb-3">
                   <label for="location">City<span style="color:red;">*</span></label>
                   <input type="text" class="form-control" formControlName="city"  [ngClass]="{'is-invalid':
                   (submitted && t['city'].errors) ||(t['city'].errors && t['city'].touched)}" />
@@ -81,7 +62,7 @@
                  </div>
                 </div>
       
-                <div class="col-md-6">
+                <div class="col-lg-4 mb-3">
                   <label for="location">Location<span style="color:red;">*</span></label>
                   <input type="text" class="form-control" formControlName="location" [ngClass]="{'is-invalid':
                   (submitted && t['location'].errors) ||(t['location'].errors && t['location'].touched)}" />
@@ -91,7 +72,7 @@
                  </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-lg-4 mb-3">
                   <label for="location">Qualification<span style="color:red;">*</span></label>
                   <input type="text" class="form-control" formControlName="qualification" [ngClass]="{'is-invalid':
                   (submitted && t['qualification'].errors) ||(t['qualification'].errors && t['qualification'].touched)}" />
@@ -101,7 +82,7 @@
                  </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-lg-4 mb-3">
                   <label for="exampleInputEmail1">Teaching Experience<span style="color:red;">*</span></label>
                   <select class="form-control form-select" id="exampleFormControlSelect1" formControlName="teachingexp"
                   [ngClass]="{'is-invalid':(submitted && t['teachingexp'].errors) ||(t['teachingexp'].errors && t['teachingexp'].touched)}">
@@ -119,7 +100,7 @@
                 </div>  
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-lg-4 mb-3">
                   <label for="location">Specialization<span style="color:red;">*</span></label>
                   <input type="text" class="form-control" formControlName="subjects" [ngClass]="{'is-invalid':
                   (submitted && t['subjects'].errors) ||(t['subjects'].errors && t['subjects'].touched)}" />
@@ -129,7 +110,7 @@
                  </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-lg-4 mb-3">
                   <label for="exampleInputEmail1">Available Timings<span style="color:red;">*</span></label>
                   <input type="text" class="form-control" formControlName="timing" [ngClass]="{'is-invalid':
                   (submitted && t['timing'].errors) ||(t['timing'].errors && t['timing'].touched)}" />
@@ -139,7 +120,7 @@
                  </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-lg-4 mb-3">
                   <label for="exampleInputEmail1">Mode Of Teaching<span style="color:red;">*</span></label>   
                   <div class="form-group hmt-checkbox">
                      <div class="form-check form-check-inline" *ngFor="let item of modeofTeachingArr">
@@ -156,20 +137,31 @@
                   
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-lg-4 mb-3">
                   <label for="exampleInputEmail1">Have Vehicle<span style="color:red;">*</span></label>
-                  <select class="form-control form-select" id="exampleFormControlSelect1" formControlName="vehicle"
+                  <div class="form-group hmt-checkbox">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio"  formControlName="vehicle" name="inlineRadioOptions" id="inlineRadio1" value="yes">
+                    <label class="form-check-label" for="inlineRadio1">Yes</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio"  formControlName="vehicle" name="inlineRadioOptions" id="inlineRadio2" value="no">
+                    <label class="form-check-label" for="inlineRadio2">No</label>
+                  </div>
+                 
+                  <!-- <select class="form-control form-select" id="exampleFormControlSelect1" formControlName="vehicle"
                   [ngClass]="{'is-invalid':(submitted && t['vehicle'].errors) ||(t['vehicle'].errors && t['vehicle'].touched)}">
                       <option disabled>Select</option>
                       <option value="yes">Yes</option>
                       <option value="no">No</option>  
-                  </select>
+                  </select> -->
                   <div *ngIf="(submitted && t['vehicle'].errors) ||(t['vehicle'].errors && t['vehicle'].touched)" class="invalid-feedback">
                     <div *ngIf="t['vehicle'].errors['required']">Mode of Transport is required</div>   
-                </div>  
+                </div>
+              </div>  
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-lg-4 mb-3">
                   <label for="exampleInputEmail1">Mention five Preferred Locations<span style="color:red;">*</span></label>
                   <input type="text" class="form-control" formControlName="preferredlocation" [ngClass]="{'is-invalid':
                   (submitted && t['preferredlocation'].errors) ||(t['preferredlocation'].errors && t['preferredlocation'].touched)}" />
@@ -179,8 +171,7 @@
                  </div>
                 </div>
 
-
-                <div class="col-md-6 d-flex">
+                <div class="col-lg-4 mb-3 d-flex">
                   <div class="col-md-8">
                       <label for="exampleInputEmail1">Charge<span style="color:red;">*</span></label>
                   <input type="text" class="form-control" formControlName="charge" [ngClass]="{'is-invalid':
@@ -190,7 +181,7 @@
                       <div *ngIf="t['charge'].errors['pattern']">Only Number are allowed</div>  
                  </div>
                  </div>
-                 <div class="ml-5 col-md-3">
+                 <div class="col-md-3">
                   <label for="budget type">Type <span style="color:red;">*</span></label>
                   <select class="form-control form-select" id="budgettype" formControlName="chargeType"
                   [ngClass]="{'is-invalid':(submitted && t['chargeType'].errors) ||(t['chargeType'].errors && t['chargeType'].touched)}">
@@ -206,14 +197,14 @@
 
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-lg-4 mb-3">
                   <label for="exampleInputEmail1">About Me<span style="color:red;">*</span></label>
                   <textarea type="text-area" class="form-control" rows="5" id="aboout" formControlName="about"
                   placeholder="I am Rohit. My Qualification is BTech. I have 5 years of experience in teaching maths and science upto 10th Standard.">
                   </textarea>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-lg-4 mb-3">
                     <label for="formFile" class="form-label">Upload ID Proof</label>
                     <input class="form-control" type="file" id="formFile" (change)="onFileSelect($event)" 
                     formControlName="imageurl"  name="doument"

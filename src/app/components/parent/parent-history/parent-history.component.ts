@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorhandlerService } from '../../../../app/shared/services/errorhandler.service';
 import { ParentService } from '../../../../app/shared/services/parent.service';
+import { Pagination } from '../../../../app/shared/utils/pagination';
 
 @Component({
   selector: 'app-parent-history',
@@ -16,7 +17,7 @@ export class ParentHistoryComponent {
   breadcrumb = ['Dashboard', 'Parent', 'Tuition History'];
   startNumber = 1;
   pageSize = 10;
-  payload :any = {};
+  pagination = Pagination;
   tuitionList :any[] = [];
   filterText= '';
   currentPage: number = 1;
@@ -37,18 +38,16 @@ export class ParentHistoryComponent {
 
 
   ngOnInit(): void {
-    this.getTeachersList();
+    this.getTuitionsList();
 
   }
 
-  getTeachersList(){
-    this.payload.startNumber = 1;
-    this.payload.pageSize = 10;
-    this.parentService.listoftuitionsByParentId(this.user.id,this.payload).subscribe({next: (data:any)=>{
+  getTuitionsList(){
+    this.parentService.listoftuitionsByParentId(this.user.id,this.pagination).subscribe({next: (data:any)=>{
       if(data.status == 200){
-      // let tuitions = data.listoftuitions.map((item:any) => ({...item, modeofteaching : JSON.parse(item.modeofteaching)}))
+       let tuitions = data.data.map((item:any) => ({...item, modeofteaching : JSON.parse(item.modeofteaching)}))
      //  console.log(tuitions)
-        this.tuitionList = data.listofparents;
+        this.tuitionList = tuitions;
         console.log(this.tuitionList)
       //  this.toastrService.success('Tutions list are fetched successfully')
       }
@@ -59,6 +58,9 @@ export class ParentHistoryComponent {
       if(error.status == 401) {
        this.toastrService.error('Token Expired');
       }
+      if(error.status == 400){
+        this.toastrService.error('Please enter valid input');
+       }
       if(error.status == 500){
        this.toastrService.error('Server Error.Failed to fetch teachers list');
       }

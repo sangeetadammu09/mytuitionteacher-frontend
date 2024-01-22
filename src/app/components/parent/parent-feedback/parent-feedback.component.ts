@@ -55,7 +55,8 @@ export class ParentFeedbackComponent {
 
   ngOnInit(): void {
     this.getParentDetails();
-    this.getAllFeedbacks()
+    this.getAllFeedbacks();
+    this.getTuitionsList();
   }
 
 
@@ -85,6 +86,31 @@ export class ParentFeedbackComponent {
       
    })})
 
+  }
+
+  getTuitionsList(){
+    this.parentService.listoftuitionsByParentId(this.user.id,this.pagination).subscribe({next: (data:any)=>{
+      if(data.status == 200){
+       let tuitions = data.listofparents.map((item:any) => ({...item, modeofteaching : JSON.parse(item.modeofteaching), 
+           title : item.grade+' '+item.subjects}))
+      this.tuitionList = tuitions;
+      //  this.toastrService.success('Tutions list are fetched successfully')
+      }
+      
+    },error:((err:any) =>{
+      let error =  this.errHandler.handleError(err);
+      //console.log(error)
+      if(error.status == 401) {
+       this._toastrService.error('Token Expired');
+      }
+      if(error.status == 400){
+        this._toastrService.error('Please enter valid input');
+       }
+      if(error.status == 500){
+       this._toastrService.error('Server Error.Failed to fetch teachers list');
+      }
+      
+   })})
   }
 
   
@@ -127,8 +153,6 @@ export class ParentFeedbackComponent {
        
     })
   }
-
-
 
   submitFeedback(){
     this.parentService.createfeedback(this.feedbackForm.value).subscribe({next: (data:any)=>{

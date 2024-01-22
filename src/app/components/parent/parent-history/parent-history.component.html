@@ -26,15 +26,15 @@
               <tr>
                 <td>{{itemsPerPage*(currentPage-1)+i+1}} </td>
                 <td>{{item.createdAt | date:'dd/MM/yyyy'}}</td>
-                <td>{{item.status}}</td>
+                <td [ngClass]="item.status == 'open' ? 'statusopen': 'statusclosed'">{{item.status | titlecase}}</td>
                 <td>{{item.city}} {{item.state}}</td>
                 <td>{{item.lookingfor}}</td> 
-                <!-- <td>
+                <td>
                   <ng-container *ngFor="let x of item.modeofteaching">
                       <span>{{x.label}}, </span> 
                     </ng-container>
-                </td>-->
-                <td>{{item.modeofteaching}}</td>
+                </td>
+                <!-- <td>{{item.modeofteaching}}</td> -->
                 <td class="custom-ellipsis js-btn-tooltip" data-toggle="tooltip" data-custom-class="tooltip-secondary" data-placement="top" 
                 [title]="item.details">{{item.details}}</td>  
                 <td>{{item.grade}}</td>

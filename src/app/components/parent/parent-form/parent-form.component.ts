@@ -9,6 +9,7 @@ import { Board } from '../../../../assets/referencedata/board';
 import { Grade } from '../../../../assets/referencedata/grade';
 import { ErrorhandlerService } from '../../../shared/services/errorhandler.service';
 import { CommonService } from '../../../../app/shared/services/common.service';
+import { ModeofTeachingArr } from '../../../../assets/referencedata/modeofteaching';
 
 declare var $: any;
 @Component({
@@ -27,6 +28,7 @@ export class ParentFormComponent implements OnInit {
   statesList = States.data;
   boardList = Board.data;
   gradeList = Grade.data;
+  modeofTeachingArr = ModeofTeachingArr.data;
   selectedFile: any;
   selectedFileName = "";
   title = 'Tuition Form';
@@ -52,7 +54,7 @@ export class ParentFormComponent implements OnInit {
       board: ['', Validators.required],
       subjects: ['', Validators.required],
       details: [''],
-      modeofteaching: ['', Validators.required],
+      modeofteaching: [, Validators.required],
       days: ['', Validators.required],
       hours: ['', Validators.required],
       time: ['', Validators.required],
@@ -60,7 +62,8 @@ export class ParentFormComponent implements OnInit {
       budget: ['', [Validators.required, Validators.pattern('^[0-9,]*$')]],
       budgettype: ['', Validators.required],
       isActive : [true],
-      imageurl: [],
+      status : ['open'],
+      imageurl: ['']
 
     })
   }
@@ -131,14 +134,16 @@ export class ParentFormComponent implements OnInit {
   submitParentForm() {
     this.submitted = true;
     console.log(this.addParentForm.value)
-    if (this.addParentForm.valid) {
+    if (this.addParentForm.valid){
       let payload = this.addParentForm.value;
       let formData = new FormData();
       Object.entries(payload).forEach(([key, value]) => {
-        if(value != null){
-        formData.append(key, (value).toString());
+        if(key !== 'modeofteaching'){
+          formData.append(key, (value).toString());
         }
+        
       });
+      formData.append('modeofteaching', JSON.stringify(this.modeofTeachingArr))
       if(this.selectedFileName){
         formData.append('image', this.selectedFile, this.selectedFileName);
       }
@@ -165,8 +170,6 @@ export class ParentFormComponent implements OnInit {
 
         })
       })
-
-
 
     } else {
       return;
