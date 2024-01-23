@@ -23,6 +23,10 @@ export class ParentDetailsComponent {
   selectedFile:any;
   selectedFileName ="";
   socialMediaList = SocialMedia.data;
+  facebookUrl = '';
+  instagramUrl = '';
+  twitterUrl = '';
+  linkedinUrl = '';
 
   constructor(private fb: FormBuilder, private commonService: CommonService,private errHandler : ErrorhandlerService,private _toastrService : ToastrService) {
     this.parentForm = this.fb.group({
@@ -66,7 +70,7 @@ export class ParentDetailsComponent {
       if(data.status == 200){
        // this._toastrService.success('Profile successfully!');
        this.parentData = data.singleuser;
-       console.log(this.parentData, '--', JSON.parse(this.parentData.sociallinks));
+      // console.log(this.parentData, '--', JSON.parse(this.parentData.sociallinks));
        this.parentForm.patchValue({
         firstname: this.parentData.firstname,
         lastname: this.parentData.lastname,
@@ -81,11 +85,11 @@ export class ParentDetailsComponent {
       
       })
 
-      if(this.parentData.sociallinks){
+      if(this.parentData.sociallinks != 'empty'){
         this.populateData();
       }
 
-      this.selectedFileName = this.parentData.imageurl.substring(this.parentData.imageurl.indexOf('uploads/') + 1);
+      this.selectedFileName = this.parentData.imageurl == undefined ? '' : this.parentData.imageurl.substring(this.parentData.imageurl.indexOf('uploads/') + 1);
       
       }      
     },error:((err:any) =>{
@@ -105,7 +109,26 @@ export class ParentDetailsComponent {
 
   populateData(){
     // populating data
+  
     const socialData = JSON.parse(this.parentData.sociallinks);
+   
+    socialData.forEach((x:any)=>{
+      if(x.name == 'facebook'){
+        this.facebookUrl = x.url
+      }
+      if(x.name == 'instagram'){
+        this.instagramUrl = x.url
+      }
+      if(x.name == 'linkedin'){
+        this.linkedinUrl = x.url
+      }
+      if(x.name == 'twitter'){
+        this.twitterUrl = x.url
+      }
+      
+    })
+
+    
     const data = socialData.map(x => {
       return this.fb.group({
         name: [x.name],
@@ -146,11 +169,9 @@ export class ParentDetailsComponent {
       }
       this.commonService.update(this.parentData._id, formData).subscribe({next: (data:any)=>{
         if(data.status == 200){
-          // $('#parentModal').modal('show')
-          // this.authService.parentEmail(payload).subscribe((data:any) => {
-          //  console.log(data, 'email')
-          // });
+          this.getParentDetails();
           this._toastrService.success('Your details are updated successfully')
+          this.isEdited = false;
         }
         
       },error:((err:any) =>{

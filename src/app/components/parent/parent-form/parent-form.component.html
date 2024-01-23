@@ -31,9 +31,8 @@
       <div class="col-md-12">
         <h1 class="hmt-parent">Looking for home tutors, online teachers, assignment help, homework guidance or any
           such related requirement. Kindly fill the form below to hire a teacher today!!
-          </h1>
-      
-         <form class="row parentForm" [formGroup]="addParentForm" (ngSubmit)="submitParentForm()">
+          </h1>     
+         <form class="row parentForm" [formGroup]="parentForm" (ngSubmit)="submitParentForm()">
           <div class="col-md-4 mb-3">
               <label for="name">Name<span style="color:red;">*</span></label>
               <input type="text" class="form-control field-disabled" formControlName="name" readonly />
@@ -253,8 +252,7 @@
                   <button type="submit" class="btn btn-primary">Submit</button>
            </div>
 
-         </form>
-     
+         </form>    
       </div>
     </div>
  </div>

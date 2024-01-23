@@ -26,7 +26,8 @@
               <tr>
                 <td>{{itemsPerPage*(currentPage-1)+i+1}} </td>
                 <td>{{item.createdAt | date:'dd/MM/yyyy'}}</td>
-                <td [ngClass]="item.status == 'open' ? 'statusopen': 'statusclosed'">{{item.status | titlecase}}</td>
+                <td data-bs-toggle="modal" data-bs-target="#teacherModal" (click)="openTeacherModal(item)"
+                 [ngClass]="item.status == 'open' ? 'statusopen': 'statusclosed'">{{item.status | titlecase}}</td>
                 <td>{{item.city}} {{item.state}}</td>
                 <td>{{item.lookingfor}}</td> 
                 <td>
@@ -43,7 +44,7 @@
                 <td>{{item.days}}days/weekly {{item.hours}}/daily at {{item.time}}</td>
                 <td>{{item.budget}} {{item.budgettype}}</td>
                 <td>{{item.gender}}</td>
-                <td data-bs-toggle="modal" data-bs-target="#shortlistTeacherModal" (click)="openShortListTeacherModal(item)"  >
+                <td (click)="moveToTeacherForm(item)">
                   <img src="../../../../assets/images/icons/edit_icon.png" alt="Post Status">
                 </td>          
               </tr>
@@ -76,7 +77,7 @@
 </div>
 
 
-<div class="modal fade" id="shortlistTeacherModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="teacherModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -86,13 +87,15 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>Post has been closed.</p>
+          
          <div class="modal-footer mb-3">
           <button type="submit" class="btn btn-primary">Okay</button>
           </div>
         </div>
       </div>
     </div>
+
+
   </div>
 
 

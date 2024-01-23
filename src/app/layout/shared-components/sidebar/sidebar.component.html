@@ -24,11 +24,15 @@
           
         </div>
       </div>
-      <div class="logout-button">
-        <a (click)="onLoggedout()" [routerLink]="['/']" class="dropdown-item">
-          <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
-      </a>
-    </div>
+      <div class="list-group logout-button" (click)="onLoggedout()">
+        <div class="nested-menu">
+          <a class="list-group-item"[routerLink]="['/']" >           
+            <span><i class="fa fa-fw fa-power-off"></i></span>
+            <span> {{ 'Log Out' | translate }}</span>
+          </a>   
+        </div>
+      </div>
+      
     <div (click)="toggleCollapsed()" [ngClass]="{ collapsed: collapsed }" class="toggle-button">
         <i class="fa fa-fw fa-angle-double-{{ collapsed ? 'right' : 'left' }}"></i>&nbsp;
         <span>{{ 'Collapse Sidebar' | translate }}</span>

@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ErrorhandlerService } from '../../../../app/shared/services/errorhandler.service';
 import { ParentService } from '../../../../app/shared/services/parent.service';
 import { Pagination } from '../../../../app/shared/utils/pagination';
+import { MasterService } from '../../../../app/shared/services/master.service';
 
 @Component({
   selector: 'app-parent-history',
@@ -34,7 +35,7 @@ export class ParentHistoryComponent {
 
   constructor(private fb : FormBuilder, private parentService : ParentService,
               private router : Router, private errHandler : ErrorhandlerService,
-              private toastrService : ToastrService){ }
+              private toastrService : ToastrService, private masterService : MasterService,){ }
 
 
   ngOnInit(): void {
@@ -97,6 +98,17 @@ export class ParentHistoryComponent {
 
 
  searchTuition(text:any){
+
+  }
+
+  moveToTeacherForm(item){
+    this.router.navigate(['/dashboard/parent/parent-form'])
+    if(item){
+      this.masterService.sendData(item)
+    }
+  }
+
+  openTeacherModal(item){
 
   }
 

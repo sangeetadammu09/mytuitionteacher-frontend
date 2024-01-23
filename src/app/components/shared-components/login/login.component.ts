@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('userToken',data.token);
           let loggedUserDetails = data.loggedcommon;
           this._toastrService.success('Logged in successfully!');
-          this.masterService.sendUserDetails(loggedUserDetails);
+        //  this.masterService.sendUserDetails(loggedUserDetails);
           localStorage.setItem('user', JSON.stringify(loggedUserDetails))
           // navigation to specific users
           //this.masterService.sendMenu(this.menuList); 

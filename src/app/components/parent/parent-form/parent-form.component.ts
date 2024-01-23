@@ -10,6 +10,7 @@ import { Grade } from '../../../../assets/referencedata/grade';
 import { ErrorhandlerService } from '../../../shared/services/errorhandler.service';
 import { CommonService } from '../../../../app/shared/services/common.service';
 import { ModeofTeachingArr } from '../../../../assets/referencedata/modeofteaching';
+import { MasterService } from '../../../../app/shared/services/master.service';
 
 declare var $: any;
 @Component({
@@ -19,7 +20,7 @@ declare var $: any;
 })
 export class ParentFormComponent implements OnInit {
 
-  addParentForm!: FormGroup;
+  parentForm!: FormGroup;
   submitted: boolean = false;
   public visible = false;
   formattedaddress: any;
@@ -36,12 +37,12 @@ export class ParentFormComponent implements OnInit {
   user = JSON.parse(localStorage.getItem('user'));
 
   // convenience getter for easy access to form fields
-  get p() { return this.addParentForm.controls; };
+  get p() { return this.parentForm.controls; };
 
   constructor(private fb: FormBuilder, private parentService: ParentService,private commonService: CommonService,
     private authService: AuthService, private router: Router, private errHandler: ErrorhandlerService,
-    private _toastrService: ToastrService) {
-    this.addParentForm = this.fb.group({
+    private _toastrService: ToastrService, private masterService: MasterService) {
+    this.parentForm = this.fb.group({
       parentid: [''],
       name: [''],
       email: [''],
@@ -77,33 +78,39 @@ export class ParentFormComponent implements OnInit {
 
   getParentDetails(){
     // console.log(this.user, 'user');
+    let tuitionData = this.masterService.getData();
+    console.log(tuitionData,'data')
     this.commonService.userById(this.user.id).subscribe({next: (data:any)=>{
       if(data.status == 200){
        // this._toastrService.success('Profile successfully!');
        this.parentData = data.singleuser;
        console.log(this.parentData)
-       this.addParentForm.patchValue({
+       if(tuitionData == undefined){
+       this.parentForm.patchValue({
         parentid: this.parentData._id,
         name: this.parentData.firstname +' '+ this.parentData.lastname,
         email : this.parentData.email,
         contact: this.parentData.mobile,
-        location: "",
-        state: "Andhra Pradesh",
-        city: "Vizag",
-        lookingfor: "tutor",
-        grade: "Class 4",
-        board: "CBSE",
-        subjects: "maths,science",
-        details: 'looking for teacher',
-        modeofteaching: "home",
-        days: "5",
-        hours: "1.5hours",
-        time: "5pm",
-        gender: "female",
-        budget: "5000",
-        budgettype: "per month"
+        //location: "",
+        // state: "Andhra Pradesh",
+        // city: "Vizag",
+        // lookingfor: "tutor",
+        // grade: "Class 4",
+        // board: "CBSE",
+        // subjects: "maths,science",
+        // details: 'looking for teacher',
+        // modeofteaching: "home",
+        // days: "5",
+        // hours: "1.5hours",
+        // time: "5pm",
+        // gender: "female",
+        // budget: "5000",
+        // budgettype: "per month"
   
       })
+      }else{
+        this.parentData.patchValue(tuitionData)
+      }
             
       }      
     },error:((err:any) =>{
@@ -133,9 +140,9 @@ export class ParentFormComponent implements OnInit {
 
   submitParentForm() {
     this.submitted = true;
-    console.log(this.addParentForm.value)
-    if (this.addParentForm.valid){
-      let payload = this.addParentForm.value;
+    console.log(this.parentForm.value)
+    if (this.parentForm.valid){
+      let payload = this.parentForm.value;
       let formData = new FormData();
       Object.entries(payload).forEach(([key, value]) => {
         if(key !== 'modeofteaching'){
@@ -151,7 +158,8 @@ export class ParentFormComponent implements OnInit {
       this.parentService.createparent(formData).subscribe({
         next: (data: any) => {
           if (data.status == 200) {
-            $('#parentModal').modal('show')
+          //  $('#parentModal').modal('show')
+            this.router.navigate(['/parent-history'])
             this.authService.parentEmail(payload).subscribe((data: any) => {
               console.log(data, 'email')
             });

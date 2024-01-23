@@ -9,6 +9,7 @@ export class MasterService {
   constructor() { }
 
   menuData:any;
+  payloadData : any;
   
   private userSource = new BehaviorSubject(null);
   currentuserDetails = this.userSource.asObservable();
@@ -17,8 +18,7 @@ export class MasterService {
     this.userSource.next(user);
   }
 
-  isLoggedIn()
-  {
+  isLoggedIn(){
     return localStorage.getItem('userToken') != null;
   }
 
@@ -29,4 +29,13 @@ export class MasterService {
   getMenu(){
     return this.menuData;
   }
+
+  sendData(data:any){
+    this.payloadData = data;
+  }
+
+  getData(){
+    return this.payloadData;
+  }
+
 }
