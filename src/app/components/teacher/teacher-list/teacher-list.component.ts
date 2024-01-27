@@ -46,7 +46,7 @@ export class TeacherListComponent {
        let listofteachers = data.listofteachers.map((item:any) => ({...item, modeofteaching : JSON.parse(item.modeofteaching)}))
        //console.log(listofteachers)
         this.teacherList = listofteachers;
-        this.toastrService.success('Teacher list are fetched successfully')
+       // this.toastrService.success('Teacher list are fetched successfully')
       }
       
     },error:((err:any) =>{

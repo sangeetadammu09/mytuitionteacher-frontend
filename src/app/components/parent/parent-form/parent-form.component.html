@@ -45,15 +45,14 @@
           
             <div class="col-md-4 mb-3">
               <label for="phone">Contact<span style="color:red;">*</span></label>
-              <input type="text" class="form-control field-disabled" formControlName="contact" readonly />
-              
+              <input type="text" class="form-control field-disabled" formControlName="contact" readonly />           
             </div>
 
             <div class="col-md-4 mb-3">
               <label for="location">State<span style="color:red;">*</span></label>
               <select class="form-control form-select" formControlName="state"
               [ngClass]="{'is-invalid':(submitted && p['state'].errors) ||(p['state'].errors && p['state'].touched)}">
-                  <option selected>Select</option>
+                  <option value="" selected>Select</option>
                   <option *ngFor="let item of statesList" [value]="item.name">{{item.name}}</option>
               </select>
               <div *ngIf="(submitted && p['state'].errors) ||(p['state'].errors && p['state'].touched)" class="invalid-feedback">
@@ -100,7 +99,7 @@
               <label for="location">Grade<span style="color:red;">*</span></label>
               <select class="form-control form-select" id="exampleFormControlSelect1" formControlName="grade"
               [ngClass]="{'is-invalid':(submitted && p['grade'].errors) ||(p['grade'].errors && p['grade'].touched)}">
-                  <option disabled>Select</option>
+                  <option value="" disabled>Select</option>
                   <option *ngFor="let item of gradeList" [value]="item.name">{{item.name}}</option>
                   
                  
@@ -115,7 +114,7 @@
               <label for="location">Board<span style="color:red;">*</span></label>
               <select class="form-control form-select" id="exampleFormControlSelect1" formControlName="board"
               [ngClass]="{'is-invalid':(submitted && p['board'].errors) ||(p['board'].errors && p['board'].touched)}">
-                  <option disabled>Select</option>
+                  <option value="" disabled>Select</option>
                   <option *ngFor="let item of boardList" [value]="item.name">{{item.name}}</option>
                  
                 </select>
@@ -139,7 +138,7 @@
               <label for="location">No of days weekly<span style="color:red;">*</span></label>
               <select class="form-control form-select" id="exampleFormControlSelect1" formControlName="days"
                 [ngClass]="{'is-invalid':(submitted && p['days'].errors) ||(p['days'].errors && p['days'].touched)}">
-                  <option disabled>Select</option>
+                  <option value="" disabled>Select</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -195,7 +194,7 @@
               <label for="gender">Gender Preference<span style="color:red;">*</span></label>
               <select class="form-control form-select" id="gender" formControlName="gender"
               [ngClass]="{'is-invalid':(submitted && p['modeofteaching'].errors) ||(p['modeofteaching'].errors && p['modeofteaching'].touched)}">
-                <option disabled>Select</option>
+                <option value="" disabled>Select</option>
                 <option value="female">Female</option>
                 <option value="male">Male</option>
                 <option value="nopreference">No preference</option>
@@ -208,9 +207,9 @@
 
             <div class="col-md-4 mb-3">
               <label for="location">Details of the requirement</label>
-              <textarea type="text-area" class="form-control" rows="5" id="details" formControlName="details"
-              placeholder="Need home tutor for class 9 ICSE maths and science for 5 days weekly, 1.5hours daily. Timings can be 5 to 6:30pm.">
+              <textarea type="text-area" class="form-control" rows="5" id="details" formControlName="details">
               </textarea>
+              <!-- placeholder="Need home tutor for class 9 ICSE maths and science for 5 days weekly, 1.5hours daily. Timings can be 5 to 6:30pm." -->
             </div>
 
 
@@ -228,7 +227,7 @@
               <label for="budget type">Type <span style="color:red;">*</span></label>
               <select class="form-control form-select" id="budgettype" formControlName="budgettype"
               [ngClass]="{'is-invalid':(submitted && p['budgettype'].errors) ||(p['budgettype'].errors && p['budgettype'].touched)}">
-                  <option disabled>Select</option>
+                  <option value="" disabled>Select</option>
                   <option value="per hour">per hour</option>
                   <option value="per month">per month</option>
                   <option value="one time pay">one time pay</option>
@@ -239,17 +238,21 @@
              </div>
 
             </div>
-            <div class="col-md-4 mb-3">
-              <label for="upload">Upload Reference(if required)</label>
+            <div class="col-md-4 mb-3" *ngIf="imageUrl == ''">
+              <label for="upload">Upload Reference(optional)</label>
               <input class="form-control" type="file" id="formFile" formControlName="imageurl" 
               (change)="onFileSelect($event)"  name="document">
-              <!-- <div *ngIf="(submitted && p['imageurl'].errors) ||(p['imageurl'].errors && p['imageurl'].touched)" class="invalid-feedback">
-                <div *ngIf="p['imageurl'].errors['required']">Document is required</div>
-              </div> -->
+            </div>
+            <div class="col-md-4 mb-3" *ngIf="imageUrl != ''">
+              <label for="upload">Reupload Reference</label>
+              <div class="col-lg-12 mb-3">
+                <a class="image-hyperlink">{{imageUrl}} 
+                  <span (click)="reuploadImage()"><img src="../../../../assets/images/icons/reset_icon.png" alt="Reupload"> </span></a>
+            </div>
             </div>
 
            <div class="modal-footer mb-3">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">{{parentSubmitBtnText}}</button>
            </div>
 
          </form>    

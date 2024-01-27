@@ -48,11 +48,11 @@ export class ParentListComponent {
     pagination.startNumber = this.page;
     pagination.pageSize = this.tableSize;
     this.parentService.listofteachingjobs(pagination).subscribe((data:any) => {
-    //  console.log(data)
-       data.listofparents.forEach((data:any) => {
-        data.additionalDetails = data.details != "" ? data.details : "-"
+     console.log(data)
+       data.data.forEach((x:any) => {
+        x.additionalDetails = x.details != "" ? x.details : "-"
        })
-      this.listofTeachingJobs = data.listofparents;
+      this.listofTeachingJobs = data.data;
       this.count = data.total;
 
       
@@ -105,8 +105,8 @@ export class ParentListComponent {
   }
 
 
-  moveToTeacherForm(){
-    this.router.navigate(['/teacher-form'])
+  moveToRegisterForm(){
+    this.router.navigate(['/register'])
   }
 
   onTableDataChange(event: any) {

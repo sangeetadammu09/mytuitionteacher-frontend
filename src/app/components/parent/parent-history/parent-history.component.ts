@@ -44,10 +44,13 @@ export class ParentHistoryComponent {
   }
 
   getTuitionsList(){
-    this.parentService.listoftuitionsByParentId(this.user.id,this.pagination).subscribe({next: (data:any)=>{
+    let payload : any = {};
+    payload.pagination = this.pagination;
+    payload.filterCondition = {'parentid' : this.user.id};
+
+    this.parentService.searchtuitions(payload).subscribe({next: (data:any)=>{
       if(data.status == 200){
        let tuitions = data.data.map((item:any) => ({...item, modeofteaching : JSON.parse(item.modeofteaching)}))
-     //  console.log(tuitions)
         this.tuitionList = tuitions;
         console.log(this.tuitionList)
       //  this.toastrService.success('Tutions list are fetched successfully')

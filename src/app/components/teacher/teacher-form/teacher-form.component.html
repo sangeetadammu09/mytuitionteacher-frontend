@@ -6,39 +6,21 @@
           <div class="col-md-12">
               <h1 class="hmt-parent">Are you looking for part time home/online teacher jobs? Register your tutoring details below FREELY to find suitable.!!</h1>
           
-           <form class="row parentForm" [formGroup]="addTeacherForm" (ngSubmit)="submitTeacherForm()">
-              <div class="col-lg-4 mb-3">
-                  <label for="name">Full Name<span style="color:red;">*</span></label>
-                  <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid':
-                  (submitted && t['name'].errors) ||(t['name'].errors && t['name'].touched)}" />
-                  <div *ngIf="(submitted && t['name'].errors) ||(t['name'].errors && t['name'].touched)" class="invalid-feedback">
-                      <div *ngIf="t['name'].errors['required']">
-                          Name is required
-                      </div>
-                 </div>
-
-                </div>
-
-                <div class="col-lg-4 mb-3">
-                  <label for="email">Email<span style="color:red;">*</span></label>
-                    <input type="text" class="form-control" formControlName="email" (change)="checkPhoneEmail($event)" [ngClass]="{'is-invalid':
-                  (submitted && t['email'].errors) ||(t['email'].errors && t['email'].touched)}" />
-                  <div *ngIf="(submitted && t['email'].errors) ||(t['email'].errors && t['email'].touched)" class="invalid-feedback">
-                      <div *ngIf="t['email'].errors['required']">Email is required</div>
-                      <div *ngIf="t['email'].errors['email']">Email is not valid</div>
-                 </div>
-                </div>
+           <form class="row parentForm" [formGroup]="teacherForm" (ngSubmit)="submitTeacherForm()">
+            <div class="col-md-4 mb-3">
+              <label for="name">Name<span style="color:red;">*</span></label>
+              <input type="text" class="form-control field-disabled" formControlName="name" readonly />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="email">Email Address<span style="color:red;">*</span></label>
+                <input type="text" class="form-control field-disabled" formControlName="email" readonly/>
               
-                 <div class="col-lg-4 mb-3">
-                  <label for="phone">Contact<span style="color:red;">*</span></label>
-                  <input type="text" class="form-control" formControlName="contact" (change)="checkPhoneEmail($event)" [ngClass]="{'is-invalid':
-                  (submitted && t['contact'].errors) ||(t['contact'].errors && t['contact'].touched)}" />
-                  <div *ngIf="(submitted && t['contact'].errors) ||(t['contact'].errors && t['contact'].touched)" class="invalid-feedback">
-                      <div *ngIf="t['contact'].errors['required']">Contact is required</div>
-                      <div *ngIf="t['contact'].errors['pattern']">Only Number are allowed</div>
-                      <div *ngIf="t['contact'].errors['maxlength']">Only 10 digits are allowed</div>
-                 </div>
-                </div>
+            </div>
+          
+            <div class="col-md-4 mb-3">
+              <label for="phone">Contact<span style="color:red;">*</span></label>
+              <input type="text" class="form-control field-disabled" formControlName="contact" readonly />           
+            </div>
 
                 <div class="col-lg-4 mb-3">
                   <label for="location">State<span style="color:red;">*</span></label>
@@ -125,7 +107,7 @@
                   <div class="form-group hmt-checkbox">
                      <div class="form-check form-check-inline" *ngFor="let item of modeofTeachingArr">
                           <input class="form-check-input" [value]="item.value" [checked]="item.checked"
-                          [ngClass]="{'is-invalid':(submitted && t['modeofteaching'].errors) ||(t['modeofteaching'].errors && t['modeofteaching'].touched)}"
+                           [ngClass]="{'is-invalid':(submitted && t['modeofteaching'].errors) ||(t['modeofteaching'].errors && t['modeofteaching'].touched)}"
                             type="checkbox" (change)="onModeChange($event)" formArrayName="modeofteaching">
                           <label class="form-check-label" for="inlineCheckbox1">{{item.label}}</label>
                       </div>                     
@@ -141,11 +123,11 @@
                   <label for="exampleInputEmail1">Have Vehicle<span style="color:red;">*</span></label>
                   <div class="form-group hmt-checkbox">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio"  formControlName="vehicle" name="inlineRadioOptions" id="inlineRadio1" value="yes">
+                    <input class="form-check-input" type="radio"  formControlName="vehicle" name="vehicle" id="inlineRadio1" value="yes">
                     <label class="form-check-label" for="inlineRadio1">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio"  formControlName="vehicle" name="inlineRadioOptions" id="inlineRadio2" value="no">
+                    <input class="form-check-input" type="radio"  formControlName="vehicle" name="vehicle" id="inlineRadio2" value="no">
                     <label class="form-check-label" for="inlineRadio2">No</label>
                   </div>
                  
@@ -198,21 +180,23 @@
                 </div>
 
                 <div class="col-lg-4 mb-3">
+                  <label for="formFile" class="form-label">Upload ID Proof</label>
+                  <input class="form-control" type="file" id="formFile" (change)="onFileSelect($event)" 
+                  formControlName="imageurl"  name="doument"
+                  [ngClass]="{'is-invalid':(submitted && t['imageurl'].errors) ||(t['imageurl'].errors && t['imageurl'].touched)}">
+                  <div *ngIf="(submitted && t['imageurl'].errors) ||(t['imageurl'].errors && t['imageurl'].touched)" class="invalid-feedback">
+                    <div *ngIf="t['imageurl'].errors['required']">ID proof is required</div>
+                  </div>
+              </div>  
+
+                <div class="col-lg-4 mb-3">
                   <label for="exampleInputEmail1">About Me<span style="color:red;">*</span></label>
                   <textarea type="text-area" class="form-control" rows="5" id="aboout" formControlName="about"
                   placeholder="I am Rohit. My Qualification is BTech. I have 5 years of experience in teaching maths and science upto 10th Standard.">
                   </textarea>
                 </div>
 
-                <div class="col-lg-4 mb-3">
-                    <label for="formFile" class="form-label">Upload ID Proof</label>
-                    <input class="form-control" type="file" id="formFile" (change)="onFileSelect($event)" 
-                    formControlName="imageurl"  name="doument"
-                    [ngClass]="{'is-invalid':(submitted && t['imageurl'].errors) ||(t['imageurl'].errors && t['imageurl'].touched)}">
-                    <div *ngIf="(submitted && t['imageurl'].errors) ||(t['imageurl'].errors && t['imageurl'].touched)" class="invalid-feedback">
-                      <div *ngIf="t['imageurl'].errors['required']">ID proof is required</div>
-                    </div>
-                </div>  
+                
 
                <div class="modal-footer mb-3">
                       <button type="submit" class="btn btn-primary">Submit</button>
@@ -245,7 +229,7 @@
         <p>Your details are saved successfully</p>
        <p>We Will update you as soon as possible.</p>
        <div class="modal-footer mb-3">
-        <button type="submit" class="btn btn-primary" (click)="closeTeacherConfimModal()">Okay</button>
+        <button type="submit" class="btn btn-primary">Okay</button>
         </div>
       </div>
     </div>

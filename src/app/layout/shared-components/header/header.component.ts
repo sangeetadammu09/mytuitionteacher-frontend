@@ -9,8 +9,10 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HeaderComponent implements OnInit {
     public pushRightClass: string;
-
     user = JSON.parse(localStorage.getItem('user'));
+    greetingtxt = '';
+    greetingicon = '';
+
     constructor(private translate: TranslateService, public router: Router) {
         this.router.events.subscribe((val) => {
             if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {
@@ -21,6 +23,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
         this.pushRightClass = 'push-right';
+        this.greetingMessage();
     }
 
     isToggled(): boolean {
@@ -46,4 +49,30 @@ export class HeaderComponent implements OnInit {
     changeLang(language: string) {
         this.translate.use(language);
     }
+
+    greetingMessage(){
+        var today = new Date();
+        var hourNow = today.getHours();
+
+        if (hourNow < 12){
+        this.greetingtxt = "Good Morning";
+        this.greetingicon = "fa fa-coffee";
+        }
+        else if (hourNow < 20){
+        this.greetingtxt = 'Good afternoon!';
+        this.greetingicon = "fa fa-sun-o";
+        }
+        else if (hourNow < 24){
+        this.greetingtxt = "Good evening"
+        this.greetingicon = "fa fa-moon-o";
+        }
+        else {
+        this.greetingtxt = "Welcome";
+        }
+
+        console.log(this.greetingtxt);
+
+            }
+
+        
 }

@@ -192,6 +192,14 @@ table thead tr th {
     border: 1px #9585876e solid;
     background-color: #9585876e;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+.image-hyperlink {
+    text-decoration: none;
+    color: rgb(6, 50, 196);
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .statusopen{
@@ -244,7 +252,7 @@ table.autowidth td{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 200px;
+    max-width: 150px;
   
 }
 

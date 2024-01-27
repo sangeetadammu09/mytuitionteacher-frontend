@@ -15,19 +15,23 @@ export class ParentService {
   }
 
   listofteachingjobs(pagination: any){
-    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.listofteachingjobsbypage,pagination)
+    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.listofteachingjobs,pagination)
   }
 
-  listoftuitionsByParentId(id:any,pagination: any){
-    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.listoftuitionsByParentId+id,pagination)
+  listoftuitionsById(id:any,pagination: any){
+    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.listoftuitionsById+id,pagination)
+  }
+
+  searchtuitions(data: any){
+    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.search,data)
   }
 
   singleparent(_id:string){
     return this._http.get<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.parentbyid+_id)
   }
 
-  updateparent(parent: any){
-    return this._http.put<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.parentupdate, parent)
+  updateparent(_id:string,parent: any){
+    return this._http.put<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.parentupdate+_id, parent)
   }
   
   deleteparent(_id:string){

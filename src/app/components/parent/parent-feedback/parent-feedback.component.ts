@@ -89,7 +89,7 @@ export class ParentFeedbackComponent {
   }
 
   getTuitionsList(){
-    this.parentService.listoftuitionsByParentId(this.user.id,this.pagination).subscribe({next: (data:any)=>{
+    this.parentService.listoftuitionsById(this.user.id,this.pagination).subscribe({next: (data:any)=>{
       if(data.status == 200){
        let tuitions = data.listofparents.map((item:any) => ({...item, modeofteaching : JSON.parse(item.modeofteaching), 
            title : item.grade+' '+item.subjects}))

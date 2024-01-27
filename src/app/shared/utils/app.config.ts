@@ -26,11 +26,12 @@ export const APP_DI_CONFIG: any = {
     },
     Parent:{
       form : "parent/form",
-      listofteachingjobs : "parent/listofteachingjobsbypage",
-      listoftuitionsByParentId : "parent/listoftuitionsbyparentid/",
+      listofteachingjobs : "parent/listoftuitions",
+      listoftuitionsById : "parent/listoftuitionsbyid/",
       parentbyid : "parent/",
+      search : "parent/search",
       checkphoneemail : "parent/check/",
-      parentupdate : "parent/update",
+      parentupdate : "parent/update/",
       parentdelete : "parent/delete"
     },
     Teacher:{

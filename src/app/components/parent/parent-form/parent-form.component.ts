@@ -31,10 +31,13 @@ export class ParentFormComponent implements OnInit {
   gradeList = Grade.data;
   modeofTeachingArr = ModeofTeachingArr.data;
   selectedFile: any;
+  tuitionData :any;
   selectedFileName = "";
   title = 'Tuition Form';
   breadcrumb = ['Dashboard', 'Parent', 'Tuition Form'];
   user = JSON.parse(localStorage.getItem('user'));
+  parentSubmitBtnText = 'Submit';
+  imageUrl = '';
 
   // convenience getter for easy access to form fields
   get p() { return this.parentForm.controls; };
@@ -55,7 +58,7 @@ export class ParentFormComponent implements OnInit {
       board: ['', Validators.required],
       subjects: ['', Validators.required],
       details: [''],
-      modeofteaching: [, Validators.required],
+      modeofteaching: [{id: 1, label: 'Home', value: 'home', checked: true}, Validators.required],
       days: ['', Validators.required],
       hours: ['', Validators.required],
       time: ['', Validators.required],
@@ -77,29 +80,27 @@ export class ParentFormComponent implements OnInit {
 
 
   getParentDetails(){
-    // console.log(this.user, 'user');
-    let tuitionData = this.masterService.getData();
-    console.log(tuitionData,'data')
+    this.tuitionData = this.masterService.getData();
+   // console.log(this.tuitionData,'data')
     this.commonService.userById(this.user.id).subscribe({next: (data:any)=>{
       if(data.status == 200){
        // this._toastrService.success('Profile successfully!');
-       this.parentData = data.singleuser;
-       console.log(this.parentData)
-       if(tuitionData == undefined){
+       this.parentData = data.singleuser;   
+       if(this.tuitionData == undefined && this.parentData){
        this.parentForm.patchValue({
         parentid: this.parentData._id,
         name: this.parentData.firstname +' '+ this.parentData.lastname,
         email : this.parentData.email,
         contact: this.parentData.mobile,
-        //location: "",
-        // state: "Andhra Pradesh",
-        // city: "Vizag",
-        // lookingfor: "tutor",
+        // location: "HSR Layout",
+        // state: "Karnataka",
+        // city: "Bangalore",
+        // lookingfor: "tutor", 
         // grade: "Class 4",
         // board: "CBSE",
         // subjects: "maths,science",
         // details: 'looking for teacher',
-        // modeofteaching: "home",
+        // //modeofteaching: "home",
         // days: "5",
         // hours: "1.5hours",
         // time: "5pm",
@@ -107,9 +108,37 @@ export class ParentFormComponent implements OnInit {
         // budget: "5000",
         // budgettype: "per month"
   
-      })
+       })
       }else{
-        this.parentData.patchValue(tuitionData)
+       
+        this.parentSubmitBtnText = "Update";
+        this.parentForm.patchValue({
+          parentid: this.tuitionData.parentid,
+          name: this.tuitionData.name,
+          email : this.tuitionData.email,
+          contact: this.tuitionData.mobile,
+          location: this.tuitionData.location,
+          state: this.tuitionData.state,
+          city: this.tuitionData.city,
+          lookingfor: this.tuitionData.lookingfor,
+          grade: this.tuitionData.grade,
+          board: this.tuitionData.board,
+          subjects: this.tuitionData.subjects,
+          details: this.tuitionData.details,
+          days: this.tuitionData.days,
+          hours: this.tuitionData.hours,
+          time: this.tuitionData.time,
+          gender: this.tuitionData.gender,
+          budget: this.tuitionData.budget,
+          budgettype: this.tuitionData.budgettype,
+          isActive : this.tuitionData.isActive,
+          status : this.tuitionData.status,
+         // imageurl: this.tuitionData.imageurl
+    
+         })
+
+        this.imageUrl = this.parentData.imageurl.substring(this.tuitionData.imageurl.lastIndexOf('/')+1);
+        this.modeofTeachingArr = this.tuitionData.modeofteaching;
       }
             
       }      
@@ -138,9 +167,26 @@ export class ParentFormComponent implements OnInit {
 
   }
 
+  onModeChange(event:any){
+    //let temp = this.modeofTeachingArr.map((x:any)=>{ x.value == event.target.value ? x.checked = event.target.checked : x.checked });
+     this.modeofTeachingArr.forEach((x:any)=>{
+      if( x.value == event.target.value){
+        x.checked = event.target.checked
+      }
+    })
+    console.log(this.modeofTeachingArr)
+    console.log(this.parentForm.controls['modeofteaching'].value);
+}
+
+
+reuploadImage(){
+  this.imageUrl = '';
+
+}
+
   submitParentForm() {
     this.submitted = true;
-    console.log(this.parentForm.value)
+    console.log(this.parentForm.value);
     if (this.parentForm.valid){
       let payload = this.parentForm.value;
       let formData = new FormData();
@@ -154,12 +200,14 @@ export class ParentFormComponent implements OnInit {
       if(this.selectedFileName){
         formData.append('image', this.selectedFile, this.selectedFileName);
       }
-      
-      this.parentService.createparent(formData).subscribe({
-        next: (data: any) => {
+
+     // let id = this.parentForm.controls['_id'].value;
+      if(this.tuitionData == undefined){
+     // formData.delete('_id');   
+      this.parentService.createparent(formData).subscribe({next: (data: any) => {
           if (data.status == 200) {
           //  $('#parentModal').modal('show')
-            this.router.navigate(['/parent-history'])
+            this.router.navigate(['/dashboard/parent/parent-history'])
             this.authService.parentEmail(payload).subscribe((data: any) => {
               console.log(data, 'email')
             });
@@ -178,6 +226,31 @@ export class ParentFormComponent implements OnInit {
 
         })
       })
+     }else{
+      
+      this.parentService.updateparent(this.tuitionData._id,formData).subscribe({next: (data: any) => {
+          if (data.status == 200) {
+          //  $('#parentModal').modal('show')
+            this.router.navigate(['/dashboard/parent/parent-history'])
+            this.authService.parentEmail(payload).subscribe((data: any) => {
+              console.log(data, 'email')
+            });
+            this._toastrService.success('Your details are updated successfully')
+          }
+
+        }, error: ((err: any) => {
+          let error = this.errHandler.handleError(err);
+          //console.log(error)
+          if (error.status == 401) {
+            this._toastrService.error('Token Expired');
+          }
+          if (error.status == 500) {
+            this._toastrService.error('Server Error.Failed to update parent');
+          }
+
+        })
+      })
+     }
 
     } else {
       return;

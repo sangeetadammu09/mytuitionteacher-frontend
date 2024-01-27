@@ -11,15 +11,8 @@ export class TeacherService {
 
   constructor(private _http: HttpClient) { }
 
-  teacherregister(teacher: any){
-    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Teacher.register,teacher)
-   }
  
-  teacherlogin(teacher: any){
-     return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Teacher.login, teacher)
-   }
-
-   createteacher(teacher: any){
+  createteacher(teacher: any){
     return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Teacher.form,teacher)
   }
 
