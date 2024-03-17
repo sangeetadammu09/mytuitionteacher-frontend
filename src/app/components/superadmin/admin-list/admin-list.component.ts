@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorhandlerService } from '../../../../app/shared/services/errorhandler.service';
-import { AdminService } from '../../../../app/shared/services/admin.service';
 import { CommonService } from '../../../../app/shared/services/common.service';
+import { PagerService } from '../../../../app/shared/services/pager.service';
 
 
 @Component({
@@ -27,8 +27,7 @@ export class AdminListComponent {
   tableSize: number[] = [10,20,30];
   sortProperty: string = 'id';
   sortOrder = 1;
-  tableColumns = ['SNo.','Reg. Date','Name', 'Location', 'Qualification', 'Mode','Exp.','Subjects','Charge', 'Vehicle', 'Action'];
-  rolesList = [];
+  tableColumns = ['SNo.','Reg.Date','Name', 'Location', 'Qualification', 'Mode','Exp.','Subjects','Charge', 'Vehicle', 'Action'];
   registerForm :FormGroup;
   get f() { return this.registerForm.controls};
   submitted = false;
@@ -38,17 +37,16 @@ export class AdminListComponent {
   @ViewChild('inputpassword') inputpassword!:ElementRef;
 
 
-  constructor(private fb : FormBuilder, private adminService : AdminService,
-              private router : Router, private errHandler : ErrorhandlerService,
+  constructor(private fb : FormBuilder,private router : Router, private errHandler : ErrorhandlerService,private filterService : PagerService,
               private toastrService : ToastrService,private _fb: FormBuilder, private _commonService: CommonService){ 
                 this.registerForm = this._fb.group({
                   firstname : ['', Validators.required],
                   lastname : ['', Validators.required],
                   email : ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
                   mobile : ['', [Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-                  role : ['', Validators.required],
-                  location: ['empty', Validators.required],
-                  sociallinks:  ['empty', Validators.required],
+                  role : ['subadmin'],
+                  location: ['empty'],
+                  sociallinks:  ['empty'],
                   password : ['', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
                   cpass : ['', Validators.required],    
                   isActive : [true],
@@ -58,7 +56,7 @@ export class AdminListComponent {
 
 
   ngOnInit(): void {
-    this.getTeachersList();
+    this.getSubAdminList();
     this.getRouteDetails();
   }
 
@@ -67,12 +65,14 @@ export class AdminListComponent {
     this.breadcrumb = this.breadcrumb.split('/');
   }
 
-  getTeachersList(){
+  getSubAdminList(){
     this.payload.startNumber = 1;
     this.payload.pageSize = 10;
-    this.adminService.getAllSubAdmins(this.payload).subscribe({next: (data:any)=>{
+    let role = 'subadmin';
+    let filter = this.filterService.GetFilterConditionPagination('role', 'subadmin',this.payload.pageSize, this.payload.startNumber )
+    this._commonService.searchUser(filter).subscribe({next: (data:any)=>{
       if(data.status == 200){
-        console.log(data)
+        console.log(data.data)
        //console.log(listofteachers)
       //  this.subAdminList = listofteachers;
       }
@@ -141,7 +141,8 @@ export class AdminListComponent {
     //  formData.append('image', this.selectedFile, this.selectedFileName);
         this._commonService.register(formData).subscribe({next: (data:any)=>{
           if(data.status == 200){
-            this.toastrService.success('Registered successfully!');
+            this.toastrService.success('Sub Admin Registered successfully!');
+            this.getSubAdminList();
           }      
         },error:((err:any) =>{
           let error =  this.errHandler.handleError(err);
@@ -149,6 +150,9 @@ export class AdminListComponent {
           if(error.status == 401) {
            this.toastrService.error('Token Expired');
           }
+          if(error.status == 400) {
+            this.toastrService.error('Please Enter All the Mandatory Fields!');
+           }
           if(error.status == 500){
            this.toastrService.error('Server Error.Failed to register');
           }

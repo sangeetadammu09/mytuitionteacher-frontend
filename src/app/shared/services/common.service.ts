@@ -25,5 +25,9 @@ export class CommonService {
     return this.http.put<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Common.update+`${id}`, data)
   }
 
+  searchUser(data: any){
+    return this.http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Common.search,data)
+  }
+
 
 }

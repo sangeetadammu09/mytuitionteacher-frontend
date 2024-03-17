@@ -56,5 +56,30 @@ export class PagerService {
         endIndex: endIndex,
         pages: pages
     };
+  }
+
+  public GetFilterConditionPagination(key:any ,value:any,pageSize:number,startNumber:number){
+    return this.CreateFilterCondition(key,value,pageSize,startNumber);
+  }
+
+  private CreateFilterCondition(key:any, value:any,pageSize: number ,startNumber:number){
+    var filterCond = new FilterCondition();
+    let filter:any = {};
+    filter[key] = value;
+    filterCond.filterCondition = filter;
+    filterCond.pageSize = pageSize;
+    filterCond.startNumber = startNumber;
+  
+    return filterCond;
+  }
+  
+ 
 }
+
+export class FilterCondition {
+    filterCondition = {};
+    pageSize: number = 10;
+    startNumber: number = 1;
+
 }
+

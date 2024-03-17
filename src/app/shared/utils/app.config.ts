@@ -10,6 +10,7 @@ export const APP_DI_CONFIG: any = {
       register : "register", 
       userbyid : "user/",
       update : "user/update/",
+      search : "user/search",
     },
     Feedback:{
       create : "feedback/add", 
@@ -17,12 +18,6 @@ export const APP_DI_CONFIG: any = {
       listbyparentid : "feedback/listoffeedbacksbyparentid/",
       update : "feedback/update",
       delete : "feedback/delete",
-    },
-    SubAdmin:{
-      register : "subadmin/form", 
-      list: "subadmin/listofsubAdmin",
-      update : "subadmin/update",
-      delete : "subadmin/delete",
     },
     Parent:{
       form : "parent/form",
