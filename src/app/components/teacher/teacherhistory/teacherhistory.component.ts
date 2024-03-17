@@ -30,7 +30,7 @@ export class TeacherhistoryComponent {
   sortOrder = 1;
   user = JSON.parse(localStorage.getItem('user'));
   tableColumns = ['SNo.','Reg. Date','Status', 'Location', 'Looking for', 'Mode','Details','Grade','Board', 'Subjects', 'Duration',
-                  'Budget', 'Gender', 'Action']
+                  'Budget', 'Gender', 'Action'];
 
 
   constructor(private fb : FormBuilder, private parentService : ParentService,

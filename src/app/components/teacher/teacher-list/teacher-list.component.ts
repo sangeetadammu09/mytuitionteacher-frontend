@@ -13,7 +13,7 @@ import { TeacherService } from '../../../../app/shared/services/teacher.service'
 export class TeacherListComponent {
 
   title = 'Teacher List';
-  breadcrumb = ['Dashboard', 'Parent', 'Teacher List'];
+  breadcrumb :any;
   startNumber = 1;
   pageSize = 10;
   payload :any = {};
@@ -26,6 +26,7 @@ export class TeacherListComponent {
   tableSize: number[] = [10,20,30];
   sortProperty: string = 'id';
   sortOrder = 1;
+  tableColumns = ['SNo.','Reg. Date','Name', 'Location', 'Qualification', 'Mode','Exp.','Subjects','Charge', 'Vehicle', 'Action'];
 
 
   constructor(private fb : FormBuilder, private teacherService : TeacherService,
@@ -35,7 +36,12 @@ export class TeacherListComponent {
 
   ngOnInit(): void {
     this.getTeachersList();
+    this.getRouteDetails();
+  }
 
+  getRouteDetails(){
+    this.breadcrumb = this.router.url.replace('/','');
+    this.breadcrumb = this.breadcrumb.split('/');
   }
 
   getTeachersList(){
@@ -92,6 +98,10 @@ export class TeacherListComponent {
 
   searchTeacher(text:any){
 
+  }
+
+  shortListTeacherModal(item){
+    console.log(item.id, 'teacher id')
   }
 
 }

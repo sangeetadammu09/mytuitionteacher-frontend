@@ -18,18 +18,7 @@
         <table class="table table-bordered table-hover">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">S No.</th>
-              <th scope="col">Reg. Date</th>
-              <th scope="col">Name</th>
-              <th scope="col">Location</th>
-              <th scope="col">Qualification</th>
-              <th scope="col">Mode</th>
-              <th scope="col">Exp.</th>
-              <th scope="col">Subjects</th>    
-              <th scope="col">Charge</th>
-              <th scope="col">Vehicle</th>
-              <th scope="col">Action</th>
-              
+              <th scope="col" *ngFor="let item of tableColumns">{{item}}</th>  
             </tr>
           </thead>
           <tbody *ngFor="let item of teacherList| paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems } ; let i = index">
@@ -54,7 +43,7 @@
                 <i class="fa fa-circle status-false"></i>
               </td>
   
-              <td data-bs-toggle="modal" data-bs-target="#shortlistTeacherModal" (click)="openShortListTeacherModal(item)"  >
+              <td data-bs-toggle="modal" data-bs-target="#shortlistTeacherModal" (click)="shortListTeacherModal(item)">
                 <img src="../../../../assets/images/icons/user_checked_icon.png" alt="ShortList Teacher">
               </td>          
             </tr>
@@ -92,8 +81,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
           </button>
         </div>
         <div class="modal-body">

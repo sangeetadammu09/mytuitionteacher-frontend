@@ -112,7 +112,7 @@ export const AdminMenuList = {
             name: 'Parent List',
             icon : 'fa-chalkboard',
             isActive: true,
-            url: 'tuitions-list',
+            url: 'tuition-list',
             subMenus: []
         },
         {
@@ -120,7 +120,7 @@ export const AdminMenuList = {
             name: 'Teacher List',
             icon : 'fa-user',
             isActive: true,
-            url: 'teachers-list',
+            url: 'teacher-list',
             subMenus: []
         },
         {
@@ -128,11 +128,27 @@ export const AdminMenuList = {
             name: 'Admins List',
             icon : 'fa-user',
             isActive: true,
-            url: 'admins-list',
+            url: 'sub-admin-list',
             subMenus: []
         },
         {
             id: 4,
+            name: 'Feedback List',
+            icon : 'fa-pencil',
+            isActive: true,
+            url: 'feedback-list',
+            subMenus: []
+        },
+        {
+            id: 5,
+            name: 'Enquiry List',
+            icon : 'fa-book',
+            isActive: true,
+            url: 'contact-list',
+            subMenus: []
+        },
+        {
+            id: 6,
             name: 'List of Payments',
             icon : 'fa-money',
             isActive: true,
@@ -160,7 +176,7 @@ export const SubAdminMenuList = {
             name: 'Teachers List',
             icon : 'fa-chalkboard',
             isActive: true,
-            url: 'teachers-list',
+            url: 'teacher-list',
             subMenus: []
         },
         {
@@ -168,7 +184,7 @@ export const SubAdminMenuList = {
             name: 'Tuitions List',
             icon : 'fa-user',
             isActive: true,
-            url: 'tuitions-list',
+            url: 'tuition-list',
             subMenus: []
         },
         {

@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../shared/services/auth.service';
 import { ParentService } from '../../../shared/services/parent.service';
 import { TeacherService } from '../../../shared/services/teacher.service';
+import { Pagination } from '../../../../app/shared/utils/pagination';
 
 @Component({
   selector: 'app-parent-list',
@@ -19,10 +20,10 @@ export class ParentListComponent {
   appliedTeacherDetails: any = {};
   noTeacherFoundMsg: any;
   interestedTuition: any = {};
-   // Pagination parameters.
   page: number = 1;
   count: number = 0;
   tableSize: number = 8;
+  pagination = Pagination;
   @ViewChild('closeJobApplyModal') closeJobApplyModal! : ElementRef;
 
    // convenience getter for easy access to form fields
@@ -44,10 +45,7 @@ export class ParentListComponent {
   }
 
   getAllTeachingJobs(){
-    let pagination:any={};
-    pagination.startNumber = this.page;
-    pagination.pageSize = this.tableSize;
-    this.parentService.listofteachingjobs(pagination).subscribe((data:any) => {
+    this.parentService.listoftuitions(this.pagination).subscribe((data:any) => {
      console.log(data)
        data.data.forEach((x:any) => {
         x.additionalDetails = x.details != "" ? x.details : "-"

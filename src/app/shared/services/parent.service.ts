@@ -14,8 +14,8 @@ export class ParentService {
     return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.form,parent)
   }
 
-  listofteachingjobs(pagination: any){
-    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.listofteachingjobs,pagination)
+  listoftuitions(pagination: any){
+    return this._http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.Parent.listoftuitions,pagination)
   }
 
   listoftuitionsById(id:any,pagination: any){

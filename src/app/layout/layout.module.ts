@@ -10,7 +10,7 @@ import { ComponentModule } from '../components/component.module';
 
 @NgModule({
     imports: [CommonModule, LayoutRoutingModule, TranslateModule, 
-        NgbDropdownModule, ComponentModule],
+            NgbDropdownModule, ComponentModule],
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent]
 })
 export class LayoutModule {}

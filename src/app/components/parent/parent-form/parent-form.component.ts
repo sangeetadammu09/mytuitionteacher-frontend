@@ -38,6 +38,8 @@ export class ParentFormComponent implements OnInit {
   user = JSON.parse(localStorage.getItem('user'));
   parentSubmitBtnText = 'Submit';
   imageUrl = '';
+  cityList :any[] = [];
+  disableSelectCityField = false;
 
   // convenience getter for easy access to form fields
   get p() { return this.parentForm.controls; };
@@ -154,6 +156,22 @@ export class ParentFormComponent implements OnInit {
       
    })})
 
+  }
+
+  fetchCityList(value:any){
+    let cityList = this.statesList.filter((x:any)=> x.name == value);
+    this.cityList = cityList[0].cities
+    // console.log('City', this.cityList)
+     if(cityList[0].union == true){
+      this.disableSelectCityField = true;
+      this.parentForm.controls['city'].setValue('')
+     // this.parentForm.get('city').disable();
+    }else{
+      //this.parentForm.get('city').enable();
+      this.disableSelectCityField = false;
+
+      }
+     
   }
 
 

@@ -9,6 +9,4 @@ export class NotFoundComponent implements OnInit {
     constructor() {}
 
     ngOnInit() {}
-
-  list = ['Parking','Vehicle','Contact']
 }

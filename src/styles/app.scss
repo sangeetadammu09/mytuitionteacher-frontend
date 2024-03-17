@@ -189,10 +189,17 @@ table thead tr th {
     color: #000000;
     font-weight: 600;
     padding: 6px;
-    border: 1px #9585876e solid;
+    border: none;
     background-color: #9585876e;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.custom-hyperlink:hover {
+   
+    color: #000000;
+    background-color: #9585876e;
+    
 }
 
 .image-hyperlink {
@@ -217,11 +224,13 @@ table thead tr th {
     cursor: pointer;
     bottom: 50px;
     color: #999;
+    width: inherit;
    
 }
 
 .field-disabled {
     background-color: #ced4da;
+    cursor: no-drop;
 }
 
 

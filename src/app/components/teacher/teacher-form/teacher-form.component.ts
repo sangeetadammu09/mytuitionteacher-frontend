@@ -34,6 +34,8 @@ export class TeacherFormComponent implements OnInit {
   imageUrl = '';
   teacherData:any;
   tuitionData :any;
+  cityList :any[] = [];
+  disableSelectCityField = false;
 
    // convenience getter for easy access to form fields
    get t() { return this.teacherForm.controls; };
@@ -148,6 +150,22 @@ export class TeacherFormComponent implements OnInit {
       
    })})
 
+  }
+
+  fetchCityList(value:any){
+    let cityList = this.statesList.filter((x:any)=> x.name == value);
+    this.cityList = cityList[0].cities
+    // console.log('City', this.cityList)
+     if(cityList[0].union == true){
+      this.disableSelectCityField = true;
+      this.teacherForm.controls['city'].setValue('')
+     // this.parentForm.get('city').disable();
+    }else{
+      //this.parentForm.get('city').enable();
+      this.disableSelectCityField = false;
+
+      }
+     
   }
 
 

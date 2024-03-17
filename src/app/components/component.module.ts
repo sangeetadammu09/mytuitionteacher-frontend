@@ -24,6 +24,10 @@ import { SubadminDetailsComponent } from './subadmin/subadmin-details/subadmin-d
 import { SubadminPaymentComponent } from './subadmin/subadmin-payment/subadmin-payment.component';
 import { AdminListComponent } from './superadmin/admin-list/admin-list.component';
 import { PageTitleComponent } from './shared-components/page-title/page-title.component';
+import { TuitionListComponent } from './teacher/tuition-list/tuition-list.component';
+import { FeedbackListComponent } from './superadmin/feedback-list/feedback-list.component';
+import { ContactListComponent } from './superadmin/contact-list/contact-list.component';
+import { NotFoundComponent } from './shared-components/not-found/not-found.component';
 
 
 @NgModule({
@@ -36,7 +40,8 @@ import { PageTitleComponent } from './shared-components/page-title/page-title.co
     HomeComponent,ContactComponent,AboutComponent,LoginComponent,RegisterComponent,
     RegisteredTutorsComponent,TeacherFormComponent,ParentFormComponent,ParentDetailsComponent, TeacherListComponent, 
     ParentHistoryComponent, ParentFeedbackComponent, TeacherdetailsComponent, 
-    TeacherfeedbackComponent, TeacherhistoryComponent, ParentListComponent, AdminDetailsComponent, PaymentDetailsComponent, SubadminDetailsComponent, SubadminPaymentComponent, AdminListComponent, PageTitleComponent
+    TeacherfeedbackComponent, TeacherhistoryComponent, ParentListComponent, AdminDetailsComponent, PaymentDetailsComponent,
+     SubadminDetailsComponent, SubadminPaymentComponent, AdminListComponent, PageTitleComponent, TuitionListComponent, FeedbackListComponent, ContactListComponent,NotFoundComponent
   ]
 })
 

@@ -1,1 +1,222 @@
-<p>admin-list works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <app-page-title [pagetitle]="title" [breadcrumbLabel]="breadcrumb"></app-page-title>
+    </div>
+    <div class="row pt-3">
+        <div class="col-lg-6">
+          <h4>List of Sub Admins</h4>
+        </div>
+        <div class="col-lg-4">
+          <div class="input-group">
+            <input  class="form-control border-secondary border-right-0 rounded-0" type="search" [(ngModel)]="filterText"
+            placeholder="Search By Sub Admin Name" (change)="searchTeacher(filterText)">
+          </div>
+        </div>
+        <div class="col-lg-2">
+          <button type="button" class="btn btn-primary"
+          data-bs-toggle="modal" data-bs-target="#addSubAdminModal" >Add Sub Admin</button>
+        </div>
+        
+      </div>
+      <div class="table-responsive  py-3" *ngIf="subAdminList.length > 0">
+        <table class="table table-bordered table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col" *ngFor="let item of tableColumns">{{item}}</th>  
+            </tr>
+          </thead>
+          <tbody *ngFor="let item of subAdminList| paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems } ; let i = index">
+            <tr>
+              <td  scope="col">{{itemsPerPage*(currentPage-1)+i+1}}</td>
+              <td  scope="col">{{item.createdAt | date:'dd/MM/yyyy'}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.city}} {{item.state}}</td>
+              <td>{{item.qualification}}</td> 
+              <td>
+                <ng-container *ngFor="let x of item.modeofteaching">
+                    <span>{{x.label}}, </span> 
+                  </ng-container>
+              </td>                
+              <td>{{item.teachingexp}}</td>  
+              <td>{{item.subjects}}</td>
+              <td>{{item.charge}} {{item.chargeType}}</td>
+              <td *ngIf="item.vehicle == 'yes'">
+                <i class="fa fa-circle status-true"></i>
+              </td>
+              <td *ngIf="item.vehicle == 'no'">
+                <i class="fa fa-circle status-false"></i>
+              </td>
+  
+              <td data-bs-toggle="modal" data-bs-target="#shortlistTeacherModal" (click)="shortListTeacherModal(item)">
+                <img src="../../../../assets/images/icons/user_checked_icon.png" alt="ShortList Teacher">
+              </td>          
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row w-100 p-2"  *ngIf="subAdminList.length > 0">
+        <div class="col-6">
+          <div class="row align-items-center">
+            <div class="col-auto">
+              <label class="control-label" for="noOfRows">No. of Entries</label>
+            </div>
+            <div class="col-auto">
+              <select name="noOfRows" (change)="onTableSizeChange($event)" class="form-select form-select-sm">
+                <option *ngFor="let size of tableSize" [ngValue]="size">
+                  {{ size }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+          <pagination-controls previousLabel="Prev" nextLabel="Next" [responsive]="true"
+            (pageChange)="handlePageChange($event)"></pagination-controls>
+        </div>
+      </div>
+      <div class="col-12 mb-3" *ngIf="subAdminList.length == 0">
+        <!-- <p class="text-center">No Teacher Found</p> -->
+        <app-not-found></app-not-found>
+      </div> 
+</div>
+
+
+<div class="modal fade" id="addSubAdminModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Sub Admin</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="registerForm" (ngSubmit)="addSubAdmin()">
+            <div class="row">
+                <div class="form-group col-lg-6 mb-3">
+                    <label class="form-control-label">Fist Name<span style="color:red;">*</span></label>
+                    <input type="text" class="form-control" formControlName="firstname"
+                        firstname="firstname"
+                        [ngClass]="{'is-invalid':(submitted && f['firstname'].errors) ||(f['firstname'].errors && f['firstname'].touched) }">
+                    <div *ngIf="(submitted && f['firstname'].errors) ||(f['firstname'].errors && f['firstname'].touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="f['firstname'].errors['required']">
+                            First Name is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-lg-6 mb-3">
+                    <label class="form-control-label">Last Name<span style="color:red;">*</span></label>
+                    <input type="text" class="form-control" formControlName="lastname" name="lastname"
+                        [ngClass]="{'is-invalid':(submitted && f['lastname'].errors) ||(f['lastname'].errors && f['lastname'].touched) }">
+                    <div *ngIf="(submitted && f['lastname'].errors) ||(f['lastname'].errors && f['lastname'].touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="f['lastname'].errors['required']">
+                            Last Name is required
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="form-group col-lg-6 mb-3">
+                    <label class="form-control-label">Contact Number<span
+                            style="color:red;">*</span></label>
+                    <input type="text" class="form-control" formControlName="mobile" name="mobile"
+                        [ngClass]="{'is-invalid':(submitted && f['mobile'].errors) ||(f['mobile'].errors && f['mobile'].touched) }">
+                    <div *ngIf="(submitted && f['mobile'].errors) ||(f['mobile'].errors && f['mobile'].touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="f['mobile'].errors['required']">
+                            Contact is required
+                        </div>
+                        <div *ngIf="f['mobile'].errors['pattern']">
+                            Contact is invalid
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-lg-6 mb-3">
+                    <label for="location">Role<span style="color:red;">*</span></label>
+                    <select class="form-select" formControlName="role"
+                        [ngClass]="{'is-invalid':(submitted && f['role'].errors) ||(f['role'].errors && f['role'].touched)}">
+                        <option value="" disabled>Select</option>
+                        <option *ngFor="let item of rolesList" [value]="item.name">{{item.label}}</option>
+                    </select>
+                    <div *ngIf="(submitted && f['role'].errors) ||(f['role'].errors && f['role'].touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="f['role'].errors['required']">Role is required</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-control-label">Email<span style="color:red;">*</span></label>
+                <input type="text" class="form-control" formControlName="email" name="email"
+                    [ngClass]="{'is-invalid':(submitted && f['email'].errors) ||(f['email'].errors && f['email'].touched) }">
+                <div *ngIf="(submitted && f['email'].errors) ||(f['email'].errors && f['email'].touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="f['email'].errors['required']">
+                        Email is required
+                    </div>
+                    <div *ngIf="f['email'].errors['pattern']">Email is invalid</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-6 mb-3">
+                    <label class="form-control-label">Password</label>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" formControlName="password"
+                            name="password" #inputpassword
+                            [ngClass]="{'is-invalid':(submitted && f['password'].errors) ||(f['password'].errors && f['password'].touched) }">
+                        <span class="input-group-text" (click)="togglePassword()">
+                            <i [ngClass]="togglePasswordIcon ? 'fa fa-eye' : 'fa fa-eye-slash'"
+                                id="togglePassword" style="cursor: pointer"></i>
+                        </span>
+                        <div *ngIf="(submitted && f['password'].errors) ||(f['password'].errors && f['password'].touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="f['password'].errors['required']">
+                                Password is required
+                            </div>
+                            <div *ngIf="f['password'].errors['pattern']">
+                                Password should have minimum 8 characters, at least 1 uppercase letter, 1
+                                lowercase
+                                letter and 1 number and 1 special character
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-lg-6 mb-3">
+                    <label class="form-control-label">Confirm Password</label>
+                    <input type="text" class="form-control" formControlName="cpass" name="cpass"
+                        [ngClass]="{'is-invalid':(submitted && f['cpass'].errors) ||(f['cpass'].errors && f['cpass'].touched) }">
+                    <div *ngIf="(submitted && f['cpass'].errors) ||(f['cpass'].errors && f['cpass'].touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="f['cpass'].errors['required']">
+                            Confirm Password is required
+                        </div>
+                        
+                    </div>
+                    <div class="text-validation">{{passwordMatchText}}</div>
+                </div>
+            </div>
+
+
+            <div class="form-group row mb-3">
+                <div class="col-lg-6">
+                    <div class="custom-control custom-checkbox">
+                        <small><span style="color:red;">*</span> Fields are mandatory</small>
+                        <!-- <input type="checkbox" class="custom-control-input" id="customControlInline">
+                        <label class="custom-control-label" for="customControlInline">Remember me</label> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 mb-3">
+                <button type="submit" class="btn btn-primary loginbtn w-100">Submit</button>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>

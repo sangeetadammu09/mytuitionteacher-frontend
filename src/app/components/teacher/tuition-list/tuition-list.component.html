@@ -30,6 +30,8 @@
             <td>{{item.createdAt | date:'dd/MM/yyyy'}}</td>
             <td data-bs-toggle="modal" data-bs-target="#teacherModal" (click)="openTeacherModal(item)"
               [ngClass]="item.status == 'open' ? 'statusopen': 'statusclosed'">{{item.status | titlecase}}</td>
+            <td *ngIf="user.role == 'superadmin'">{{item.email}}</td>
+            <td *ngIf="user.role == 'superadmin'">{{item.contact}}</td> 
             <td>{{item.city}} {{item.state}}</td>
             <td>{{item.lookingfor}}</td>
             <td>
@@ -46,9 +48,22 @@
             <td>{{item.days}}days/weekly {{item.hours}}/daily at {{item.time}}</td>
             <td>{{item.budget}} {{item.budgettype}}</td>
             <td>{{item.gender}}</td>
-            <td (click)="moveToTeacherForm(item)">
-              <img src="../../../../assets/images/icons/edit_icon.png" alt="Post Status">
+            <td *ngIf="user.role == 'superadmin'">
+              <img src="../../../../assets/images/icons/download_icon.png" data-bs-toggle="modal"
+               data-bs-target="#teacherModal" alt="Downlaod Document">
             </td>
+            <td (click)="clickToApply(item,'apply tuition')" *ngIf="user.role == 'teacher'">
+              <img src="../../../../assets/images/icons/edit_icon.png" data-bs-toggle="modal"
+               data-bs-target="#teacherModal" alt="Tuition Apply">
+            </td>
+            <td (click)="clickToDelete(item, 'delete tuition')" *ngIf="user.role == 'superadmin' || user.role == 'subadmin'">
+              <img src="../../../../assets/images/icons/delete_icon.png" data-bs-toggle="modal"
+               data-bs-target="#teacherModal" alt="Delete tuition">
+            </td>
+            <!-- <td (click)="clickToApprove(item, 'approve tuition')" *ngIf="user.role == 'superadmin' || user.role == 'subadmin'">
+              <img src="../../../../assets/images/icons/approve_icon.png" data-bs-toggle="modal"
+               data-bs-target="#teacherModal" alt="Approve tuition">
+            </td> -->
           </tr>
         </tbody>
       </table>
@@ -84,15 +99,23 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           </button>
         </div>
-        <div class="modal-body">
-  
+        <div class="modal-body" *ngIf = "modalValue == 'apply tuition'">
+           <p>Are you sure you want to apply to this tuition.</p>
           <div class="modal-footer mb-3">
-            <button type="submit" class="btn btn-primary">Okay</button>
+            <button type="submit" class="btn btn-primary">Yes</button>
           </div>
         </div>
+
+        <div class="modal-body" *ngIf = "modalValue == 'delete tuition'">
+          <p>Are you sure you want to delete to this tuition.</p>
+         <div class="modal-footer mb-3">
+           <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="deleteTuition()">Yes</button>
+         </div>
+       </div>
+
       </div>
     </div>
   

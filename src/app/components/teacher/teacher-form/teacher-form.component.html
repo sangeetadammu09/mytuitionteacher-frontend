@@ -23,8 +23,8 @@
             </div>
 
                 <div class="col-lg-4 mb-3">
-                  <label for="location">State<span style="color:red;">*</span></label>
-                  <select class="form-control form-select" formControlName="state"
+                  <label for="location">{{disableSelectCityField ? 'Union Territory' : 'State'}}<span style="color:red;">*</span></label>
+                  <select class="form-control form-select" formControlName="state" (change)="fetchCityList(t['state'].value)"
                   [ngClass]="{'is-invalid':(submitted && t['state'].errors) ||(t['state'].errors && t['state'].touched)}">
                       <option selected>Select</option>
                       <option *ngFor="let item of statesList" [value]="item.name">{{item.name}}</option>
@@ -37,8 +37,12 @@
 
                 <div class="col-lg-4 mb-3">
                   <label for="location">City<span style="color:red;">*</span></label>
-                  <input type="text" class="form-control" formControlName="city"  [ngClass]="{'is-invalid':
-                  (submitted && t['city'].errors) ||(t['city'].errors && t['city'].touched)}" />
+                  <input *ngIf="disableSelectCityField" type="text" class="form-control field-disabled" formControlName="city" readonly />   
+                  <select *ngIf="!disableSelectCityField"  class="form-control form-select" formControlName="city"
+                  [ngClass]="{'is-invalid':(submitted && t['city'].errors) ||(t['city'].errors && t['city'].touched)}">
+                      <option value="" selected>Select</option>
+                      <option *ngFor="let item of cityList" [value]="item.name">{{item.name}}</option>
+                  </select>
                   <div *ngIf="(submitted && t['city'].errors) ||(t['city'].errors && t['city'].touched)" class="invalid-feedback">
                       <div *ngIf="t['city'].errors['required']">City is required</div>
                  </div>
@@ -221,8 +225,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
         </button>
       </div>
       <div class="modal-body">

@@ -26,13 +26,13 @@ export const APP_DI_CONFIG: any = {
     },
     Parent:{
       form : "parent/form",
-      listofteachingjobs : "parent/listoftuitions",
+      listoftuitions : "parent/listoftuitions",
       listoftuitionsById : "parent/listoftuitionsbyid/",
       parentbyid : "parent/",
       search : "parent/search",
       checkphoneemail : "parent/check/",
       parentupdate : "parent/update/",
-      parentdelete : "parent/delete"
+      parentdelete : "parent/delete/"
     },
     Teacher:{
         login : "teacher/login",
