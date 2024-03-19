@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MasterService } from '../../../../app/shared/services/master.service';
 import { CommonService } from '../../../../app/shared/services/common.service';
-import { decodeToken } from '../../../../app/shared/utils/token';
 import { AdminMenuList, ParentMenuList, SubAdminMenuList, TeacherMenuList } from '../../../../assets/menus/menu';
 import { ErrorhandlerService } from '../../../../app/shared/services/errorhandler.service';
+import { AdminService } from '../../../../app/shared/services/admin.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
    togglePasswordIcon: boolean = false;
    @ViewChild('inputpassword') inputpassword!:ElementRef;
 
-  constructor( private _router: Router, private _fb: FormBuilder, 
+  constructor( private _router: Router, private _fb: FormBuilder, private adminService: AdminService,
     private _commonService: CommonService, private masterService: MasterService,
     private errHandler : ErrorhandlerService,
     private _toastrService : ToastrService) { 
@@ -74,12 +74,6 @@ export class LoginComponent implements OnInit {
           }else if(loggedUserDetails.role == 'teacher'){
             this._router.navigate(['/dashboard/teacher/my-profile']);
             localStorage.setItem('menu', JSON.stringify(this.menuList = TeacherMenuList.data));
-          }else if(loggedUserDetails.role == 'superadmin'){
-            this._router.navigate(['/dashboard/superadmin/my-profile']);
-            localStorage.setItem('menu', JSON.stringify(this.menuList = AdminMenuList.data));
-          }else if(loggedUserDetails.role == 'subadmin'){
-            this._router.navigate(['/dashboard/subadmin/my-profile'])
-            localStorage.setItem('menu', JSON.stringify(this.menuList = SubAdminMenuList.data));
           }
           console.log(this.menuList,'menu list loaded')
         }  
@@ -95,6 +89,48 @@ export class LoginComponent implements OnInit {
         if(error.status == 400){
           this._toastrService.error('Invalid details. Please try again');
          }
+        if(error.status == 403){
+          this.adminService.login(this.loginForm.value).subscribe({next: (data:any)=>{
+            if(data.status == 200){
+            //  this.decodedToken = decodeToken(data.token);
+    
+              localStorage.setItem('userToken',data.token);
+              let loggedUserDetails = data.loggedcommon;
+              this._toastrService.success('Logged in successfully!');
+            //  this.masterService.sendUserDetails(loggedUserDetails);
+              localStorage.setItem('user', JSON.stringify(loggedUserDetails))
+              // navigation to specific users
+              //this.masterService.sendMenu(this.menuList); 
+              if(loggedUserDetails.role == 'superadmin'){
+                this._router.navigate(['/dashboard/superadmin/my-profile']);
+                localStorage.setItem('menu', JSON.stringify(this.menuList = AdminMenuList.data));
+              }else if(loggedUserDetails.role == 'subadmin'){
+                this._router.navigate(['/dashboard/subadmin/my-profile'])
+                localStorage.setItem('menu', JSON.stringify(this.menuList = SubAdminMenuList.data));
+              }
+              console.log(this.menuList,'menu list loaded')
+            }  
+          },error:((err:any) =>{
+            let error =  this.errHandler.handleError(err);
+            //console.log(error)
+            if(error.status == 401) {
+             this._toastrService.error('Token Expired');
+            }
+            if(error.status == 500){
+             this._toastrService.error('Server Error.Failed to login');
+            }
+            if(error.status == 400){
+              this._toastrService.error('Invalid details. Please try again');
+             }
+            if(error.status == 403){
+              this._toastrService.error('No User found. Please try again');
+            
+            }        
+            
+         })})
+        
+        }
+        
         
      })})
        

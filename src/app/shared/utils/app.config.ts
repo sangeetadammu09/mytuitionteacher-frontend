@@ -5,6 +5,14 @@ export const APP_DI_CONFIG: any = {
   // For api calls
   parentDomain: 'http://localhost:8080/',
   endPoints: {
+    Admin:{
+      login : "admin/login",
+      register : "admin/register", 
+      adminbyid : "admin/",
+      update : "admin/update/",
+      delete : "admin/delete/",
+      search : "admin/search",
+    },
     Common:{
       login : "login",
       register : "register", 

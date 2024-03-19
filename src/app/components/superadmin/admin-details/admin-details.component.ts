@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { CommonService } from '../../../shared/services/common.service';
+import { AdminService } from '../../../shared/services/admin.service';
 import { ErrorhandlerService } from '../../../shared/services/errorhandler.service';
 import { SocialMedia } from '../../../../assets/referencedata/socialmedia';
 
@@ -28,7 +28,7 @@ export class AdminDetailsComponent {
   twitterUrl = '';
   linkedinUrl = '';
 
-  constructor(private fb: FormBuilder, private commonService: CommonService, private router: Router,
+  constructor(private fb: FormBuilder, private adminService: AdminService, private router: Router,
     private errHandler : ErrorhandlerService,private _toastrService : ToastrService) {
     this.adminForm = this.fb.group({
       firstname: ['', Validators.required],
@@ -73,7 +73,7 @@ export class AdminDetailsComponent {
 
   getAdminDetails(){
     // console.log(this.user, 'user');
-    this.commonService.userById(this.user.id).subscribe({next: (data:any)=>{
+    this.adminService.adminById(this.user.id).subscribe({next: (data:any)=>{
       if(data.status == 200){
        // this._toastrService.success('Profile successfully!');
        this.adminData = data.singleuser;
@@ -178,7 +178,7 @@ export class AdminDetailsComponent {
       if(this.selectedFile){
       formData.append('image', this.selectedFile, this.selectedFileName);
       }
-      this.commonService.update(this.adminData._id, formData).subscribe({next: (data:any)=>{
+      this.adminService.update(this.adminData._id, formData).subscribe({next: (data:any)=>{
         if(data.status == 200){
           this.getAdminDetails();
           this._toastrService.success('Your details are updated successfully')

@@ -14,7 +14,7 @@
         </div>
         <div class="col-lg-2">
           <button type="button" class="btn btn-primary"
-          data-bs-toggle="modal" data-bs-target="#addSubAdminModal" >Add Sub Admin</button>
+          data-bs-toggle="modal" data-bs-target="#addSubAdminModal" (click)="openSubAdminModal()">Add Sub Admin</button>
         </div>
         
       </div>
@@ -29,26 +29,22 @@
             <tr>
               <td  scope="col">{{itemsPerPage*(currentPage-1)+i+1}}</td>
               <td  scope="col">{{item.createdAt | date:'dd/MM/yyyy'}}</td>
-              <td>{{item.name}}</td>
-              <td>{{item.city}} {{item.state}}</td>
-              <td>{{item.qualification}}</td> 
-              <td>
-                <ng-container *ngFor="let x of item.modeofteaching">
-                    <span>{{x.label}}, </span> 
-                  </ng-container>
-              </td>                
-              <td>{{item.teachingexp}}</td>  
-              <td>{{item.subjects}}</td>
-              <td>{{item.charge}} {{item.chargeType}}</td>
-              <td *ngIf="item.vehicle == 'yes'">
+              <td *ngIf="item.isActive == true">
                 <i class="fa fa-circle status-true"></i>
               </td>
-              <td *ngIf="item.vehicle == 'no'">
+              <td *ngIf="item.isActive == false">
                 <i class="fa fa-circle status-false"></i>
               </td>
-  
-              <td data-bs-toggle="modal" data-bs-target="#shortlistTeacherModal" (click)="shortListTeacherModal(item)">
-                <img src="../../../../assets/images/icons/user_checked_icon.png" alt="ShortList Teacher">
+              <td>{{item.firstname}} {{item.lastname}}</td>
+              <td>{{item.location}}</td>
+              <td>{{item.role}}</td>                 
+              <td>{{item.islocationassigned == false ? 'No' : 'Yes'}}</td>  
+              <td>{{item.locationassignednames == '' ? '-' : item.locationassignednames}}</td>         
+              <td data-bs-toggle="modal" data-bs-target="#addSubAdminModal" (click)="updateAdmin(item)">
+                <img src="../../../../assets/images/icons/edit_icon.png" alt="Update Admin">
+              </td>  
+              <td data-bs-toggle="modal" data-bs-target="#deleteAdmin" (click)="deleteAdmin(item)">
+                <img src="../../../../assets/images/icons/delete_icon.png" alt="Delete Admin">
               </td>          
             </tr>
           </tbody>
@@ -85,8 +81,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Sub Admin</h5>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          <h5 class="modal-title" id="exampleModalLabel">{{subAdminLabel}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #closeAddAdminModal>
           </button>
         </div>
         <div class="modal-body">
@@ -155,7 +151,19 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="form-group mb-3">
+              <label class="form-control-label">Location<span style="color:red;">*</span></label>
+              <input type="text" class="form-control" formControlName="location" name="location"
+                  [ngClass]="{'is-invalid':(submitted && f['location'].errors) ||(f['location'].errors && f['location'].touched) }">
+              <div *ngIf="(submitted && f['location'].errors) ||(f['location'].errors && f['location'].touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="f['location'].errors['required']">
+                      Location is required
+                  </div>
+              </div>
+          </div>
+
+            <div class="row" *ngIf="registerText == 'Submit'">
                 <div class="form-group col-lg-6 mb-3">
                     <label class="form-control-label">Password</label>
                     <div class="input-group mb-3">
@@ -195,6 +203,23 @@
                 </div>
             </div>
 
+            <div class="row">
+              <div class="form-group col-lg-6 mb-3">
+                  <label class="form-control-label">Location Assigned</label>
+                  <select class="form-select" name="islocationassigned" id="islocationassigned" formControlName="islocationassigned">
+                    <option value="" disabled>Select</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+              </div>
+
+              <div class="form-group col-lg-6 mb-3">
+                  <label class="form-control-label">Handling Locations</label>
+                  <input type="text" class="form-control" formControlName="locationassignednames" name="locationassignednames">
+          
+              </div>
+          </div>
+
 
             <div class="form-group row mb-3">
                 <div class="col-lg-6">
@@ -206,9 +231,31 @@
                 </div>
             </div>
             <div class="col-lg-12 mb-3">
-                <button type="submit" class="btn btn-primary loginbtn w-100"  data-dismiss="modal" >Submit</button>
+                <button type="submit" class="btn btn-primary loginbtn w-100" >{{registerText}}</button>
             </div>
         </form>
       </div>
     </div>
+  </div>
+</div>
+
+
+<!-- update admin -->
+<div class="modal fade" id="deleteAdmin" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this admin?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="confirmDelete()">Yes</button>
+
+  </div>
+  </div>
+</div>
 </div>

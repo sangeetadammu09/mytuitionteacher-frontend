@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorhandlerService } from '../../../../app/shared/services/errorhandler.service';
-import { CommonService } from '../../../../app/shared/services/common.service';
+import { AdminService } from '../../../../app/shared/services/admin.service';
 import { PagerService } from '../../../../app/shared/services/pager.service';
 
 
@@ -27,29 +27,35 @@ export class AdminListComponent {
   tableSize: number[] = [10,20,30];
   sortProperty: string = 'id';
   sortOrder = 1;
-  tableColumns = ['SNo.','Reg.Date','Name', 'Location', 'Qualification', 'Mode','Exp.','Subjects','Charge', 'Vehicle', 'Action'];
+  tableColumns = ['SNo.','Reg.Date','Status','Name', 'Location', 'Role', 'Location Assigned','Handling Locations','Edit', 'Delete'];
   registerForm :FormGroup;
+  adminData: any;
+  subAdminLabel: string = '';
   get f() { return this.registerForm.controls};
   submitted = false;
-  registerText = 'Register';
+  registerText = 'Submit';
   passwordMatchText:string = '';
   togglePasswordIcon: boolean = false;
   @ViewChild('inputpassword') inputpassword!:ElementRef;
+   @ViewChild('closeAddAdminModal') closeAddAdminModal!:ElementRef;
+  
 
 
   constructor(private fb : FormBuilder,private router : Router, private errHandler : ErrorhandlerService,private filterService : PagerService,
-              private toastrService : ToastrService,private _fb: FormBuilder, private _commonService: CommonService){ 
+              private toastrService : ToastrService,private _fb: FormBuilder, private adminService: AdminService){ 
                 this.registerForm = this._fb.group({
                   firstname : ['', Validators.required],
                   lastname : ['', Validators.required],
                   email : ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
                   mobile : ['', [Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
                   role : ['subadmin'],
-                  location: ['empty'],
+                  location: ['', Validators.required],
                   sociallinks:  ['empty'],
                   password : ['', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
                   cpass : ['', Validators.required],    
                   isActive : [true],
+                  islocationassigned : [false],
+                  locationassignednames : ['']
                   //imageurl: [],
                })
               }
@@ -70,11 +76,10 @@ export class AdminListComponent {
     this.payload.pageSize = 10;
     let role = 'subadmin';
     let filter = this.filterService.GetFilterConditionPagination('role', 'subadmin',this.payload.pageSize, this.payload.startNumber )
-    this._commonService.searchUser(filter).subscribe({next: (data:any)=>{
+    this.adminService.searchUser(filter).subscribe({next: (data:any)=>{
       if(data.status == 200){
-        console.log(data.data)
-       //console.log(listofteachers)
-      //  this.subAdminList = listofteachers;
+       // console.log(data.data)
+        this.subAdminList = data.data;
       }
       
     },error:((err:any) =>{
@@ -130,38 +135,130 @@ export class AdminListComponent {
   
   }
 
+  openSubAdminModal(){
+    this.subAdminLabel = 'Add Sub Admin';
+    this.registerForm.reset();
+    this.registerForm.patchValue({
+      role : 'subadmin',
+      islocationassigned : false,
+      isActive : true,
+      sociallinks : 'empty',
+      locationassignednames : ''
+
+    })
+   
+
+
+  }
+
+  updateAdmin(item:any){
+    this.subAdminLabel = 'Edit Sub Admin';
+    this.adminData = item;
+      this.registerText = 'Update';
+        this.registerForm.patchValue({
+          firstname : item.firstname,
+          lastname : item.lastname,
+          email : item.email,
+          mobile : item.mobile,
+          role : item.role,
+          location: item.location,
+          isActive : item.isActive,
+          password: item.password,
+          cpass : item.cpass,
+          islocationassigned : item.islocationassigned,
+          locationassignednames : item.locationassignednames
+        })
+  }
+
   addSubAdmin(){
     this.submitted = true;
       if(this.registerForm.valid){
         let payload = this.registerForm.value;
+       
         let formData = new FormData();
         Object.entries(payload).forEach(([key, value]) => {
           formData.append(key, (value).toString());
         });
+        if(this.adminData){
+          this.adminService.update(this.adminData._id,formData).subscribe({next: (data:any)=>{
+            if(data.status == 200){
+              this.toastrService.success('Sub Admin Updated successfully!');
+              this.closeAddAdminModal.nativeElement.click();
+              this.getSubAdminList();
+            }      
+          },error:((err:any) =>{
+            let error =  this.errHandler.handleError(err);
+            //console.log(error)
+            if(error.status == 401) {
+             this.toastrService.error('Token Expired');
+            }
+            if(error.status == 400) {
+              this.toastrService.error('Please Enter All the Mandatory Fields!');
+             }
+            if(error.status == 500){
+             this.toastrService.error('Server Error.Failed to register');
+            }
+            
+         })})
+
+        }else{
+          this.adminService.register(formData).subscribe({next: (data:any)=>{
+            if(data.status == 200){
+              this.closeAddAdminModal.nativeElement.click();
+              this.toastrService.success('Sub Admin Registered successfully!');
+              this.getSubAdminList();
+            }      
+          },error:((err:any) =>{
+            let error =  this.errHandler.handleError(err);
+            //console.log(error)
+            if(error.status == 401) {
+             this.toastrService.error('Token Expired');
+            }
+            if(error.status == 400) {
+              this.toastrService.error('Please Enter All the Mandatory Fields!');
+             }
+            if(error.status == 500){
+             this.toastrService.error('Server Error.Failed to register');
+            }
+            
+         })})
+        }
     //  formData.append('image', this.selectedFile, this.selectedFileName);
-        this._commonService.register(formData).subscribe({next: (data:any)=>{
-          if(data.status == 200){
-            this.toastrService.success('Sub Admin Registered successfully!');
-            this.getSubAdminList();
-          }      
-        },error:((err:any) =>{
-          let error =  this.errHandler.handleError(err);
-          //console.log(error)
-          if(error.status == 401) {
-           this.toastrService.error('Token Expired');
-          }
-          if(error.status == 400) {
-            this.toastrService.error('Please Enter All the Mandatory Fields!');
-           }
-          if(error.status == 500){
-           this.toastrService.error('Server Error.Failed to register');
-          }
-          
-       })})
+
          
       }else{
-        console.log('invalid login')
+        return;
+       
       }
+  }
+
+
+
+  deleteAdmin(item){
+    this.adminData = item;
+
+  }
+
+  confirmDelete(){
+    this.adminService.delete(this.adminData._id).subscribe({next: (data:any)=>{
+      if(data.status == 200){
+        this.toastrService.success('Sub Admin Deleted successfully!');
+        this.getSubAdminList();
+      }      
+    },error:((err:any) =>{
+      let error =  this.errHandler.handleError(err);
+      //console.log(error)
+      if(error.status == 401) {
+       this.toastrService.error('Token Expired');
+      }
+      if(error.status == 400) {
+        this.toastrService.error('Please Enter All the Mandatory Fields!');
+       }
+      if(error.status == 500){
+       this.toastrService.error('Server Error.Failed to register');
+      }
+      
+   })})
   }
 
 
