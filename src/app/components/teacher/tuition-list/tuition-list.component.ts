@@ -163,6 +163,40 @@ export class TuitionListComponent {
     
   }
 
+  // submitJob(){
+  //   this.submitted = true;
+  //   //console.log(this.applyJobForm.value)
+  //   if(this.applyJobForm.valid){
+  //     var teacherEmail :any = {}
+  //     teacherEmail.email = this.applyJobForm.controls['email'].value;
+  //     teacherEmail.jobId = this.interestedTuition._id;
+  //      this.teacherService.jobApplied(teacherEmail).subscribe((data:any) => {
+  //           console.log(data)
+  //          if(data.status == 200){
+  //           this.closeJobApplyModal.nativeElement.click();
+  //           this.toastr.success("Job Applied Successfully")
+  //           this.appliedTeacherDetails.teacherDetails = data.appliedteacher;
+  //           this.appliedTeacherDetails.appliedFor= this.interestedTuition.title;
+  //           this.appliedTeacherDetails.parentDetails= this.interestedTuition.parentDetails;
+  //           console.log(this.appliedTeacherDetails) 
+  //           this.authService.interestedteacherEmail(this.appliedTeacherDetails).subscribe((data:any) => {
+  //          // console.log(data, 'email')
+  //            });
+           
+
+  //        }
+  //        if(data.status == 204){
+  //         this.noTeacherFoundMsg = data.message;
+  //         console.log(this.noTeacherFoundMsg)
+  //      }
+
+  //     },(error:any)=>{
+  //          console.log(error)
+           
+  //     })
+  //   }
+  // }
+
 }
 
 
