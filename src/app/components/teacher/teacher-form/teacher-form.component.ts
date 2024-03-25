@@ -63,7 +63,8 @@ export class TeacherFormComponent implements OnInit {
         charge : ['', [Validators.required, Validators.pattern('^[0-9,]*$')]],
         chargeType : ['', Validators.required],
         imageurl: [, Validators.required],
-        isActive : [true]
+        isActive : [true],
+        isVerified : [false],
       
       })
   }

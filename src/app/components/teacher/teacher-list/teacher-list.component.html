@@ -25,6 +25,7 @@
             <tr>
               <td  scope="col">{{itemsPerPage*(currentPage-1)+i+1}}</td>
               <td  scope="col">{{item.createdAt | date:'dd/MM/yyyy'}}</td>
+              <td>{{item.isVerified == true ? 'Yes' : 'No'}}</td>
               <td>{{item.name}}</td>
               <td>{{item.city}} {{item.state}}</td>
               <td>{{item.qualification}}</td> 
@@ -43,9 +44,9 @@
                 <i class="fa fa-circle status-false"></i>
               </td>
   
-              <td data-bs-toggle="modal" data-bs-target="#shortlistTeacherModal" (click)="shortListTeacherModal(item)">
+              <!-- <td data-bs-toggle="modal" data-bs-target="#shortlistTeacherModal" (click)="shortListTeacherModal(item)">
                 <img src="../../../../assets/images/icons/user_checked_icon.png" alt="ShortList Teacher">
-              </td>          
+              </td>           -->
             </tr>
           </tbody>
         </table>

@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorhandlerService } from '../../../../app/shared/services/errorhandler.service';
 import { ParentService } from '../../../../app/shared/services/parent.service';
 import { Pagination } from '../../../../app/shared/utils/pagination';
 import { MasterService } from '../../../../app/shared/services/master.service';
+import { AuthService } from '../../../../app/shared/services/auth.service';
+import { TeacherService } from '../../../../app/shared/services/teacher.service';
+
 
 @Component({
   selector: 'app-tuition-list',
@@ -31,11 +34,15 @@ export class TuitionListComponent {
   tableColumns = [];
   modalValue = '';
   tuitionItem : any;
+  appliedTuitionComment ='';
+  appliedTeacherDetails :any = {};
+  @ViewChild('closeJobApplyModal') closeJobApplyModal! : ElementRef;
 
 
-  constructor(private fb: FormBuilder, private parentService: ParentService,
-    private router: Router, private errHandler: ErrorhandlerService,
+  constructor(private fb: FormBuilder, private parentService: ParentService, private teacherService: TeacherService,
+    private router: Router, private errHandler: ErrorhandlerService,private authService : AuthService, 
     private toastrService: ToastrService, private masterService: MasterService,) {
+     
     if (this.user.role == 'superadmin' || this.user.role == 'subadmin') {
       this.tableColumns = ['SNo.', 'Reg. Date', 'Status', 'Email', 'Contact', 'Location', 'Looking for', 'Mode', 'Details', 'Grade', 'Board', 'Subjects', 'Duration',
         'Budget', 'Gender', 'Document', 'Action']
@@ -60,6 +67,14 @@ export class TuitionListComponent {
     this.parentService.listoftuitions(this.pagination).subscribe({
       next: (data: any) => {
         if (data.status == 200) {
+          data.data.forEach((x: any) => {
+            let teacherAppliedAlready = JSON.parse(x.teachersApplied);
+            let appliedForTuition = teacherAppliedAlready.find((y:any)=> y.teacherid == this.user.id);
+            console.log(appliedForTuition)
+            appliedForTuition != undefined ? x.appliedForTuition = true : x.appliedForTuition =  false;
+            
+          })
+          
           let tuitions = data.data.map((item: any) => ({ ...item, modeofteaching: JSON.parse(item.modeofteaching) }))
           this.tuitionList = tuitions;
           console.log(this.tuitionList)
@@ -128,6 +143,10 @@ export class TuitionListComponent {
   clickToApply(item: any,val:any){
     this.modalValue = val;
     this.tuitionItem = item;
+    this.tuitionItem.title = 
+    `Need ${item.gender} ${item.lookingfor} in ${item.location} to teach ${item.grade} for ${item.days} days/weekly ${item.hours} daily`;
+    this.tuitionItem.parentDetails = 
+    `Parent: ${item.pname}, ${item.pemail} and contact ${item.contact}`;
 
   }
 
@@ -163,39 +182,102 @@ export class TuitionListComponent {
     
   }
 
-  // submitJob(){
-  //   this.submitted = true;
-  //   //console.log(this.applyJobForm.value)
-  //   if(this.applyJobForm.valid){
-  //     var teacherEmail :any = {}
-  //     teacherEmail.email = this.applyJobForm.controls['email'].value;
-  //     teacherEmail.jobId = this.interestedTuition._id;
-  //      this.teacherService.jobApplied(teacherEmail).subscribe((data:any) => {
-  //           console.log(data)
-  //          if(data.status == 200){
-  //           this.closeJobApplyModal.nativeElement.click();
-  //           this.toastr.success("Job Applied Successfully")
-  //           this.appliedTeacherDetails.teacherDetails = data.appliedteacher;
-  //           this.appliedTeacherDetails.appliedFor= this.interestedTuition.title;
-  //           this.appliedTeacherDetails.parentDetails= this.interestedTuition.parentDetails;
-  //           console.log(this.appliedTeacherDetails) 
-  //           this.authService.interestedteacherEmail(this.appliedTeacherDetails).subscribe((data:any) => {
-  //          // console.log(data, 'email')
-  //            });
-           
 
-  //        }
-  //        if(data.status == 204){
-  //         this.noTeacherFoundMsg = data.message;
-  //         console.log(this.noTeacherFoundMsg)
-  //      }
+  applyTuition(){
+    if(this.user.id){
+      var teacher :any = {}
+      teacher.email = this.user.email;
+      teacher.appliedTutionid = this.tuitionItem._id;
+      teacher.comment = this.appliedTuitionComment;
+      this.teacherService.jobApplied(teacher).subscribe({next: (data:any)=>{
+        if(data.status == 200){
+          this.closeJobApplyModal.nativeElement.click();
+          this.toastrService.success("Tuition Applied Successfully")
+          this.appliedTeacherDetails.teacherDetails = data.appliedteacher;
+          this.appliedTeacherDetails.appliedFor= this.tuitionItem.title;
+          this.appliedTeacherDetails.parentDetails= this.tuitionItem.parentDetails;
+          console.log(this.appliedTeacherDetails)
+        
+          this.authService.interestedteacherEmail(this.appliedTeacherDetails).subscribe((data:any) => {
+         // console.log(data, 'email')
+           });
 
-  //     },(error:any)=>{
-  //          console.log(error)
-           
-  //     })
-  //   }
-  // }
+          //update tuition
+         
+          let payload :any= {};
+          payload.parentid = this.tuitionItem.parentid,
+          payload.name= this.tuitionItem.name,
+          payload.email = this.tuitionItem.email,
+          payload.contact= this.tuitionItem.contact,
+          payload.location= this.tuitionItem.location,
+          payload.state= this.tuitionItem.state,
+          payload.city= this.tuitionItem.city,
+          payload.lookingfor= this.tuitionItem.lookingfor,
+          payload.modeofteaching = this.tuitionItem.modeofteaching,
+          payload.grade= this.tuitionItem.grade,
+          payload.board= this.tuitionItem.board,
+          payload.subjects= this.tuitionItem.subjects,
+          payload.details= this.tuitionItem.details,
+          payload.days= this.tuitionItem.days,
+          payload.hours= this.tuitionItem.hours,
+          payload.time= this.tuitionItem.time,
+          payload.gender= this.tuitionItem.gender,
+          payload.budget= this.tuitionItem.budget,
+          payload.budgettype= this.tuitionItem.budgettype,
+          payload.isActive = this.tuitionItem.isActive,
+          payload.status = this.tuitionItem.status
+          let teacherArr :any[] = [];
+          teacherArr.push({ teacherid : this.user.id})
+          payload.teachersApplied = teacherArr
+        
+          let formData = new FormData();
+          Object.entries(payload).forEach(([key, value]) => {
+            if(key !== 'modeofteaching' && key !== 'teachersApplied'){
+              formData.append(key, (value).toString());
+            }
+            
+          });
+          formData.append('modeofteaching', JSON.stringify(payload.modeofteaching))
+          formData.append('teachersApplied', JSON.stringify(payload.teachersApplied))
+          
+          this.parentService.updateparent(this.tuitionItem._id,formData).subscribe({next: (data: any) => {
+            if (data.status == 200) {
+            //  $('#parentModal').modal('show')
+              this.authService.parentEmail(payload).subscribe((data: any) => {
+                console.log(data, 'email')
+              });
+              this.toastrService.success('Tuition is updated successfully')
+              this.getTuitionsList();
+            }
+  
+          }, error: ((err: any) => {
+            let error = this.errHandler.handleError(err);
+            //console.log(error)
+            if (error.status == 401) {
+              this.toastrService.error('Token Expired');
+            }
+            if (error.status == 500) {
+              this.toastrService.error('Server Error.Failed to update parent');
+            }
+  
+          })
+        })
+       
+        }      
+      },error:((err:any) =>{
+        let error =  this.errHandler.handleError(err);
+        //console.log(error)
+        if(error.status == 401) {
+         this.toastrService.error('Token Expired');
+        }
+        if(error.status == 500){
+         this.toastrService.error('Server Error.Failed to fetch user details');
+        }
+        
+      })})
+       
+    }
+  }
 
 }
 

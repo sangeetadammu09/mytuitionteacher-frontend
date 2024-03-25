@@ -26,7 +26,7 @@ export class TeacherListComponent {
   tableSize: number[] = [10,20,30];
   sortProperty: string = 'id';
   sortOrder = 1;
-  tableColumns = ['SNo.','Reg. Date','Name', 'Location', 'Qualification', 'Mode','Exp.','Subjects','Charge', 'Vehicle', 'Action'];
+  tableColumns = ['SNo.','Reg. Date','Verified','Name', 'Location', 'Qualification', 'Mode','Exp.','Subjects','Charge', 'Vehicle', 'Action'];
 
 
   constructor(private fb : FormBuilder, private teacherService : TeacherService,

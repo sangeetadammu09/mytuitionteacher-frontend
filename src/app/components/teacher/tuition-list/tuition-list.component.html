@@ -52,9 +52,13 @@
               <img src="../../../../assets/images/icons/download_icon.png" data-bs-toggle="modal"
                data-bs-target="#teacherModal" alt="Downlaod Document">
             </td>
-            <td (click)="clickToApply(item,'apply tuition')" *ngIf="user.role == 'teacher'">
-              <img src="../../../../assets/images/icons/edit_icon.png" data-bs-toggle="modal"
-               data-bs-target="#teacherModal" alt="Tuition Apply">
+            <td  *ngIf="user.role == 'teacher' && item.appliedForTuition == true">
+              Already Applied
+            </td>
+            <td class="custom-hyperlink"  (click)="clickToApply(item,'apply tuition')"  
+            *ngIf="user.role == 'teacher' && item.appliedForTuition == false" data-bs-toggle="modal"
+               data-bs-target="#teacherModal">
+              Apply Now
             </td>
             <td (click)="clickToDelete(item, 'delete tuition')" *ngIf="user.role == 'superadmin' || user.role == 'subadmin'">
               <img src="../../../../assets/images/icons/delete_icon.png" data-bs-toggle="modal"
@@ -99,13 +103,18 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #closeJobApplyModal>
           </button>
         </div>
         <div class="modal-body" *ngIf = "modalValue == 'apply tuition'">
            <p>Are you sure you want to apply to this tuition.</p>
+           <div class="mb-3">
+            <label for="exampleInputEmail1">Comment<span style="color:red;">*</span></label>
+            <textarea type="text-area" class="form-control" rows="5" id="appliedTuitionComment" [(ngModel)]="appliedTuitionComment">
+            </textarea>
+          </div>
           <div class="modal-footer mb-3">
-            <button type="submit" class="btn btn-primary"  (click)="applyTuition()">Yes</button>
+            <button type="submit" class="btn btn-primary"  (click)="applyTuition()">Submit</button>
           </div>
         </div>
 

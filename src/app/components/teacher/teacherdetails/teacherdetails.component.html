@@ -186,13 +186,14 @@
                                      [ngClass]="{'is-invalid':(submitted && f['imageurl'].errors) ||(f['imageurl'].errors && f['imageurl'].touched) }">
                                     <div *ngIf="(submitted && f['imageurl'].errors) ||(f['imageurl'].errors && f['imageurl'].touched)"
                                     class="invalid-feedback">  
-                                     <div *ngIf="f['imageurl'].errors['required']">Picture is required
-                                     </div>
+                                     <div *ngIf="f['imageurl'].errors['required']">Picture is required</div>
+                                     
+
                                   </div>
+                                  <div  class="text-validation" *ngIf="fileUploadError !== ''">
+                                    File size is too large. Please upload upto 2mb</div>
                                 </div>
-                                <!-- <div class="mb-3" *ngIf="teacherData.imageurl">                                   
-                                        <a class="custom-hyperlink" (click)="addNewSocialGroup()">Reupload Picture</a>
-                                </div> -->
+                               
                                
                             </div>
 

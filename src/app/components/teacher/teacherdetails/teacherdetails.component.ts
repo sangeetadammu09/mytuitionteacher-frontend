@@ -26,6 +26,7 @@ export class TeacherdetailsComponent {
   instagramUrl = '';
   twitterUrl = '';
   linkedinUrl = '';
+  fileUploadError ='';
 
   constructor(private fb: FormBuilder, private commonService: CommonService,private errHandler : ErrorhandlerService,private _toastrService : ToastrService) {
     this.teacherForm = this.fb.group({
@@ -59,11 +60,11 @@ export class TeacherdetailsComponent {
   }
 
   ngOnInit(): void {
-    this.getParentDetails();
+    this.getTeacherDetails();
   }
 
 
-  getParentDetails(){
+  getTeacherDetails(){
     // console.log(this.user, 'user');
     this.commonService.userById(this.user.id).subscribe({next: (data:any)=>{
       if(data.status == 200){
@@ -168,19 +169,23 @@ export class TeacherdetailsComponent {
       }
       this.commonService.update(this.teacherData._id, formData).subscribe({next: (data:any)=>{
         if(data.status == 200){
-          this.getParentDetails();
+          this.getTeacherDetails();
           this._toastrService.success('Your details are updated successfully')
           this.isEdited = false;
         }
         
       },error:((err:any) =>{
         let error =  this.errHandler.handleError(err);
-        //console.log(error)
+        console.log(error)
         if(error.status == 401) {
          this._toastrService.error('Token Expired');
         }
         if(error.status == 500){
          this._toastrService.error('Server Error.Failed to add parent');
+        }
+        if(error.status == 418){
+          this._toastrService.error('File size is too large.Failed to add parent');
+          this.fileUploadError = "'File size is too large.Failed to add parent'"
         }
         
      })})
