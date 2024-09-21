@@ -13,7 +13,7 @@
 
   .hmt-works{
     text-align: center;
-    color: #9b111e;
+    color: #BA0021;
   }
 
   .hmt-parent{
@@ -38,7 +38,7 @@
   }
 
   .form-control.is-invalid{
-    border: 1px solid #9b111e
+    border: 1px solid #BA0021
   }
   
   .ml-5{

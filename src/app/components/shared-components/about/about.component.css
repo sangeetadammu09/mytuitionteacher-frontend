@@ -13,7 +13,7 @@
 .span1{
     text-transform: uppercase; 
     display: block;
-    color:  #9b111e ; 
+    color:  #BA0021 ; 
     font-weight: 500; 
     margin-bottom: 10px;
 }
@@ -136,7 +136,7 @@ margin-top: 50px;overflow: hidden; background-color: #dc3545;position: relative;
 }
 
 .hmt-angle:hover{
-   color:#9b111e ;
+   color:#BA0021 ;
 }
 
 
@@ -153,7 +153,7 @@ margin-top: 50px;overflow: hidden; background-color: #dc3545;position: relative;
 .counter-count
 {
     font-size: 18px;
-    background-color: #9b111e ;
+    background-color: #BA0021 ;
     border-radius: 50%;
     position: relative;
     color: #ffffff;
